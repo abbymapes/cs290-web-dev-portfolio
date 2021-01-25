@@ -3,15 +3,15 @@
 This repository holds all of your submitted work for CompSci 290 Spring 2021
 
 ## Name: 
-
+Abby Mapes - acm103
 
 ### Timeline
 
-Start Date: 
+Start Date: January 24, 2021
 
 Finish Date: 
 
-Hours Spent:
+Hours Spent: ~ 6 hours (so far)
 
 
 ### Collaboration
@@ -19,8 +19,11 @@ Hours Spent:
 People consulted:
 
 Resources used:
+- Image Grid (https://www.w3schools.com/howto/howto_js_image_grid.asp)
+- Navigation Bar (https://www.w3schools.com/howto/howto_js_topnav.asp)
 
 Asset attributions:
+- All images included in my portfolio were taken and approved by me
 
 
 ### Assignment Notes
@@ -28,6 +31,8 @@ Asset attributions:
 Known Bugs:
 
 Extra credit:
+- Navigation Bar
+- CSS styling
 
 
 ### Impressions
