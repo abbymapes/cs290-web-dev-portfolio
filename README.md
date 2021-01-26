@@ -11,7 +11,7 @@ Start Date: January 24, 2021
 
 Finish Date: 
 
-Hours Spent: ~ 6 hours (so far)
+Hours Spent: ~ 8 hours (so far)
 
 
 ### Collaboration
