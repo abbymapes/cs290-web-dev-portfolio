@@ -1,3 +1,9 @@
+/*
+ * Styling for my portfolio
+ *
+ * @author Abby Mapes
+ */
+
 /* Navigation Bar */
 .nav-bar {
   overflow: hidden;
@@ -128,4 +134,28 @@ p {
   padding-top: 5px;
   padding-bottom: 5px;
   text-align: center;
+}
+
+button {
+  font-family: 'Montserrat';
+  font-size: 10pt;
+  color: hsl(180, 1%, 50%);
+}
+
+input {
+  font-family: 'Montserrat';
+  font-size: 10pt;
+  color: hsl(180, 1%, 50%);
+}
+
+/* Image Manipulation */
+.image-display {
+  display: block;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+.image-uploader {
+  text-align: center;
+  vertical-align: middle;
 }

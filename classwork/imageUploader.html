@@ -13,6 +13,8 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
 
+    <script async src="https://www2.cs.duke.edu/courses/compsci290/spring21/resources/code/js/SimpleImage.js"></script>
+    <script defer src="../main.js"></script>
     <link rel="stylesheet" href="../style.css">
   </head>
 
@@ -27,8 +29,30 @@
         <h1>Image Uploader</h1>
       </div>
       <br>
-      <div class="text-section">
+      <div class="text-section image-uploader">
+        <div class="center">
+          Image: <input type="file" id="fileInput" multiple="false" accept="image/*" onchange="loadImage()" />
+        </div>
+        <div class="center">
+          Resize: 
+          <button id="large" onclick="resize()">Fit to Frame</button>
+        </div>
 
+        <canvas id="image-display">
+          <!-- Area used to display uploaded image to be filtered -->
+        </canvas>
+        
+        <div class="center">
+          <button id="create" onclick="scan()">Begin Scan</button>
+        </div>
+        <div class="center">
+          Adjust Horizontal Position: <input type="range" id="horizontal" min="0" max="255" value="128" oninput="scan()"/><br>
+          Adjust Vertical Position: <input type="range" id="vertical" min="0" max="255" value="128" oninput="scan()"/><br>
+          Adjust Scan Width: <input type="range" id="width" min="0" max="50" value="10" oninput="scan()"/><br>
+          Adjust Scan Colors: <input type="range" id="color" min="0" max="255" value="128" oninput="scan()"/><br>
+          <button id="clear" onclick="clearFilter()">Clear Filter</button>
+          <button id="clear" onclick="clearCanvas()">Clear Image</button>
+        </div>
       </div>
     </div>
   </body>

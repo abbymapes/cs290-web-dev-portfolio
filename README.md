@@ -11,7 +11,7 @@ Start Date: January 24, 2021
 
 Finish Date: 
 
-Hours Spent: ~ 8 hours (so far)
+Hours Spent: ~ 12 hours (so far)
 
 
 ### Collaboration
@@ -25,14 +25,12 @@ Resources used:
 Asset attributions:
 - All images included in my portfolio were taken and approved by me
 
-
 ### Assignment Notes
 
 Known Bugs:
 
 Extra credit:
-- Navigation Bar
 - CSS styling
-
+- Complex image filter based on multiple inputs
 
 ### Impressions
