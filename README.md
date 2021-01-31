@@ -9,14 +9,15 @@ Abby Mapes - acm103
 
 Start Date: January 24, 2021
 
-Finish Date: 
+Finish Date: January 31, 2021
 
-Hours Spent: ~ 12 hours (so far)
+Hours Spent: ~ 14 hours
 
 
 ### Collaboration
 
 People consulted:
+- N/A
 
 Resources used:
 - Image Grid (https://www.w3schools.com/howto/howto_js_image_grid.asp)
@@ -31,6 +32,7 @@ Known Bugs:
 
 Extra credit:
 - CSS styling
-- Complex image filter based on multiple inputs
+- Complex image filter based on multiple inputs and math calculations
 
 ### Impressions
+This assignment was a good introduction to web development and was helpful in setting up a basis of how we will do projects this semester.

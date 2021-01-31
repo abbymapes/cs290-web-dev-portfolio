@@ -4,18 +4,17 @@
  * @author Abby Mapes
  */
 
-
 let canvas = document.getElementById('image-display');
 let contentSection = document.getElementsByClassName('text-section')[0];
 let canvasWidth = contentSection.clientWidth - 100;
 let originalImage = null;
-let filteredImage =null;
-let scanPercent = .25;
+let filteredImage = null;
+let scanPercent = 0.25;
 
 /*
  * Loads and displays image from user input
  */
-function loadImage () {
+function loadImage() {
     originalImage = new SimpleImage(document.getElementById('fileInput'));
     originalImage.drawTo(canvas);
 }
@@ -23,20 +22,20 @@ function loadImage () {
 /*
  * Resizes image currently displayed to fit the width of the screen
  */
-function resize () {
+function resize() {
     canvasWidth = contentSection.clientWidth - 100;
     if (filteredImage != null) {
-        let originalWidth = filteredImage.getWidth();
-        let originalHeight = filteredImage.getHeight();
-        let ratioFactor = canvasWidth / originalWidth;
+        var originalWidth = filteredImage.getWidth();
+        var originalHeight = filteredImage.getHeight();
+        var ratioFactor = canvasWidth / originalWidth;
         filteredImage.setSize(canvasWidth, originalHeight * ratioFactor);
         // Sets size of original image too, in case they clear the filter to see original
         originalImage.setSize(canvasWidth, originalHeight * ratioFactor);
         filteredImage.drawTo(canvas);
     } else if (originalImage != null) {
-        let originalWidth = originalImage.getWidth();
-        let originalHeight = originalImage.getHeight();
-        let ratioFactor = canvasWidth / originalWidth;
+        var originalWidth = originalImage.getWidth();
+        var originalHeight = originalImage.getHeight();
+        var ratioFactor = canvasWidth / originalWidth;
         originalImage.setSize(canvasWidth, originalHeight * ratioFactor);
         originalImage.drawTo(canvas);
     } 
@@ -45,11 +44,11 @@ function resize () {
 /*
  * Creates a new filtered scanning image and draws it to canvas 
  */
-function scan () {
+function scan() {
     if (originalImage != null) {
         filteredImage = new SimpleImage(originalImage.getWidth(), originalImage.getHeight());
-        let horizontal = document.getElementById('horizontal').value;
-        let vertical = document.getElementById('vertical').value;
+        var horizontal = document.getElementById('horizontal').value;
+        var vertical = document.getElementById('vertical').value;
         filterImage(originalImage, filteredImage, horizontal, vertical);
         filteredImage.drawTo(canvas);
     }
@@ -59,21 +58,19 @@ function scan () {
  * Generates scan filter based on position of the slider to produce a scanning effect
  * with some degrees of randomness
  */
-function filterImage (source, result, horizontal, vertical) {
+function filterImage(source, result, horizontal, vertical) {
     // Use to project slider position onto scanner position for picturee
-    let horizontalRatio = horizontal / 255;
-    let verticalRatio = vertical / 255;
+    var horizontalRatio = horizontal / 255;
+    var verticalRatio = (255 - vertical) / 255;
     // Use to generate element of randomness as slider changes
-    let random = Math.random() * 10;
+    var random = Math.random() * 10;
     // Combine randomness with color slider to generate different combinations
-    let colorChanger = document.getElementById('color').value;
-    
+    var colorChanger = document.getElementById('color').value;
     scanPercent = document.getElementById('width').value / 100;
-    let scanWidth = result.getWidth() * scanPercent;
-    console.log(scanWidth);
+    var scanWidth = result.getWidth() * scanPercent;
 
     result.forEachPixel(pixel => {
-        let srcPixel = source.getPixel(pixel.getX(), pixel.getY());
+        var srcPixel = source.getPixel(pixel.getX(), pixel.getY());
         if (Math.abs(pixel.getX() - Math.round(result.getWidth() * horizontalRatio)) <= scanWidth && 
         Math.abs(pixel.getY() - Math.round(result.getHeight() * verticalRatio)) <= scanWidth) {
             pixel.setRed(adjustValue(srcPixel.getRed(), horizontal));
@@ -138,7 +135,7 @@ function adjustValue(value, threshold) {
 /*
  * Clears filter from image and displays original image
  */
-function clearFilter () {
+function clearFilter() {
     if (originalImage != null) {
         filteredImage = null;
         originalImage.drawTo(canvas);
@@ -148,7 +145,7 @@ function clearFilter () {
 /*
  * Erases image from canvas by drawing a reectange over it
  */
-function clearCanvas () {
+function clearCanvas() {
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
     originalImage = null;
     filteredImage = null;

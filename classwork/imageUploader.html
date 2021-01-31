@@ -2,11 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <!-- always put your name in your work -->
     <meta name="author" content="Abby Mapes">
-    <!-- always label your name with a title -->
     <title>CompSci 290, Spring 2021 : Image Uploader</title>
-    <!-- scale page to fit entire screen, so it properly fills non-desktop devices -->    
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- DEV-only for easier refreshing: stop the web browser from ever caching this page or its images -->
     <meta http-equiv="Cache-Control" content="no-cache" />
@@ -31,7 +28,7 @@
       <br>
       <div class="text-section image-uploader">
         <div class="center">
-          Image: <input type="file" id="fileInput" multiple="false" accept="image/*" onchange="loadImage()" />
+          Image: <input type="file" id="fileInput" accept="image/*" onchange="loadImage()" />
         </div>
         <div class="center">
           Resize: 
@@ -50,8 +47,8 @@
           Adjust Vertical Position: <input type="range" id="vertical" min="0" max="255" value="128" oninput="scan()"/><br>
           Adjust Scan Width: <input type="range" id="width" min="0" max="50" value="10" oninput="scan()"/><br>
           Adjust Scan Colors: <input type="range" id="color" min="0" max="255" value="128" oninput="scan()"/><br>
-          <button id="clear" onclick="clearFilter()">Clear Filter</button>
-          <button id="clear" onclick="clearCanvas()">Clear Image</button>
+          <button id="clearFilter" onclick="clearFilter()">Clear Filter</button>
+          <button id="clearCanvas" onclick="clearCanvas()">Clear Image</button>
         </div>
       </div>
     </div>
