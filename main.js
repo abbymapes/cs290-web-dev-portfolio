@@ -14,9 +14,12 @@ let scanPercent = 0.25;
 /*
  * Loads and displays image from user input
  */
-function loadImage() {
-    originalImage = new SimpleImage(document.getElementById('fileInput'));
+function loadImage () {
+    let input = document.getElementById('fileInput');
+    originalImage = new SimpleImage(input);
     originalImage.drawTo(canvas);
+    // forget chosen file so it can be reloaded
+    input.value = null;
 }
 
 /*

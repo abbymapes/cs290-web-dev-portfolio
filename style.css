@@ -12,7 +12,7 @@
 .nav-bar a {
   float: left;
   display: block;
-  color: hsl(180, 1%, 40%);
+  color: hsl(180, 1%, 30%);
   text-align: center;
   padding: 15px 15px;
   text-decoration: none;
@@ -25,11 +25,11 @@
   
 .nav-bar a.home {
   float: left;
-  color:hsl(215, 100%, 65%);
+  color:hsl(215, 100%, 60%);
 }
   
 .nav-bar a.home:hover {
-  color:hsl(215, 100%, 75%);
+  color:hsl(215, 100%, 70%);
 }
 
 /* Interest Page*/
@@ -71,7 +71,7 @@ body {
   margin-right: auto;
   font-family: 'Montserrat', Verdana;
   font-size: 14pt;
-  color: hsl(180, 1%, 50%);
+  color: hsl(0, 0%, 30%);
   padding-left: 50px;
   padding-right: 50px;
   padding-bottom: 50px;
@@ -90,12 +90,12 @@ body {
 
 a {
   text-decoration: none;
-  color: hsl(215, 100%, 65%);
+  color: hsl(215, 100%, 70%);
 }
 
 a:hover {
   text-decoration: none;
-  color: hsl(215, 100%, 80%);
+  color: hsl(215, 100%, 70%);
 }
 
 .panorama {
@@ -105,12 +105,12 @@ a:hover {
 
 h1 {
   font-size: 30pt;
-  color: hsl(215, 100%, 65%);
+  color: hsl(215, 100%, 60%);
 }
 
 h2 {
   font-size: 20pt;
-  color: hsl(215, 100%, 65%);
+  color: hsl(215, 100%, 60%);
 }
 
 p {
@@ -122,12 +122,12 @@ p {
   vertical-align: middle;
 }
 
-.footer {
+footer {
   text-align: center;
   padding: 15px;
 }
 
-.header {
+header {
   background-color: hsl(0, 0%, 100%);
   outline-style: solid;
   outline-color: hsl(0, 0%, 100%);
@@ -139,13 +139,13 @@ p {
 button {
   font-family: 'Montserrat', Verdana;
   font-size: 10pt;
-  color: hsl(180, 1%, 50%);
+  color: hsl(0, 0%, 30%);
 }
 
 input {
   font-family: 'Montserrat', Verdana;
   font-size: 10pt;
-  color: hsl(180, 1%, 50%);
+  color: hsl(0, 0%, 30%);
 }
 
 /* Image Manipulation */
