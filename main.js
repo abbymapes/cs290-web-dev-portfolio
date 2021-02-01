@@ -25,12 +25,12 @@ function loadImage() {
 function resize() {
     canvasWidth = contentSection.clientWidth - 100;
     if (filteredImage != null) {
-        var originalWidth = filteredImage.getWidth();
-        var originalHeight = filteredImage.getHeight();
-        var ratioFactor = canvasWidth / originalWidth;
-        filteredImage.setSize(canvasWidth, originalHeight * ratioFactor);
+        var filteredWidth = filteredImage.getWidth();
+        var filteredHeight = filteredImage.getHeight();
+        var filteredRatio = canvasWidth / filteredWidth;
+        filteredImage.setSize(canvasWidth, filteredHeight * filteredRatio);
         // Sets size of original image too, in case they clear the filter to see original
-        originalImage.setSize(canvasWidth, originalHeight * ratioFactor);
+        originalImage.setSize(canvasWidth, filteredHeight * filteredRatio);
         filteredImage.drawTo(canvas);
     } else if (originalImage != null) {
         var originalWidth = originalImage.getWidth();
