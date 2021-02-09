@@ -1,0 +1,40 @@
+/*
+ * Styling for my word game
+ *
+ * @author Abby Mapes
+ */
+
+[class^="letter-"] { 
+    float: left; 
+}
+
+.letter-count { 
+    float: right; 
+}
+
+* {
+    box-sizing: border-box;
+  }
+
+.column-left {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+.column-right {
+    float: right;
+    width: 50%;
+    padding: 10px;
+  }
+  
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#bad-input {
+    color: red;
+    float: left; 
+}
