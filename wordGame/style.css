@@ -1,20 +1,34 @@
 /*
- * Styling for my word game
+ * Styling for Clever Hangman page
  *
  * @author Abby Mapes
  */
 
-[class^="letter-"] { 
+[id^="letter-"] { 
     float: left; 
 }
 
-.letter-count { 
-    float: right; 
+
+.not-guessed { 
+    display: inline-block;
+    color: red; 
+}
+
+.template { 
+    text-align: center; 
+}
+
+.select-options {
+    text-align: center; 
+}
+
+.debug-winning {
+    font: bold;
 }
 
 * {
     box-sizing: border-box;
-  }
+}
 
 .column-left {
   float: left;

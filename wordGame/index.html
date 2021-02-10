@@ -5,10 +5,6 @@
     <meta name="author" content="Abby Mapes">
     <title>CompSci 290, Spring 2021 : Word Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- DEV-only for easier refreshing: stop the web browser from ever caching this page or its images -->
-    <meta http-equiv="Cache-Control" content="no-cache" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
 
     <script defer src="./wordList.js"></script>
     <script defer src="./alphabet.js"></script>
@@ -25,18 +21,33 @@
         <a href="../projectList.html">Course Work</a>
       </div>
       <header>
-        <h1>Jotto</h1>
+        <h1>Clever Hangman</h1>
       </header>
       <br>
       <div id="game-section" class="text-section">
-        <label for="name">Name: </label><input type="text" id="name" name="name"><br>
-        <label for="difficulty">Choose a difficulty:</label>
-          <select name="difficulty" id="difficulty">
-            <option value="easy">Easy</option>
-            <option value="hard">Hard</option>
-          </select>
+        <div id="instructions">
+            Welcome to Clever Hangman. It's like Hangman, but when you guess a letter, I will change the secret word I'm thinking of 
+            to make the game harder for you. Want to play? Write your name below, and select a difficulty and a game mode. 
+            Easy will give you 20 guesses to guess my word and hard will give you 15 guesses. The debugging mode allows 
+            you to see why my algorithm is "clever," by providing information about the choices I make for each guess.
+        </div>
         <br>
-        <button onclick = "startGame()">Start Game</button>
+        <div class="select-options">
+            <label for="name">Name: </label><input type="text" id="name" name="name"><br>
+            <label for="difficulty">Choose a difficulty:</label>
+            <select name="difficulty" id="difficulty">
+                <option value="easy">Easy</option>
+                <option value="hard">Hard</option>
+            </select>
+            <br>
+            <label for="debug">Would you like to debug?</label>
+            <select name="debug" id="debug">
+                <option value="normal">Normal</option>
+                <option value="debug">Debug</option>
+            </select>
+            <br>
+            <button onclick = "startGame()">Start Game</button>
+        </div>
       </div>
     </div>
   </body>

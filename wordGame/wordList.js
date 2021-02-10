@@ -1,5 +1,10 @@
-const wordsString = `
-which
+/*
+ * Wordlist for clever hangman game
+ *
+ * @author Abby Mapes
+ */
+
+const wordsString = `which
 there
 their
 about
