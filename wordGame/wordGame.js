@@ -92,7 +92,7 @@ function startGame() {
  * and clears input box afterwards
  */
 function processUserGuess() {
-    var guessedLetter = guessInput.value;
+    var guessedLetter = guessInput.value.trim();
     if (guessedLetter.length != 1) {
         errorMessage.innerText = "Bad input: Guesses must be a single letter in the alphabet.";
     } else if (!alphabet.includes(guessedLetter)) {
@@ -153,7 +153,7 @@ function processGuessedLetter(guess) {
         
         var finalDisplay = "";
         console.log(template);
-        Array.from(chosenWord).forEach(letter => {
+        [...chosenWord].forEach(letter => {
             if (!template.includes(letter)) {
                 finalDisplay += "<div class = 'not-guessed'>" + letter.toUpperCase() + "</div> &ensp; ";
             } else {
@@ -183,7 +183,7 @@ function getNewWordList(letter) {
     var optimalTemp;
     var newWords;
     var maxLength = 0;
-    for (var temp in dict) {
+    Object.keys(dict).forEach(temp => {
         if (dict[temp].length > maxLength) {
             maxLength = dict[temp].length;
             optimalTemp = temp;
@@ -191,14 +191,16 @@ function getNewWordList(letter) {
         } else if (dict[temp].length == maxLength) {
             var tempBlankCount = 0;
             var optTempBlankCount = 0;
-            for (var i = 0; i < 5; ++i) {
-                if (temp.charAt(i) == "_") {
+            [...temp].forEach(letter => {
+                if (letter == "_") {
                     tempBlankCount += 1;
                 }
-                if (optimalTemp.charAt(i) == "_") {
+            });
+            [...optimalTemp].forEach(letter => {
+                if (letter == "_") {
                     optTempBlankCount += 1;
                 }
-            }
+            });
             if (tempBlankCount > optTempBlankCount) {
                 maxLength = dict[temp].length;
                 optimalTemp = temp;
@@ -210,7 +212,7 @@ function getNewWordList(letter) {
             dictionaryChoice.innerHTML = temp + ": &ensp;" + dict[temp].length + " word(s)";
             debugOutput.insertBefore(dictionaryChoice, debugOutput.childNodes[0]);
         }
-    }
+    });
     template = optimalTemp;
     possibleWords = newWords;
 
@@ -231,11 +233,13 @@ function getNewWordList(letter) {
  */
 function createTemplate(word, letter, currentTemplate) {
     var templateArray = Array.from(currentTemplate);
-    for (var i = 0; i < word.length; ++i) {
-        if (word.charAt(i) == letter) {
+    var i = 0;
+    [...word].forEach(c => {
+        if (c == letter) {
             templateArray[i] = letter;
         }
-    }
+        i += 1;
+    });
     return templateArray.join("");
 }
 
@@ -329,7 +333,7 @@ function createIncorrectLetters() {
 
 /*
  * Returns the letterboard section that displays the alphabet
- * of letters that are colored greeen if they have been correctly
+ * of letters that are colored green if they have been correctly
  * guessed, reed if they have been incorrectly guessed, or
  * black if they have yet to be guessed
  */
@@ -340,14 +344,13 @@ function createLetterBoard() {
     var letterboardHeader = document.createElement("h3");
     letterboardHeader.innerText = "Letterboard:";
     letterBoardLetters.appendChild(letterboardHeader);
-
-    for (var i = 0; i < alphabet.length; i++) {
+    alphabet.forEach(c => {
         var letterElement = document.createElement("div");
-        var letter = alphabet[i].trim();
+        var letter = c.trim();
         letterElement.id = "letter-" + letter;
         letterElement.innerHTML = letter.toUpperCase() + "&ensp;";
         letterBoardLetters.appendChild(letterElement);
-    }
+    });
     var lineBreak = document.createElement("br");
     letterBoardLetters.appendChild(lineBreak);
     return letterBoardLetters;
