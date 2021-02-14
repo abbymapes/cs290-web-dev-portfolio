@@ -1,0 +1,52 @@
+/*
+ * Styling for map plotting page
+ *
+ * @author Abby Mapes
+ */
+
+#mapid { 
+    height: 750px; 
+}
+
+#popInput {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+table {
+    padding-left: 50px;
+}
+
+.legend-text {
+    display: inline-block;
+    font-size: 12pt;
+}
+
+.legend-icon-1 {
+    width: 20px;
+    height: 36px;
+}
+.legend-icon-2 {
+    width: 25px;
+    height: 41px;
+}
+.legend-icon-3 {
+    width: 30px;
+    height: 46px;
+}
+.legend-icon-4 {
+    width: 35px;
+    height: 51px;
+}
+.legend-icon-5 {
+    width: 40px;
+    height: 56px;
+}
+
+.numbers {
+    display: inline-block;
+    font-weight: bold;
+}

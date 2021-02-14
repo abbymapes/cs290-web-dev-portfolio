@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Abby Mapes">
+    <title>CompSci 290, Spring 2021 : Plotting Data</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script defer src="./icon.js"></script>
+    <script defer src="./plottingData.js"></script>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./style.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+  </head>
+
+  <body>
+    <div id="content">
+      <div class="nav-bar">
+        <a href="../index.html" class="home">Home</a>
+        <a href="../interests/index.html">Interests</a>
+        <a href="../projectList.html">Course Projects</a>
+      </div>
+      <header>
+        <h1>Plotting Data</h1>
+      </header>
+      <br>
+      <div class="text-section">
+        <p>
+            The map below shows each country's megatonnes of carbon dioxide emissions from consumption of energy per 100 people. 
+            On the map, countries are classified by megatonnes of their carbon dioxide emissions, according to the key below. 
+            The color of the icons, along with the size, depict the amount carbon dioxide that each country emits per 100 people. 
+            To see each country's exact number of carbon dioxide emissions from consumption of energy and their population size, 
+            hover over any of the pins below. By default, all countries that have carbon dioxide emission numbers in our dataset 
+            are displayed on the map below. In order to filter countries by population size, select the population sizes below.
+            <br>
+            <br>
+            From these pins, we can attempt to visualize how much each country contributes to our earth's carbon dioxide 
+            emissions in terms of their population. Some may argue that bigger countries like the U.S. have more carbon 
+            dioxide emissions because they have a larger population size. However, we can see that this isn't neccessarily 
+            the case. By standardizing carbon dioxide emissions across population sizes, we can begin to understand each 
+            country's impact and contribution to our current enviornmental crisis compared to others. 
+        </p>
+
+        <h2>Key:</h2>
+        <table id="legend">
+
+        </table>
+        <br>
+        <h2>Filter Countries by Population Size:</h2>
+        <div id="popInput">
+        </div>
+        <br>
+        <div id="mapid"></div>
+
+        <h2>Countries:</h2>
+        <table id="country-list">
+
+        </table>
+      </div>
+      <footer>
+        Powered by <a href="https://leafletjs.com/">Leaflet</a>, <a href="https://www.cia.gov/the-world-factbook/">CIA World Factbook</a>, <a href="https://github.com/iancoleman/cia_world_factbook_api">Ian Coleman</a> for converting the CIA World Factbook to JSON format and the <a href="https://www2.cs.duke.edu/courses/spring21/compsci290/resources/data/countries/">Duke-hosted copy</a> of the Factbook.
+      </footer>
+    
+    </div>
+  </body>
+</html>
