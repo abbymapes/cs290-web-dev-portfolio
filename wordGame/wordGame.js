@@ -5,24 +5,24 @@
  */
 
 let gameSection = document.getElementById('game-section');
-var guessInput;
-var guessList;
-var errorMessage;
-var currentTemplate;
-var correctLetters;
-var incorrectLetters;
-var guessesLabel;
-var debugOutput;
+let guessInput;
+let guessList;
+let errorMessage;
+let currentTemplate;
+let correctLetters;
+let incorrectLetters;
+let guessesLabel;
+let debugOutput;
 
-var alphabet = alphabetString.split('\n');
-var possibleWords = wordsString.split('\n');
-var template = "_____";
+let alphabet = alphabetString.split('\n');
+let possibleWords = wordsString.split('\n');
+let template = "_____";
 
-var guesses = [];
-var userName;
-var difficulty;
-var debugging;
-var guessCount = 20;
+let guesses = [];
+let userName;
+let difficulty;
+let debugging;
+let guessCount = 20;
 
 /*
  * Builds and displays the game when the user clicks Start Game
@@ -37,17 +37,17 @@ function startGame() {
         guessCount = 15;
     }
     
-    var header = document.createElement("h2");
+    let header = document.createElement("h2");
     header.innerText = "Guess the secret word " + userName;
 
-    var templateDiv = document.createElement("div");
+    let templateDiv = document.createElement("div");
     templateDiv.className = "template";
-    var template = document.createElement("h1");
+    let template = document.createElement("h1");
     template.id = "secret-word-template";
     template.innerHTML = "_ &ensp; _ &ensp; _ &ensp; _ &ensp; _ &ensp; ";
     templateDiv.appendChild(template);
 
-    var instructions = document.createElement("p");
+    let instructions = document.createElement("p");
     instructions.innerText = `
         I am thinking of a secret word. My word is 5 letters long. In the input box below, type a single letter from the letterboard that you think is in my secret word. You have ` + guessCount + 
         ` guesses. When you correctly guess a letter, it will appear in the template below. Good luck...`;
@@ -55,22 +55,22 @@ function startGame() {
     gameSection.appendChild(instructions);
     gameSection.appendChild(templateDiv);
 
-    var row = document.createElement("div");
+    let row = document.createElement("div");
     row.className = "row";
 
-    var rigthSide = document.createElement("div");
+    let rigthSide = document.createElement("div");
     rigthSide.className = "column-right";
-    var letterBoard = createLetterBoard();
+    let letterBoard = createLetterBoard();
     rigthSide.appendChild(letterBoard);
-    var foundLetters = createFoundLetters();
+    let foundLetters = createFoundLetters();
     rigthSide.appendChild(foundLetters);
-    var wrongLetters = createIncorrectLetters();
+    let wrongLetters = createIncorrectLetters();
     rigthSide.appendChild(wrongLetters);
     row.appendChild(rigthSide);
 
-    var leftSide = document.createElement("div");
+    let leftSide = document.createElement("div");
     leftSide.className = "column-left";
-    var guessedWords = createGuessWordSection();
+    let guessedWords = createGuessWordSection();
     leftSide.appendChild(guessedWords);
     row.appendChild(leftSide);
 
@@ -92,7 +92,7 @@ function startGame() {
  * and clears input box afterwards
  */
 function processUserGuess() {
-    var guessedLetter = guessInput.value.trim();
+    let guessedLetter = guessInput.value.trim();
     if (guessedLetter.length != 1) {
         errorMessage.innerText = "Bad input: Guesses must be a single letter in the alphabet.";
     } else if (!alphabet.includes(guessedLetter)) {
@@ -114,8 +114,8 @@ function processUserGuess() {
 function processGuessedLetter(guess) {
     getNewWordList(guess);
 
-    var letterInAlphabet = document.getElementById("letter-" + guess);
-    var letterElement = document.createElement("div");
+    let letterInAlphabet = document.getElementById("letter-" + guess);
+    let letterElement = document.createElement("div");
     letterElement.className = "letter";
     guesses.push(guess);
 
@@ -129,8 +129,8 @@ function processGuessedLetter(guess) {
         letterInAlphabet.style.color = "red";
         incorrectLetters.appendChild(letterElement);
     }
-    var newTemplate = Array.from(template);
-    var displayTemplate = "";
+    let newTemplate = Array.from(template);
+    let displayTemplate = "";
     newTemplate.forEach(letter => {
         displayTemplate += letter.toUpperCase() + " &ensp; ";
     });
@@ -138,7 +138,7 @@ function processGuessedLetter(guess) {
     guessCount -= 1;
     guessesLabel.innerText = "Guesses left: " + guessCount;
 	
-    var randIndex = Math.floor(Math.random() * possibleWords.length);
+    let randIndex = Math.floor(Math.random() * possibleWords.length);
     if (!template.includes("_")) {
         guessInput.style.display = "none";
         document.getElementById("submit").style.display = "none";
@@ -149,9 +149,9 @@ function processGuessedLetter(guess) {
     } else if (guessCount == 0) {
         guessInput.style.display = "none";
         document.getElementById("submit").style.display = "none";
-        var chosenWord = possibleWords[randIndex];
+        let chosenWord = possibleWords[randIndex];
         
-        var finalDisplay = "";
+        let finalDisplay = "";
         console.log(template);
         [...chosenWord].forEach(letter => {
             if (!template.includes(letter)) {
@@ -171,26 +171,26 @@ function processGuessedLetter(guess) {
  * each letter guess to be optimal
  */
 function getNewWordList(letter) {
-    var dict = {};
+    let dict = {};
     possibleWords.forEach(word => {
-        var templateForWord = createTemplate(word, letter, template);
+        let templateForWord = createTemplate(word, letter, template);
         if (templateForWord in dict) {
             dict[templateForWord].push(word);
         } else {
             dict[templateForWord] = [word];
         }
     });
-    var optimalTemp;
-    var newWords;
-    var maxLength = 0;
+    let optimalTemp;
+    let newWords;
+    let maxLength = 0;
     Object.keys(dict).forEach(temp => {
         if (dict[temp].length > maxLength) {
             maxLength = dict[temp].length;
             optimalTemp = temp;
             newWords = dict[temp];
         } else if (dict[temp].length == maxLength) {
-            var tempBlankCount = 0;
-            var optTempBlankCount = 0;
+            let tempBlankCount = 0;
+            let optTempBlankCount = 0;
             [...temp].forEach(letter => {
                 if (letter == "_") {
                     tempBlankCount += 1;
@@ -208,7 +208,7 @@ function getNewWordList(letter) {
             }
         }
         if (debugging) {
-            var dictionaryChoice = document.createElement("div");
+            let dictionaryChoice = document.createElement("div");
             dictionaryChoice.innerHTML = temp + ": &ensp;" + dict[temp].length + " word(s)";
             debugOutput.insertBefore(dictionaryChoice, debugOutput.childNodes[0]);
         }
@@ -217,7 +217,7 @@ function getNewWordList(letter) {
     possibleWords = newWords;
 
     if (debugging) {
-        var winningChoice = document.createElement("div");
+        let winningChoice = document.createElement("div");
         winningChoice.className = "debug-winning";
         winningChoice.style.color = "green";
         winningChoice.innerHTML = "We chose: " + template + " because it has the most words(s): " + possibleWords.length + " words";
@@ -232,8 +232,8 @@ function getNewWordList(letter) {
  * template and the guessed letter
  */
 function createTemplate(word, letter, currentTemplate) {
-    var templateArray = Array.from(currentTemplate);
-    var i = 0;
+    let templateArray = Array.from(currentTemplate);
+    let i = 0;
     [...word].forEach(c => {
         if (c == letter) {
             templateArray[i] = letter;
@@ -248,17 +248,17 @@ function createTemplate(word, letter, currentTemplate) {
  * which includes the input box, debugging area, and submit button
  */
 function createGuessWordSection() {
-    var guessesSection = document.createElement("div");
+    let guessesSection = document.createElement("div");
     guessesLabel = document.createElement("h3");
     guessesLabel.id = "guess-count";
     guessesLabel.innerText = "Guesses left: " + guessCount;
 
-    var guessesInput = document.createElement("input");
+    let guessesInput = document.createElement("input");
     guessesInput.type = "guess";
     guessesInput.id = "guess";
     guessesInput.name = "guess";
 
-    var submitButton = document.createElement("input");
+    let submitButton = document.createElement("input");
     submitButton.id = "submit";
     submitButton.type = "submit";
     submitButton.value = "submit";
@@ -271,9 +271,9 @@ function createGuessWordSection() {
         }
     });
 
-    var errorMessage = document.createElement("div");
+    let errorMessage = document.createElement("div");
     errorMessage.id = "bad-input";
-    var lnBreak = document.createElement("br");
+    let lnBreak = document.createElement("br");
 
     guessesSection.appendChild(guessesLabel);
     guessesSection.appendChild(errorMessage);
@@ -282,9 +282,9 @@ function createGuessWordSection() {
     guessesSection.appendChild(submitButton);
 
     if (debugging) {
-        var debugSection = document.createElement("div");
+        let debugSection = document.createElement("div");
         debugSection.id = "debug-output";
-        var lineBreak = document.createElement("br");
+        let lineBreak = document.createElement("br");
         debugSection.appendChild(lineBreak);
         guessesSection.appendChild(debugSection);
     }
@@ -296,17 +296,17 @@ function createGuessWordSection() {
  * letters that the user has correctly guessed
  */
 function createFoundLetters() {
-    var foundLetters = document.createElement("div");
+    let foundLetters = document.createElement("div");
     foundLetters.className = "foundLetters";
     foundLetters.id = "correct-letters";
-    var header = document.createElement("h3");
+    let header = document.createElement("h3");
     header.innerText = "Correct Letters:";
     foundLetters.appendChild(header);
 
-    var foundLetterList = document.createElement("div");
+    let foundLetterList = document.createElement("div");
     foundLetterList.id = "found-letters";
     foundLetterList.className = "foundLetters";
-    var lineBreak = document.createElement("br");
+    let lineBreak = document.createElement("br");
     foundLetterList.appendChild(lineBreak);
     return foundLetters;
 }
@@ -316,17 +316,17 @@ function createFoundLetters() {
  * letters that the user has incorrectly guessed
  */
 function createIncorrectLetters() {
-    var wrongLetters = document.createElement("div");
+    let wrongLetters = document.createElement("div");
     wrongLetters.className = "incorrect-Letters";
     wrongLetters.id = "incorrect-letters";
-    var header = document.createElement("h3");
+    let header = document.createElement("h3");
     header.innerText = "Incorrect Letters:";
     wrongLetters.appendChild(header);
 
-    var incorrectLetterList = document.createElement("div");
+    let incorrectLetterList = document.createElement("div");
     incorrectLetterList.id = "incorrect-letters";
     incorrectLetterList.className = "incorrectLetters";
-    var lineBreak = document.createElement("br");
+    let lineBreak = document.createElement("br");
     incorrectLetterList.appendChild(lineBreak);
     return wrongLetters;
 }
@@ -338,20 +338,20 @@ function createIncorrectLetters() {
  * black if they have yet to be guessed
  */
 function createLetterBoard() {
-    var letterBoardLetters = document.createElement("div");
+    let letterBoardLetters = document.createElement("div");
     letterBoardLetters.className = "letterboard";
 
-    var letterboardHeader = document.createElement("h3");
+    let letterboardHeader = document.createElement("h3");
     letterboardHeader.innerText = "Letterboard:";
     letterBoardLetters.appendChild(letterboardHeader);
     alphabet.forEach(c => {
-        var letterElement = document.createElement("div");
-        var letter = c.trim();
+        let letterElement = document.createElement("div");
+        let letter = c.trim();
         letterElement.id = "letter-" + letter;
         letterElement.innerHTML = letter.toUpperCase() + "&ensp;";
         letterBoardLetters.appendChild(letterElement);
     });
-    var lineBreak = document.createElement("br");
+    let lineBreak = document.createElement("br");
     letterBoardLetters.appendChild(lineBreak);
     return letterBoardLetters;
 }

@@ -4,8 +4,8 @@
  * @author Abby Mapes
  */
 
-var mymap = L.map('mapid').setView([0, 0], 3);
-var jsonURL = "https://compsci290_2021spring.dukecs.io/resources/data/countries/factbook.json";
+let mymap = L.map('mapid').setView([0, 0], 3);
+let jsonURL = "https://compsci290_2021spring.dukecs.io/resources/data/countries/factbook.json";
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -16,36 +16,36 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'pk.eyJ1IjoiYWNtMTAzIiwiYSI6ImNrbDAxNXg5eDBtOWQydXQ0cmJvZ3VvMWgifQ.0jw976vCdyyms3YAd_l0IA'
 }).addTo(mymap);
 
-var layerGroup1 = L.layerGroup().addTo(mymap);
-var layerGroup2 = L.layerGroup().addTo(mymap);
-var layerGroup3 = L.layerGroup().addTo(mymap);
-var layerGroup4 = L.layerGroup().addTo(mymap);
-var layerGroup5 = L.layerGroup().addTo(mymap);
+let layerGroup1 = L.layerGroup().addTo(mymap);
+let layerGroup2 = L.layerGroup().addTo(mymap);
+let layerGroup3 = L.layerGroup().addTo(mymap);
+let layerGroup4 = L.layerGroup().addTo(mymap);
+let layerGroup5 = L.layerGroup().addTo(mymap);
 
-var layerList = [layerGroup1, layerGroup2, layerGroup3, layerGroup4, layerGroup5];
+let layerList = [layerGroup1, layerGroup2, layerGroup3, layerGroup4, layerGroup5];
 
-var carbonDict = {};
-var latitudeDict = {};
-var longitudeDict = {};
-var countryClassification = {};
-var populationDict = {};
-var meanCarbonRate = 0;
-var carbonRatePerLevel = 0;
-var meanPopulation = 0;
+let carbonDict = {};
+let latitudeDict = {};
+let longitudeDict = {};
+let countryClassification = {};
+let populationDict = {};
+let meanCarbonRate = 0;
+let carbonRatePerLevel = 0;
+let meanPopulation = 0;
 
-var populationPerLevel = 0;
-var populationOptions = [];
-var displayedInitialPins = false;
+let populationPerLevel = 0;
+let populationOptions = [];
+let displayedInitialPins = false;
 
 function displayPins(jsonData) {
     if (!displayedInitialPins) {
         initializeMaps(jsonData);
         createKey();
         Object.entries(latitudeDict).forEach(function([country, latitude]) {
-            var longitude = longitudeDict[country];
-            var carbonLevel = carbonDict[country];
-            var url = "";
-            var size = [];
+            let longitude = longitudeDict[country];
+            let carbonLevel = carbonDict[country];
+            let url = "";
+            let size = [];
 
             if (carbonLevel <= carbonRatePerLevel) {
                 url = icons.great;
@@ -70,7 +70,7 @@ function displayPins(jsonData) {
                 countryClassification[url].push(country);
             }
         
-            var icon = new L.Icon({
+            let icon = new L.Icon({
                 iconUrl: url,
                 shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
                 iconSize: size,
@@ -79,9 +79,9 @@ function displayPins(jsonData) {
                 shadowSize: [41, 41]
             });
 
-            var countryPopulation = Math.round(populationDict[country] * 100) / 100;
-            var layerGroup = layerGroup5;
-            var carbonEmissions = Math.round(carbonLevel * 100) / 100;
+            let countryPopulation = Math.round(populationDict[country] * 100) / 100;
+            let layerGroup = layerGroup5;
+            let carbonEmissions = Math.round(carbonLevel * 100) / 100;
 
             if (countryPopulation < populationOptions[0]) {
                 layerGroup = layerGroup1;
@@ -93,7 +93,7 @@ function displayPins(jsonData) {
                 layerGroup = layerGroup4;
             }
             
-            var marker = L.marker([latitude, longitude], {icon: icon}).addTo(layerGroup);
+            let marker = L.marker([latitude, longitude], {icon: icon}).addTo(layerGroup);
             marker.bindPopup('<b>Name:</b> ' + country + '<br><b>Megatonnes of Carbon Dioxide Emissions per 100 people:</b> ' + carbonEmissions.toLocaleString() + '<br><b>Population:</b> ' + countryPopulation.toLocaleString());
             marker.on('mouseover', function (e) {
                 this.openPopup();
@@ -108,22 +108,22 @@ function displayPins(jsonData) {
 }
 
 function initializeMaps(jsonData) {
-    var sumCarbonRate = 0;
-    var sumCountries = 0; 
-    var sumPopulations = 0;
+    let sumCarbonRate = 0;
+    let sumCountries = 0; 
+    let sumPopulations = 0;
 
     Object.values(jsonData.countries).forEach(function(country) {
-        var countryName = country.data.name;
+        let countryName = country.data.name;
         console.log(country.data);
         if (isValid(country)) {
-            var carbonRate = (country.data.energy.carbon_dioxide_emissions_from_consumption_of_energy.megatonnes/country.data.people.population.total) * 100;
+            let carbonRate = (country.data.energy.carbon_dioxide_emissions_from_consumption_of_energy.megatonnes/country.data.people.population.total) * 100;
             carbonDict[countryName] = carbonRate;
             populationDict[countryName] = country.data.people.population.total;
             sumCarbonRate += carbonRate;
             sumCountries += 1;
             sumPopulations += country.data.people.population.total;
     
-            var latMinutes = 0;
+            let latMinutes = 0;
             if (country.data.geography.geographic_coordinates.latitude.minutes) {
                 latMinutes = country.data.geography.geographic_coordinates.latitude.minutes/60;
             }
@@ -133,7 +133,7 @@ function initializeMaps(jsonData) {
                 latitudeDict[countryName] = country.data.geography.geographic_coordinates.latitude.degrees + latMinutes;
             }
 
-            var longMinutes = 0;
+            let longMinutes = 0;
             if (country.data.geography.geographic_coordinates.longitude.minutes) {
                 longMinutes = country.data.geography.geographic_coordinates.longitude.minutes/60;
             }
@@ -159,20 +159,20 @@ function initializeMaps(jsonData) {
     console.log(populationOptions);
 
     
-    var populationInput = document.createElement("form");
-    var i = 1;
+    let populationInput = document.createElement("form");
+    let i = 1;
     populationOptions.forEach(level => {
-        var input = document.createElement("input");
+        let input = document.createElement("input");
         input.type = "radio";
         input.id = "input-" + level;
         input.name = "population";
         input.value = level;
         input.addEventListener("click", setPopulation);
-        var label = document.createElement("label");
+        let label = document.createElement("label");
         label.for = "input-" + level;
 
-        var start = level - Math.round(populationPerLevel);
-        var end = level;
+        let start = level - Math.round(populationPerLevel);
+        let end = level;
         if (i != 1) {
             start += 1;
         }
@@ -183,26 +183,26 @@ function initializeMaps(jsonData) {
         }
         i += 1;
 
-        var br = document.createElement("br");
+        let br = document.createElement("br");
         populationInput.appendChild(input);
         populationInput.appendChild(label);
         populationInput.appendChild(br);
     });
-    var popDiv = document.getElementById('popInput');
+    let popDiv = document.getElementById('popInput');
     popDiv.appendChild(populationInput);
 
-    var resetButton = document.createElement("button");
+    let resetButton = document.createElement("button");
     resetButton.addEventListener("click", resetToAllPopulations);
     resetButton.innerText = "Reset to All Countries";
     popDiv.appendChild(resetButton);
 }
 
 function setPopulation() {
-    var radios = document.getElementsByName('population');
-    var selectedLayer = layerGroup5;
+    let radios = document.getElementsByName('population');
+    let selectedLayer = layerGroup5;
     radios.forEach(radio => {
-        var countryPopulation = radio.value;
-        var layerGroup = layerGroup5;
+        let countryPopulation = radio.value;
+        let layerGroup = layerGroup5;
         if (countryPopulation == populationOptions[0]) {
             layerGroup = layerGroup1;
         } else if (countryPopulation == populationOptions[1]) {
@@ -225,7 +225,7 @@ function setPopulation() {
 }
 
 function resetToAllPopulations() {
-    var radios = document.getElementsByName('population');
+    let radios = document.getElementsByName('population');
     radios.forEach(radio => {
         radio.checked = false;
     });
@@ -236,15 +236,15 @@ function resetToAllPopulations() {
 }
 
 function createKey() {
-    var start = 0;
-    var end = Math.round(carbonRatePerLevel);
-    var i = 1;
-    var key = document.getElementById("legend");
+    let start = 0;
+    let end = Math.round(carbonRatePerLevel);
+    let i = 1;
+    let key = document.getElementById("legend");
     Object.values(icons).forEach(function(url) {
-        var img = document.createElement("img");
+        let img = document.createElement("img");
         img.className = "legend-icon-" + i;
         img.src = url;
-        var description = document.createElement("div");
+        let description = document.createElement("div");
         description.className = "legend-text";
         if (i == 5) {
             description.innerHTML = "<div class='numbers'> &ensp;" + start + " + </div> megatonnes of carbon dioxide emissions from consumption of energy per 100 people";
@@ -259,9 +259,9 @@ function createKey() {
         end += Math.round(carbonRatePerLevel);
         i += 1;
 
-        var row = document.createElement("tr");
-        var pictureColumn = document.createElement("td");
-        var textColumn = document.createElement("td");
+        let row = document.createElement("tr");
+        let pictureColumn = document.createElement("td");
+        let textColumn = document.createElement("td");
 
         pictureColumn.appendChild(img);
         textColumn.appendChild(description);
@@ -272,15 +272,15 @@ function createKey() {
 }
 
 function createCountryList() {
-    var start = 0;
-    var end = Math.round(carbonRatePerLevel);
-    var i = 1;
-    var list = document.getElementById("country-list");
+    let start = 0;
+    let end = Math.round(carbonRatePerLevel);
+    let i = 1;
+    let list = document.getElementById("country-list");
     Object.entries(countryClassification).forEach(function([url, countries]) {
-        var img = document.createElement("img");
+        let img = document.createElement("img");
         img.className = "legend-icon-" + i;
         img.src = url;
-        var description = document.createElement("div");
+        let description = document.createElement("div");
         description.className = "legend-text";
         if (i == 5) {
             description.innerHTML = "<div class='numbers'> &ensp;" + start + " + </div> megatonnes of carbon dioxide emissions from consumption of energy per 100 people";
@@ -295,9 +295,9 @@ function createCountryList() {
         end += Math.round(carbonRatePerLevel);
         i += 1;
 
-        var row = document.createElement("tr");
-        var pictureColumn = document.createElement("td");
-        var textColumn = document.createElement("td");
+        let row = document.createElement("tr");
+        let pictureColumn = document.createElement("td");
+        let textColumn = document.createElement("td");
 
         pictureColumn.appendChild(img);
         textColumn.appendChild(description);
@@ -305,9 +305,9 @@ function createCountryList() {
         row.appendChild(textColumn);
         list.appendChild(row);
 
-        var countryRow = document.createElement("tr");
-        var emptyColumn = document.createElement("td");
-        var nameColumn = document.createElement("td");
+        let countryRow = document.createElement("tr");
+        let emptyColumn = document.createElement("td");
+        let nameColumn = document.createElement("td");
         nameColumn.innerHTML = countries.join(", &ensp;");
         countryRow.appendChild(emptyColumn);
         countryRow.appendChild(nameColumn);

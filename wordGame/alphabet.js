@@ -4,7 +4,7 @@
  * @author Abby Mapes
  */
 
- const alphabetString = `a
+const alphabetString = `a
 b
 c
 d

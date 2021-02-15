@@ -28,17 +28,17 @@ function loadImage () {
 function resize() {
     canvasWidth = contentSection.clientWidth - 100;
     if (filteredImage != null) {
-        var filteredWidth = filteredImage.getWidth();
-        var filteredHeight = filteredImage.getHeight();
-        var filteredRatio = canvasWidth / filteredWidth;
+        let filteredWidth = filteredImage.getWidth();
+        let filteredHeight = filteredImage.getHeight();
+        let filteredRatio = canvasWidth / filteredWidth;
         filteredImage.setSize(canvasWidth, filteredHeight * filteredRatio);
         // Sets size of original image too, in case they clear the filter to see original
         originalImage.setSize(canvasWidth, filteredHeight * filteredRatio);
         filteredImage.drawTo(canvas);
     } else if (originalImage != null) {
-        var originalWidth = originalImage.getWidth();
-        var originalHeight = originalImage.getHeight();
-        var ratioFactor = canvasWidth / originalWidth;
+        let originalWidth = originalImage.getWidth();
+        let originalHeight = originalImage.getHeight();
+        let ratioFactor = canvasWidth / originalWidth;
         originalImage.setSize(canvasWidth, originalHeight * ratioFactor);
         originalImage.drawTo(canvas);
     } 
@@ -50,8 +50,8 @@ function resize() {
 function scan() {
     if (originalImage != null) {
         filteredImage = new SimpleImage(originalImage.getWidth(), originalImage.getHeight());
-        var horizontal = document.getElementById('horizontal').value;
-        var vertical = document.getElementById('vertical').value;
+        let horizontal = document.getElementById('horizontal').value;
+        let vertical = document.getElementById('vertical').value;
         filterImage(originalImage, filteredImage, horizontal, vertical);
         filteredImage.drawTo(canvas);
     }
@@ -63,17 +63,17 @@ function scan() {
  */
 function filterImage(source, result, horizontal, vertical) {
     // Use to project slider position onto scanner position for picturee
-    var horizontalRatio = horizontal / 255;
-    var verticalRatio = (255 - vertical) / 255;
+    let horizontalRatio = horizontal / 255;
+    let verticalRatio = (255 - vertical) / 255;
     // Use to generate element of randomness as slider changes
-    var random = Math.random() * 10;
+    let random = Math.random() * 10;
     // Combine randomness with color slider to generate different combinations
-    var colorChanger = document.getElementById('color').value;
+    let colorChanger = document.getElementById('color').value;
     scanPercent = document.getElementById('width').value / 100;
-    var scanWidth = result.getWidth() * scanPercent;
+    let scanWidth = result.getWidth() * scanPercent;
 
     result.forEachPixel(pixel => {
-        var srcPixel = source.getPixel(pixel.getX(), pixel.getY());
+        let srcPixel = source.getPixel(pixel.getX(), pixel.getY());
         if (Math.abs(pixel.getX() - Math.round(result.getWidth() * horizontalRatio)) <= scanWidth && 
         Math.abs(pixel.getY() - Math.round(result.getHeight() * verticalRatio)) <= scanWidth) {
             pixel.setRed(adjustValue(srcPixel.getRed(), horizontal));
