@@ -4,16 +4,13 @@
  * @author Abby Mapes
  */
 
-let mymap = L.map('mapid').setView([0, 0], 3);
 let jsonURL = "https://compsci290_2021spring.dukecs.io/resources/data/countries/factbook.json";
+let mymap = L.map('mapid').setView([0,0], 2);
 
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'pk.eyJ1IjoiYWNtMTAzIiwiYSI6ImNrbDAxNXg5eDBtOWQydXQ0cmJvZ3VvMWgifQ.0jw976vCdyyms3YAd_l0IA'
+// Source code from iss_plotter example
+L.tileLayer('images/tiles/{z}/{x}/{y}.png', {
+    minZoom: 2,
+    maxZoom: 2
 }).addTo(mymap);
 
 let layerGroup1 = L.layerGroup().addTo(mymap);
@@ -93,7 +90,13 @@ function displayPins(jsonData) {
                 layerGroup = layerGroup4;
             }
             
-            let marker = L.marker([latitude, longitude], {icon: icon}).addTo(layerGroup);
+            let marker = L.marker(
+                [latitude, longitude], {
+                    icon: icon,
+                    title: country + " Carbon Dioxide Emissions per 100 people",
+                    alt: country + " Carbon Dioxide Emissions per 100 people"
+                }).addTo(layerGroup);
+
             marker.bindPopup('<b>Name:</b> ' + country + '<br><b>Megatonnes of Carbon Dioxide Emissions per 100 people:</b> ' + carbonEmissions.toLocaleString() + '<br><b>Population:</b> ' + countryPopulation.toLocaleString());
             marker.on('mouseover', function (e) {
                 this.openPopup();
@@ -148,7 +151,7 @@ function initializeMaps(jsonData) {
     meanCarbonRate = sumCarbonRate/sumCountries;
     carbonRatePerLevel = (meanCarbonRate * 2) / 5;
     meanPopulation = sumPopulations/sumCountries;
-    populationPerLevel = (meanPopulation * 2) / 5;
+    populationPerLevel = (meanPopulation * 2) / 10;
     console.log(carbonDict);
     console.log(meanCarbonRate);
     console.log(populationPerLevel);
