@@ -20,8 +20,8 @@ let template = "_____";
 
 let guesses = [];
 let userName;
-let difficulty;
 let debugging;
+let difficulty;
 let guessCount = 20;
 
 /*
@@ -33,13 +33,15 @@ function startGame() {
     debugging = (document.getElementById('debug').value == "debug");
     gameSection.innerHTML = "";
 
-    if (difficulty != "easy") {
+    if (difficulty == "hard") {
         guessCount = 15;
     }
     
+    // creates header element
     let header = document.createElement("h2");
     header.innerText = "Guess the secret word " + userName;
 
+    // creates secret word template div
     let templateDiv = document.createElement("div");
     templateDiv.className = "template";
     let template = document.createElement("h1");
@@ -47,10 +49,11 @@ function startGame() {
     template.innerHTML = "_ &ensp; _ &ensp; _ &ensp; _ &ensp; _ &ensp; ";
     templateDiv.appendChild(template);
 
+    // creates instruction div
     let instructions = document.createElement("p");
     instructions.innerText = `
-        I am thinking of a secret word. My word is 5 letters long. In the input box below, type a single letter from the letterboard that you think is in my secret word. You have ` + guessCount + 
-        ` guesses. When you correctly guess a letter, it will appear in the template below. Good luck...`;
+    I am thinking of a secret word. My word is 5 letters long. In the input box below, type a single letter from the letterboard that you think is in my secret word. You have ` + guessCount + 
+    ` guesses. When you correctly guess a letter, it will appear in the template below. Good luck...`;
     gameSection.appendChild(header);
     gameSection.appendChild(instructions);
     gameSection.appendChild(templateDiv);
@@ -58,6 +61,7 @@ function startGame() {
     let row = document.createElement("div");
     row.className = "row";
 
+    // creates letterboard and letter sections for right side
     let rigthSide = document.createElement("div");
     rigthSide.className = "column-right";
     let letterBoard = createLetterBoard();
@@ -68,6 +72,7 @@ function startGame() {
     rigthSide.appendChild(wrongLetters);
     row.appendChild(rigthSide);
 
+    // creates guess sections for left side
     let leftSide = document.createElement("div");
     leftSide.className = "column-left";
     let guessedWords = createGuessWordSection();
@@ -75,6 +80,8 @@ function startGame() {
     row.appendChild(leftSide);
 
     gameSection.appendChild(row);
+
+    // sets global variables
     guessInput = document.getElementById('guess');
     guessList = document.getElementById('guessed-words');
     errorMessage = document.getElementById('bad-input');
@@ -82,6 +89,7 @@ function startGame() {
     incorrectLetters = document.getElementById('incorrect-letters');
     currentTemplate = document.getElementById('secret-word-template');
 
+    // sets debugging mode
     if (debugging) {
         debugOutput = document.getElementById("debug-output");
     }

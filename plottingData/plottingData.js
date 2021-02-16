@@ -7,7 +7,7 @@
 let jsonURL = "https://compsci290_2021spring.dukecs.io/resources/data/countries/factbook.json";
 let mymap = L.map('mapid').setView([0,0], 2);
 
-// Source code from iss_plotter example
+// Code from iss_plotter example
 L.tileLayer('images/tiles/{z}/{x}/{y}.png', {
     minZoom: 2,
     maxZoom: 2
@@ -34,9 +34,14 @@ let populationPerLevel = 0;
 let populationOptions = [];
 let displayedInitialPins = false;
 
+/*
+ * Creates initial map display of pins denoting carbon emissions by population for each country from 
+ * the loaded JSON and initializes layers of pins for each population size
+ */
 function displayPins(jsonData) {
     if (!displayedInitialPins) {
         initializeMaps(jsonData);
+        createPopulationFilter();
         createKey();
         Object.entries(latitudeDict).forEach(function([country, latitude]) {
             let longitude = longitudeDict[country];
@@ -110,6 +115,11 @@ function displayPins(jsonData) {
     }
 }
 
+/*
+ * Initalizes all dictionaries required to display pins on the map, including population maps,
+ * carbon maps, latitude and longitude maps and population levels in order to create content on page
+ * for the map
+ */
 function initializeMaps(jsonData) {
     let sumCarbonRate = 0;
     let sumCountries = 0; 
@@ -155,7 +165,13 @@ function initializeMaps(jsonData) {
     console.log(carbonDict);
     console.log(meanCarbonRate);
     console.log(populationPerLevel);
+}
 
+/*
+ * Creates input form to filter pins on map based on population size of each country and 
+ * a reset button to see all initial pins
+ */
+function createPopulationFilter() {
     [...Array(5).keys()].forEach(num => {
         populationOptions[num] = Math.round(populationPerLevel) * (num + 1);
     });
@@ -200,6 +216,11 @@ function initializeMaps(jsonData) {
     popDiv.appendChild(resetButton);
 }
 
+/*
+ * When radio options in population input are clicked, function determines which 
+ * layer on the map to display that shows pins for the appropriate countries of the
+ * selected population size
+ */
 function setPopulation() {
     let radios = document.getElementsByName('population');
     let selectedLayer = layerGroup5;
@@ -227,6 +248,9 @@ function setPopulation() {
     mymap.addLayer(selectedLayer);
 }
 
+/*
+ * When clicking the reset button, displays all original pins on the map for all countries
+ */
 function resetToAllPopulations() {
     let radios = document.getElementsByName('population');
     radios.forEach(radio => {
@@ -238,6 +262,10 @@ function resetToAllPopulations() {
     });
 }
 
+/*
+ * Creates the key relating pins for countries on the map to their appropriate carbon emission
+ * outputs based on their population
+ */
 function createKey() {
     let start = 0;
     let end = Math.round(carbonRatePerLevel);
@@ -274,6 +302,10 @@ function createKey() {
     });
 }
 
+/*
+ * Creates a list of each country that falls under each pin category
+ * i.e. the countries that have each level of carbon dioxide emissions per 100 people
+ */
 function createCountryList() {
     let start = 0;
     let end = Math.round(carbonRatePerLevel);
@@ -318,6 +350,10 @@ function createCountryList() {
     });
 }
 
+/*
+ * Determines whether a country has the necessary data needed to be included in 
+ * our map
+ */
 function isValid(country) {
     return (country.data.geography && 
             country.data.geography.geographic_coordinates && 
@@ -333,6 +369,9 @@ function isValid(country) {
             country.data.people.population.total);
 }
 
+/*
+ * Fetches factbook data to be used
+ */
 function fetchJSON () {
     // get data from the API AND
     fetch(jsonURL)

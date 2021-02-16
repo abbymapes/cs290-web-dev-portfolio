@@ -12,7 +12,7 @@
 .nav-bar a {
   float: left;
   display: block;
-  color: hsl(180, 1%, 30%);
+  color: hsl(180, 1%, 20%);
   text-align: center;
   padding: 15px 15px;
   text-decoration: none;
@@ -20,16 +20,16 @@
 }
   
 .nav-bar a:hover {
-  color: hsl(215, 100%, 70%);
+  color: hsl(215, 100%, 60%);
 }
   
 .nav-bar a.home {
   float: left;
-  color:hsl(215, 100%, 60%);
+  color:hsl(215, 100%, 50%);
 }
   
 .nav-bar a.home:hover {
-  color:hsl(215, 100%, 70%);
+  color:hsl(215, 100%, 60%);
 }
 
 /* Interest Page*/
@@ -90,12 +90,12 @@ body {
 
 a {
   text-decoration: none;
-  color: hsl(215, 100%, 60%);
+  color: hsl(215, 100%, 50%);
 }
 
 a:hover {
   text-decoration: none;
-  color: hsl(215, 100%, 70%);
+  color: hsl(215, 100%, 60%);
 }
 
 .panorama {
