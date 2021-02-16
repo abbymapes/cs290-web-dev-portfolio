@@ -188,7 +188,7 @@ function createPopulationFilter() {
         input.value = level;
         input.addEventListener("click", setPopulation);
         let label = document.createElement("label");
-        label.for = "input-" + level;
+        label.htmlFor = "input-" + level;
 
         let start = level - Math.round(populationPerLevel);
         let end = level;
@@ -201,7 +201,6 @@ function createPopulationFilter() {
             label.innerHTML = "<div class='numbers'> &ensp;" + start.toLocaleString() + " - " + end.toLocaleString() + " </div> people";
         }
         i += 1;
-
         let br = document.createElement("br");
         populationInput.appendChild(input);
         populationInput.appendChild(label);
@@ -279,8 +278,10 @@ function createKey() {
         description.className = "legend-text";
         if (i == 5) {
             description.innerHTML = "<div class='numbers'> &ensp;" + start + " + </div> megatonnes of carbon dioxide emissions from consumption of energy per 100 people";
+            img.alt = "Legend icon for countries with " + start + " + megatonnes of carbon dioxide emissions from consumption of energy per 100 people";
         } else {
             description.innerHTML = "<div class='numbers'> &ensp;" + start + " - " + end + " </div> megatonnes of carbon dioxide emissions from consumption of energy per 100 people";
+            img.alt = "Legend icon for countries with " + start + " - " + end +" megatonnes of carbon dioxide emissions from consumption of energy per 100 people";
         }
         if (i == 1) {
             start +=  Math.round(carbonRatePerLevel) + 1;
@@ -319,8 +320,10 @@ function createCountryList() {
         description.className = "legend-text";
         if (i == 5) {
             description.innerHTML = "<div class='numbers'> &ensp;" + start + " + </div> megatonnes of carbon dioxide emissions from consumption of energy per 100 people";
+            img.alt = "Legend icon for countries with " + start + " + megatonnes of carbon dioxide emissions from consumption of energy per 100 people";
         } else {
             description.innerHTML = "<div class='numbers'> &ensp;" + start + " - " + end + " </div> megatonnes of carbon dioxide emissions from consumption of energy per 100 people";
+            img.alt = "Legend icon for countries with " + start + " - " + end +" megatonnes of carbon dioxide emissions from consumption of energy per 100 people";
         }
         if (i == 1) {
             start +=  Math.round(carbonRatePerLevel) + 1;
