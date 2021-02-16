@@ -20,16 +20,16 @@
 }
   
 .nav-bar a:hover {
-  color: hsl(215, 100%, 60%);
+  color: hsl(215, 100%, 50%);
 }
   
 .nav-bar a.home {
   float: left;
-  color:hsl(215, 100%, 50%);
+  color:hsl(215, 100%, 40%);
 }
   
 .nav-bar a.home:hover {
-  color:hsl(215, 100%, 60%);
+  color:hsl(215, 100%, 50%);
 }
 
 /* Interest Page*/
@@ -90,12 +90,12 @@ body {
 
 a {
   text-decoration: none;
-  color: hsl(215, 100%, 50%);
+  color: hsl(215, 100%, 40%);
 }
 
 a:hover {
   text-decoration: none;
-  color: hsl(215, 100%, 60%);
+  color: hsl(215, 100%, 50%);
 }
 
 .panorama {
