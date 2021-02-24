@@ -35,7 +35,7 @@
                         v-for="(file, i) in QUIZZES"
                         :key="i"
                     >
-                        <input type="radio" id="i" :name="'file'+i" :value="i" v-model="pickedQuiz"></b-form-input>
+                        <input type="radio" :id="i" :name="'file'+i" :value="i" v-model="pickedQuiz"></b-form-input>
                         <label :for="i">{{quizNames[i]}}</label>
                     </li>
                 </ul>
@@ -60,8 +60,8 @@
                             v-for="(option, j) in q.choices"
                             :key="j"
                         >
-                            <input type="radio" :name="'answer'+i" :value="option" v-model="selections[i]" :disabled= "showAnswers"></b-form-input>
-                            <label :for="option">{{option}}</label>
+                            <input type="radio" :name="'answer'+i" :value="option" :id= "'answer'+i + option" v-model="selections[i]" :disabled= "showAnswers"></b-form-input>
+                            <label :for="'answer'+i + option">{{option}}</label>
                         </li>
                     </ul>
                 </div>
