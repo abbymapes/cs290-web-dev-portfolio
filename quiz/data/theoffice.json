@@ -1,0 +1,56 @@
+{
+	"questions": [{
+			"question": "Which is not one Dwight's favorite things?",
+			"choices": ["Bears", "Beets", "Battlestar Galactica", "Star Trek"],
+			"answer": "Star Trek"
+		},
+		{
+			"question": "What is Pam's favorite flavor yogurt?",
+			"choices": ["Vanilla", "Strawberry", "Mixed Berry", "Plain"],
+			"answer": "Mixed Berry"
+		},
+		{
+			"question": "What song is played at Jim and Pam's wedding?",
+			"choices": ["Perfect by Ed Sheeran", "Forever by Chris Brown", "Can't Help Falling in Love by Elvis Presley", "Something by The Beatles", "Your Song by Elton John"],
+			"answer": "Forever by Chris Brown"
+		},
+		{
+			"question": "What color shirt does Dwight always wear?",
+			"choices": ["Light Blue", "Peach", "Pink", "White", "Mustard Yellow"],
+			"answer": "Mustard Yellow"
+		},
+		{
+			"question": "Who does Michael give rabies to?",
+			"choices": ["Meredith", "Toby", "Creed", "Kelly", "Ryan"],
+			"answer": "Meredith"
+		},
+		{
+			"question": "Where does The Office take place?",
+			"choices": ["Southtown, PA", "Scranton, PA", "Charlotte, NC", "Philadelphia, PA", "Los Angeles, CA"],
+			"answer": "Scranton, PA"
+		},
+		{
+			"question": "What does Michael burn his foot on?",
+			"choices": ["Hot rocks", "Curling Iron", "Car Muffler", "George Foreman Grill"],
+			"answer": "George Foreman Grill"
+		},
+		{
+			"question": "Who started the fire in the building?",
+			"choices": [
+				"Angela",
+				"Dwight",
+				"Michael",
+				"Ryan",
+				"Jim"
+			],
+			"answer": "Ryan"
+		}
+	],
+	"messages": {
+		"60": "You FAILED! Michael Scott would be utterly disappointed.",
+		"70": "You didn't quite fail... but you didn't quite pass. Clearly, you aren't a true Office fan...",
+		"80": "You recieved a passing grade for your Office knowledge, which is way higher than Kevin has ever scored on a test...",
+		"90": "Not too shabby. With this score, you could become the best Assistant to the Regional Manager out there!",
+		"100": "WOW! You know your stuff. You deserve a Dundie Award for this score!"
+	}
+}

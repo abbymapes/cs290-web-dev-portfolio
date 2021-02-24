@@ -1,0 +1,65 @@
+{
+	"questions": [{
+			"question": "What is capital of Portugal?",
+			"answer": "Lisbon",
+			"choices": [
+				"Seoul",
+				"Lisbon",
+				"Melbourne",
+				"Porto",
+				"Braga"
+			]
+		},
+		{
+			"question": "What is capital of South Korea?",
+			"answer": "Seoul",
+			"choices": [
+				"Daegu",
+				"Jeonju",
+				"Ulsan",
+				"Seoul",
+				"Busan"
+			]
+		},
+		{
+			"question": "What is capital of Spain?",
+			"answer": "Madrid",
+			"choices": [
+				"Madrid",
+				"Barcelona",
+				"Rome",
+				"New Delhi",
+				"Belgium"
+			]
+		},
+		{
+			"question": "What is capital of Italy?",
+			"answer": "Rome",
+			"choices": [
+				"Milan",
+				"Venice",
+				"Florence",
+				"Rome",
+				"Paris"
+			]
+		},
+		{
+			"question": "What is capital of Denmark?",
+			"answer": "Copenhagen",
+			"choices": [
+				"Oslo",
+				"Amsterdam",
+				"Copenhagen",
+				"Stockholm",
+				"Helsinki"
+			]
+		}
+	],
+	"messages": {
+		"60": "You FAILED! Time to start looking at a globe.",
+		"70": "You didn't quite fail... but you didn't quite pass. But, who needs to know their capitals anyway?",
+		"80": "You passed! That's better than I could do!",
+		"90": "Look at you! Someone remembers a thing or two about geography.",
+		"100": "WOW! You must be a traveler... or you have a great memory!"
+	}
+}

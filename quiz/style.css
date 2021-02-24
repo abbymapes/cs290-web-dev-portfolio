@@ -1,0 +1,107 @@
+/*
+ * Styling for my Quiz page
+ *
+ * @author Abby Mapes
+ */
+
+
+ h2 {
+     text-align: center;
+ }
+ 
+ ul {
+     list-style-type: none;
+     padding: 0;
+     margin: 0;
+ }
+
+ #quiz-list {
+    text-indent: 10px;
+    padding: 10px;
+ }
+
+ #quiz {
+     text-indent: 10px;
+     padding: 10px;
+ }
+
+ h2.math {
+    padding: 15px;
+    background-color: rgba(255, 0, 0, 0.15);
+    color: red;
+ } 
+ 
+ h3.math {
+    color: red;
+ }
+
+ h2.duke {
+    padding: 15px;
+    background-color: hsla(208, 100%, 30%, 0.15);
+    color: #00539B;
+ } 
+
+ h3.duke {
+    color: #00539B;
+ }
+
+ h2.capital {
+    padding: 15px;
+    background-color: rgba(0, 128, 0, 0.15);
+    color: green;
+ } 
+
+  h3.capital {
+    color: green;
+ }
+
+ h2.office {
+    padding: 15px;
+    background-color: rgba(128, 0, 128, 0.15);
+    color: purple;
+ }  
+ 
+ h3.office {
+    color: purple;
+ }
+
+ 
+ .correct {
+     background-color: springgreen;
+ }
+ 
+ .incorrect {
+     background-color: pink;
+ }
+ 
+ button {
+     background-color: #DCDCDC;
+     color: black;
+     margin: 10px 0;
+     padding-left: 5px;
+     padding-right: 5px;
+     position: relative;
+     float: right;
+ }
+ 
+ button:hover {
+     background-color: #F8F8FF;
+     color: #525252;
+ }
+ 
+ #submit {
+     float: right;
+ }
+ 
+ #next {
+     display: none;
+     width: 90px;
+     margin: auto;
+ }
+ 
+ #result {
+     font-size: 130%;
+     text-align: center;
+     color: red;
+ }
+ 

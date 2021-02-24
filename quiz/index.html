@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Abby Mapes">
+    <title>CompSci 290, Spring 2021 : Quiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://unpkg.com/vue@latest/dist/vue.min.js"></script>
+
+    <script defer src="./main.js"></script>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+
+  <body>
+    <div id="content">
+      <div class="nav-bar">
+        <a href="../index.html" class="home">Home</a>
+        <a href="../interests/index.html">Interests</a>
+        <a href="../projectList.html">Course Projects</a>
+      </div>
+
+      <header>
+        <h1>Quiz</h1>
+      </header>
+
+      <div class="text-section">
+        <div id="app">
+            <div id ="quiz-list" v-if="!showQuiz">
+                <h3>Select a Quiz to Take:</h3>
+                <ul>
+                    <li
+                        v-bind:class=""
+                        v-for="(file, i) in QUIZZES"
+                        :key="i"
+                    >
+                        <input type="radio" :name="'file'+i" :value="i" v-model="pickedQuiz"></b-form-input>
+                        <label :for="'file'+i">{{quizNames[i]}}</label>
+                    </li>
+                </ul>
+            </div>
+
+            <div id ="quiz" :class="classNames[pickedQuiz % quizNames.length]" v-if="showQuiz">
+                <h2 :class="classNames[pickedQuiz % quizNames.length]">{{ quizNames[pickedQuiz % quizNames.length] }}</h2>
+
+                <div id="result">
+                    {{resultText}}
+                </div>
+
+                <div
+                    :class="'question' + i"
+                    v-for="(q, i) in data"
+                    :key="i"
+                >
+                    <h3 :class="classNames[pickedQuiz % quizNames.length]">{{ q.question }}</h3>
+                    <ul>
+                        <li
+                            v-bind:class="['answer' + i , highlight(i, option)]"
+                            v-for="(option, j) in q.choices"
+                            :key="j"
+                        >
+                            <input type="radio" :name="'answer'+i" :value="option" v-model="selections[i]" :disabled= "showAnswers"></b-form-input>
+                            <label :for="option">{{option}}</label>
+                        </li>
+                    </ul>
+                </div>
+                <button
+                    @click="processAnswers()"
+                    :style="'display:' + submitDisplay"
+                >
+                    Submit
+                </button>
+
+                <button
+                    @click="reset()"
+                    :style="'display:' + nextDisplay"
+                >
+                    Go Back
+                </button>
+            </div>
+        </div>
+
+        <footer>
+            
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
