@@ -35,7 +35,7 @@
                         v-for="(file, i) in QUIZZES"
                         :key="i"
                     >
-                        <input type="radio" :name="'file'+i" :value="i" v-model="pickedQuiz"></b-form-input>
+                        <input type="radio" id="i" :name="'file'+i" :value="i" v-model="pickedQuiz"></b-form-input>
                         <label :for="i">{{quizNames[i]}}</label>
                     </li>
                 </ul>
