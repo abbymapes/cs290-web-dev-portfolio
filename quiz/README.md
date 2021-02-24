@@ -1,4 +1,4 @@
-# Plotting Data
+# Quiz
 
 ## Name: 
 Abby Mapes - acm103
