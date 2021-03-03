@@ -1,0 +1,150 @@
+/*
+ * Styling for my Trello page
+ *
+ * @author Abby Mapes
+ */
+
+
+body {
+    height: fit-content;
+}
+
+ #app {
+     text-align: center;
+     color: black;
+     margin: 20px 0;
+     padding: 10px 0;
+ }
+
+ .top-bar {
+     float: left;
+     display: block;
+     text-align: left;
+     width: 100%;
+     margin: auto;
+     background-color: white;
+     padding-bottom: 20px;
+ }
+
+ .columns {
+    display: inline-block;
+}
+
+ .column {
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 16px;
+    padding: 1rem;
+    padding-bottom: 2rem;
+    margin: 20px;
+    float: left;
+    background-color: white;
+    width: 350px;
+}
+
+ .card {
+    background-color: rgb(255, 255, 255);
+    list-style: none;
+    font-weight: normal;
+    text-align: left;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 1rem;
+ }
+ .task-count {
+     float: right;
+ }
+
+.project-name {
+     color: black;
+ }
+
+ .comment-heading {
+     text-align: center;
+ }
+
+ .comment-list {
+    border-style: solid;
+    border-width: 1px;
+    background-color: white;
+    height: fit-content;
+ }
+
+.comment-item {
+    border-style: solid;
+    border-width: 1px;
+    background-color: white;
+    max-width: inherit;
+    word-wrap: break-word;
+    padding: 5px;
+}
+
+.comment-input {
+    width: 95%;
+}
+
+.comment {
+    font-style: italic;
+}
+
+
+ h2 {
+     text-align: center;
+     width: 100%;
+     color: black;
+ }
+
+ ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+ }
+
+.date {
+    text-align: right;
+}
+
+.overdue {
+    color: red;
+}
+
+.tag-section {
+    max-width: 100%;
+    text-align: center;
+}
+
+.tags {
+    width: fit-content;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 25%;
+    display: inline-block;
+}
+
+.btn-outline-danger {
+    float: left;
+    border-style: none;
+}
+
+.btn-outline-success {
+    float: right;
+    border-style: none;
+}
+
+.search {
+    text-align: right;
+}
+
+.task-color-input {
+    display: inline;
+    float: right;
+}
+
+.card-color-input {
+    display: inline;
+}
+
+.card-color-label {
+    display: inline;
+}

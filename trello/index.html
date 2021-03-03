@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Abby Mapes">
+    <title>CompSci 290, Spring 2021 : Trello</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+    <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.js"></script>
+
+
+    <script defer src="./data.js"></script>
+    <script defer src="./main.js"></script>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+
+  <body>
+    <div id="content">
+      <div class="nav-bar">
+        <a href="../index.html" class="home">Home</a>
+        <a href="../interests/index.html">Interests</a>
+        <a href="../projectList.html">Course Projects</a>
+      </div>
+
+      <header>
+        <h1>Trello</h1>
+      </header>
+
+      <div id="app">
+        <div class="top-bar">
+            <input 
+                type="color" 
+                id="background-color" 
+                name="head"
+                v-model="pageData.pageBackground">
+            <label for="background-color">Background Color</label>
+
+            <b-dropdown size="sm" boundary="window" text="Add List">
+                <div>
+                    <label for="listName">New List Name:</label>
+                    <input 
+                            v-model="newList.listName.title" 
+                            id="listName"
+                    >
+                    <br>
+                    <button
+                        v-if="newList.listName.title.length > 0"
+                        @click="submitList()"
+                    >
+                        Add List
+                    </button>
+                </div>
+            </b-dropdown>
+
+            <span class="search">
+                <label for="searchField">Search:</label>
+                <input 
+                        v-model="pageData.searchtext" 
+                        id="searchField"
+                        @keyup.enter="searchData()" 
+                >
+            </span>
+        </div> 
+
+        <main :style="'background-color:' + pageData.pageBackground">
+            <br>
+            <br>
+            <br>
+            <h1 
+                class="project-name"
+                v-if="!pageData.projectName.isEditing"
+                @dblclick="pageData.projectName.isEditing=true"
+            >
+                {{pageData.projectName.title}}
+            </h1>
+            <h1
+                v-if="pageData.projectName.isEditing"
+            >
+                <input
+                    @keyup.enter="pageData.projectName.isEditing = false" 
+                    v-model="pageData.projectName.title"
+                    id="nameInput"
+                    class="project-name"
+                >
+            </h1>
+
+                <ul class="columns">
+                    <li
+                        class="column"
+                        v-for="(list, i) in lists"
+                        :key="i"
+                    >
+                        <button type="button" class="btn btn-outline-danger list-delete" @click="deleteItem(i, lists)">X</button>
+                        <br>
+                        <h2
+                            v-if="!list.listName.isEditing"
+                            @dblclick="list.listName.isEditing=true"
+                        > 
+                            {{list.listName.title}} 
+                        </h2>
+                        <h2
+                            v-if="list.listName.isEditing"
+                        >
+                            <input
+                                @keyup.enter="list.listName.isEditing = false"
+                                v-model="list.listName.title"
+                                :id="'nameInput-' + list.listName.title"
+                                class="list-name"
+                            >
+                        </h2>
+                        <span class="task-count">{{list.cards.length}} tasks</span>
+
+                        <br>
+                        <ul class="category">
+                            <li
+                                v-for="(card, j) in list.cards"
+                                class="card"
+                                :style="'background-color:' + getCardColor(card.color)"
+                                :key="j"
+                            >
+                                <h3
+                                    v-if="!card.cardName.isEditing"
+                                    @dblclick="card.cardName.isEditing=true"
+                                > 
+                                    {{card.cardName.title}}
+                                </h3>
+                                <h3
+                                    v-if="card.cardName.isEditing"
+                                >
+                                    <input
+                                        @keyup.enter="card.cardName.isEditing = false"
+                                        v-model="card.cardName.title"
+                                        :id="'nameInput-' + card.cardName.title"
+                                        class="card-name"
+                                    >
+                                </h3>
+
+                                <span class="task-count">
+                                    {{card.comments.length}} comments
+                                </span>
+                                
+                                <br>
+                                <b v-if="card.deadline.time && deadlinePassed(card.deadline.time)" class="overdue date">{{displayDate(card.deadline.time)}}</b>
+                                <b v-else-if="card.deadline.time" class="date">{{displayDate(card.deadline.time)}}</b>
+                                
+                                <p 
+                                    v-if="card.description.title && !card.description.isEditing"
+                                    @dblclick="card.description.isEditing=true"
+                                >
+                                    {{card.description.title}}
+                                </p>
+                                <p
+                                    v-if="card.description.title && card.description.isEditing"
+                                >
+                                    <input
+                                        @keyup.enter="card.description.isEditing = false"
+                                        v-model="card.description.title"
+                                        :id="'nameInput-' + card.description.title"
+                                    >
+                                </p>
+                                <br v-else>
+
+                                <div v-if="card.tags" class="tag-section">
+                                    <h4 class="comment-heading">Tags</h4>
+                                    <ul>
+                                        <li
+                                            v-for="(tag, i) in card.tags"
+                                            :key="i"
+                                            class="tags"
+                                            :style="'background-color:' + getTagColor(tag.name)"
+                                        >
+                                            <b>{{tag.name}}</b>
+                                        </li>
+                                        <br>
+                                        <li class="add-tag">
+                                            <b-dropdown size="sm" boundary="window" text="Edit Tags">
+                                                <ul>
+                                                    <li
+                                                        class="tags"
+                                                        v-for="(t, i) in pageData.tags"
+                                                        :key="i"
+                                                    >
+                                                        <input 
+                                                            type="checkbox" 
+                                                            :id="'t'+i" 
+                                                            :name="'t'+i" 
+                                                            :value="t.name" 
+                                                            :checked="hasTag(t.name, card.tags)"
+                                                            @click="editTags(t.name, card.tags)"
+                                                        >
+                                                        <label :for="'tag'+i" class="tags" :style="'background-color:' + getTagColor(t.name)"><b>{{t.name}}</b></label>
+                                                        <br>
+                                                    </li>
+                                                </ul>
+
+                                                <div>
+                                                    <label for="tagName">New Tag:</label>
+                                                    <input 
+                                                        v-model="newTag.name" 
+                                                        id="tagName"
+                                                    >
+                                                    <br>
+                                                    <input 
+                                                            type="color" 
+                                                            id="tag-color" 
+                                                            name="head"
+                                                            v-model="newTag.color">
+                                                    <label for="tag-color">Tag Color</label>
+                                                    <br>
+                                                    <button
+                                                        v-if="newTag.color.length > 0 && newTag.name.length > 0"
+                                                        @click="addNewTag(card.tags)"
+                                                    >
+                                                        Add Tag
+                                                    </button>
+                                                </div>
+                                            </b-dropdown>
+                                        </li> 
+                                    </ul> 
+                                    <br>              
+                                </div>
+                                
+                                <h4 class="comment-heading">Comments</h4>
+                                <ul 
+                                    class="comment-list"
+                                    v-if="card.comments.length > 0"
+                                    :style="'border-color:' + getCardColor(card.color)"
+                                >
+                                    <li
+                                        v-for="(comment, k) in card.comments"
+                                        :key="k"
+                                        class="comment-item"
+                                        :style="'border-color:' + getCardColor(card.color)"
+                                    >
+                                        <div class="comment">
+                                            <button type="button" class="btn btn-outline-danger btn-sm" @click="deleteItem(k, card.comments)">X</button>
+                                            {{ comment.text }} 
+                                        </div>
+                                    </li>
+                                </ul>
+                                <br>
+                                <label for="'comment-' + list.listName.title">Add comment:</label>
+                                <input 
+                                    v-model="card.newComment"
+                                    :id="'comment-' + list.listName.title + '-' + card.cardName.title"
+                                    class="comment-input"
+                                    v-on:keyup.enter="enteredNewComment(card.comments, card)" 
+                                >
+                                <br>
+                                <label for="'colorFor-' + list.listName.title" class="card-color-label">Change color: </label>
+                                
+                                <input 
+                                    type="color" 
+                                    :id="'colorFor-' + list.listName.title"
+                                    class="card-color-input"
+                                    v-model="card.color">
+                            </li>
+                            <br>
+                            <b-dropdown size="sm" boundary="window" text="Duplicate List">
+                                <div>
+                                    <label :for="'duplicateListName-' + list.listName.title">New List Name:</label>
+                                    <input 
+                                            v-model="newList.listName.title" 
+                                            id="'duplicateListName-' + list.listName.title"
+                                    >
+                                   
+                                    <br>
+                                    <button
+                                        v-if="newList.listName.title.length > 0 && newList.listName.title != list.listName.title"
+                                        @click="duplicateList(list)"
+                                    >
+                                        Duplicate List
+                                    </button>
+                                </div>
+                            </b-dropdown>
+                        </ul>
+                    </li>
+                </ul>
+            </main>
+
+
+        <footer>
+            
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
