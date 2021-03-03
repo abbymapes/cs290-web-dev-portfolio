@@ -244,7 +244,7 @@
                                     </li>
                                 </ul>
                                 <br>
-                                <label for="'comment-' + list.listName.title + '-' + card.cardName.title">Add comment:</label>
+                                <label :for="'comment-' + list.listName.title + '-' + card.cardName.title">Add comment:</label>
                                 <input 
                                     v-model="card.newComment"
                                     :id="'comment-' + list.listName.title + '-' + card.cardName.title"
@@ -252,7 +252,7 @@
                                     v-on:keyup.enter="enteredNewComment(card.comments, card)" 
                                 >
                                 <br>
-                                <label for="'colorFor-' + list.listName.title+ '-' + card.cardName.title" class="card-color-label">Change color: </label>
+                                <label :for="'colorFor-' + list.listName.title+ '-' + card.cardName.title" class="card-color-label">Change color: </label>
                                 <input 
                                     type="color" 
                                     :id="'colorFor-' + list.listName.title+ '-' + card.cardName.title"
@@ -265,7 +265,7 @@
                                     <label :for="'duplicateListName-' + list.listName.title">New List Name:</label>
                                     <input 
                                             v-model="newList.listName.title" 
-                                            id="'duplicateListName-' + list.listName.title"
+                                            :id="'duplicateListName-' + list.listName.title"
                                     >
                                    
                                     <br>
