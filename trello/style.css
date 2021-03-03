@@ -106,7 +106,11 @@ body {
 }
 
 .overdue {
-    color: red;
+    background-color: rgb(255, 98, 98);
+    outline-style: solid;
+    outline-color: black;
+    outline-width: 1px;
+    padding: 2px;
 }
 
 .tag-section {
