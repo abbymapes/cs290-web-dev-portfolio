@@ -182,6 +182,14 @@ body {
     border-style: none;
 }
 
+.btn-outline-success {
+    color: black;
+}
+
+.btn-outline-primary {
+    color: black;
+}
+
 .tag-card {
     border: none;
 }

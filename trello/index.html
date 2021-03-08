@@ -45,9 +45,9 @@
                     size="sm" 
                     boundary="window" 
                     :text="getSearchName(selectedType)"
-                    variant="outline-primary"
+                    variant="outline-dark"
                 >
-                    <ul class="dropdown">
+                    <ul class="dropdown" role="menuitem">
                         <li
                             v-for="category in pageData.searchTypes"
                         >
@@ -68,9 +68,9 @@
                             :text="pageData.dateType" 
                             size="sm" 
                             boundary="window" 
-                            variant="outline-primary"
+                            variant="outline-dark"
                         >
-                            <div class="dropdown">
+                            <div class="dropdown" role="menuitem">
                                 <input type="radio" id="time-before" name="time-search" value="Before" v-model="pageData.dateType">
                                 <label for="time-before" >Before</label>
                                 <br>
@@ -79,7 +79,7 @@
                                 <br>
                                 <input type="radio" id="time-after" name="time-search" value="After" v-model="pageData.dateType">
                                 <label for="time-after">After</label>
-                            </div>     
+                            </div>    
                         </b-dropdown>
 
                         <input 
@@ -88,7 +88,7 @@
                             name="searchDate" 
                             v-model="pageData.searchText"
                         >
-                        <button type="button" class="btn btn-outline-success btn-small" @click="searchDate()">Search Date</button>
+                        <button type="button" class="btn btn-primary btn-small" @click="searchDate()">Search Date</button>
                         <button type="button" class="btn btn-outline-danger btn-small list-delete" @click="clearFilter()">Clear Filter</button>
                     </span>
 
@@ -110,7 +110,7 @@
                                 <br>
                             </li>
                         </ul>
-                        <button type="button" class="btn btn-outline-success btn-small" @click="searchTags()">Search Tags</button>
+                        <button type="button" class="btn btn-primary btn-small" @click="searchTags()">Search Tags</button>
                         <button type="button" class="btn btn-outline-danger btn-small list-delete" @click="clearFilter()">Clear Filter</button>
                     </span>
                     
@@ -121,7 +121,7 @@
                             id="searchField"
                             @keyup.enter="searchText()" 
                         >
-                        <button type="button" class="btn btn-outline-success btn-small" @click="searchText()">Search Text</button>
+                        <button type="button" class="btn btn-primary btn-small" @click="searchText()">Search Text</button>
                         <button type="button" class="btn btn-outline-danger btn-small list-delete" @click="clearFilter()">Clear Filter</button>
                     </span>
             </span>
@@ -130,9 +130,9 @@
                 size="sm" 
                 boundary="window" 
                 text="Add List"
-                variant="outline-primary"
+                variant="outline-dark"
             >
-                <div class="dropdown">
+                <div class="dropdown" role="menuitem">
                     <label for="newListName">New List Name:</label>
                     <input 
                         class="border text-left"
@@ -141,7 +141,7 @@
                     >
                     <br>
                     <button
-                        class="btn btn-outline-success"
+                        class="btn btn-success"
                         v-if="newList.listName.title.length > 0"
                         @click="submitList()"
                     >
@@ -356,10 +356,10 @@
                                         <br>
                                         <p
                                             class="card-text"
-                                            v-if="card.description.title.length == 0 && !card.description.isEditing"
+                                            v-if="card.description.title.trim().length == 0 && !card.description.isEditing"
                                         >
                                             <button
-                                                class="btn btn-outline-primary no-border"
+                                                class="btn btn-outline-dark"
                                                 @click="card.description.isEditing = true"
                                             >
                                                 Add Description
@@ -403,7 +403,7 @@
                                                 <br>
                                                 <div class="card-footer tag-footer">
                                                     <b-dropdown variant="outline" class="add-tag" size="sm" boundary="window" text="Edit Tags">
-                                                        <div class = "dropdown">
+                                                        <div class = "dropdown" role="menuitem">
                                                             <ul>
                                                                 <li
                                                                     class="tags"
@@ -436,7 +436,7 @@
                                                                 <label :for="'editTags-newTagColor-list-' + i + '-card-' + j">Tag Color</label>
                                                                 <br>
                                                                 <button
-                                                                    class="btn btn-outline-success"
+                                                                    class="btn btn-success"
                                                                     v-if="card.newTag.color.length > 0 && card.newTag.name.length > 0 && isValidTagName(card.newTag.name)"
                                                                     @click="addNewTag(card)"
                                                                 >
@@ -481,7 +481,7 @@
                                                         </textarea>
                                                         <br>
                                                         <button type="button" class="btn btn-outline-danger btn-sm" @click="cancelledCommentEdit(comment)">Cancel</button>
-                                                        <button type="button" class="btn btn-outline-success btn-sm" @click="editedComment(comment)">Submit</button>
+                                                        <button type="button" class="btn btn-success btn-sm" @click="editedComment(comment)">Submit</button>
                                                     </div>
                                                     <div class="text-right">
                                                         <b-icon v-if="!comment.editingOrder" @click="comment.editingOrder = true" class="bi bi-arrow-down-up" variant="primary" icon="arrow-down-up"></b-icon>
@@ -530,10 +530,10 @@
                                         <b-dropdown 
                                             size="sm" 
                                             boundary="window" 
-                                            variant="outline-primary"
+                                            variant="outline-dark"
                                             text="Duplicate Card"
                                         >
-                                            <div class="dropdown">
+                                            <div class="dropdown" role="menuitem">
                                                 <label :for="'duplicateCardName-list-' + i + '-card-' + j">New Task Name:</label>
                                                 <input 
                                                     class="border text-left"
@@ -543,7 +543,7 @@
                                             
                                                 <br>
                                                 <button
-                                                    class="btn btn-outline-success"
+                                                    class="btn btn-success"
                                                     v-if="card.duplicateCardName.length > 0 && card.duplicateCardName.title != list.listName.title"
                                                     @click="duplicateCard(card, list.cards)"
                                                 >
@@ -623,7 +623,7 @@
                                             <label :for="'addNewTagColor-list-' + i">Tag Color</label>
                                             <br>
                                             <button
-                                                class="btn btn-outline-primary"
+                                                class="btn btn-success"
                                                 v-if="list.newCard.card.newTag.color.length > 0 && list.newCard.card.newTag.name.length > 0 && isValidTagName(list.newCard.card.newTag.name)"
                                                 @click="addNewTag(list.newCard.card)"
                                             >
@@ -636,7 +636,7 @@
                                             <br>
                                             <div class="center">
                                                 <button
-                                                    class= "btn btn-outline-success"
+                                                    class= "btn btn-success"
                                                     v-if="list.newCard.card.cardName.title.length > 0"
                                                     @click="addNewCard(list, list.newCard.card)"
                                                 >
@@ -658,10 +658,10 @@
                                     <b-dropdown 
                                         size="sm" 
                                         boundary="window" 
-                                        variant="outline-primary"
+                                        variant="outline-dark"
                                         text="Duplicate List"
                                     >
-                                        <div class="dropdown">
+                                        <div class="dropdown" role="menuitem">
                                             <label :for="'duplicateListName-list-' + i">New List Name:</label>
                                             <input 
                                                 class="border text-left"
@@ -669,7 +669,7 @@
                                                 :id="'duplicateListName-list-' + i"
                                             >
                                             <button
-                                                class="btn btn-outline-success"
+                                                class="btn btn-success"
                                                 v-if="newList.listName.title.length > 0"
                                                 @click="duplicateList(list)"
                                             >
