@@ -88,7 +88,7 @@
                             name="searchDate" 
                             v-model="pageData.searchText"
                         >
-                        <button type="button" class="btn btn-primary btn-small" @click="searchDate()">Search Date</button>
+                        <button type="button" class="btn btn-primary btn-small search-button" @click="searchDate()">Search Date</button>
                         <button type="button" class="btn btn-outline-danger btn-small list-delete" @click="clearFilter()">Clear Filter</button>
                     </span>
 
@@ -110,7 +110,7 @@
                                 <br>
                             </li>
                         </ul>
-                        <button type="button" class="btn btn-primary btn-small" @click="searchTags()">Search Tags</button>
+                        <button type="button" class="btn btn-primary btn-small search-button" @click="searchTags()">Search Tags</button>
                         <button type="button" class="btn btn-outline-danger btn-small list-delete" @click="clearFilter()">Clear Filter</button>
                     </span>
                     
@@ -121,7 +121,7 @@
                             id="searchField"
                             @keyup.enter="searchText()" 
                         >
-                        <button type="button" class="btn btn-primary btn-small" @click="searchText()">Search Text</button>
+                        <button type="button" class="btn btn-primary btn-small search-button" @click="searchText()">Search Text</button>
                         <button type="button" class="btn btn-outline-danger btn-small list-delete" @click="clearFilter()">Clear Filter</button>
                     </span>
             </span>
