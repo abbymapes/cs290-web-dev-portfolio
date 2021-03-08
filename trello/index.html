@@ -198,7 +198,7 @@
                                 <div class="text-right">
                                     <b-icon v-if="!list.editingOrder" @click="list.editingOrder = true" class="bi bi-arrow-down-up" variant="primary" icon="arrow-down-up"></b-icon>
                                     <ul v-else class="center">
-                                        <span class="small card-subtitle mb-2 text-muted">List Number:</span>
+                                        <span class="small card-subtitle mb-2">List Number:</span>
                                         <br>
                                         <li
                                             class="tags"
@@ -239,7 +239,7 @@
                                     {{list.listName.title}}
                                 </textarea>
                             </h2>
-                            <span class="card-subtitle mb-2 text-muted task-count">{{list.cards.length}} tasks</span>
+                            <span class="card-subtitle mb-2 task-count">{{list.cards.length}} tasks</span>
 
                             <br>
                             <div class="category">
@@ -309,7 +309,7 @@
                                         <div class="text-right">
                                             <b-icon v-if="!card.editingOrder" @click="card.editingOrder = true" class="bi bi-arrow-down-up" variant="primary" icon="arrow-down-up"></b-icon>
                                             <ul v-else class="center">
-                                                <span class="small card-subtitle mb-2 text-muted">Task Number:</span>
+                                                <span class="small card-subtitle mb-2">Task Number:</span>
                                                 <br>
                                                 <li
                                                     class="tags"
@@ -350,7 +350,7 @@
                                             </textarea>
                                         </h3>
 
-                                        <span class="card-subtitle mb-2 text-muted task-count">
+                                        <span class="card-subtitle mb-2 task-count">
                                             {{card.comments.length}} comments
                                         </span>
                                         <br>
@@ -486,7 +486,7 @@
                                                     <div class="text-right">
                                                         <b-icon v-if="!comment.editingOrder" @click="comment.editingOrder = true" class="bi bi-arrow-down-up" variant="primary" icon="arrow-down-up"></b-icon>
                                                         <ul v-else class="center">
-                                                            <span class="small card-subtitle mb-2 text-muted">Sub-Task Number:</span>
+                                                            <span class="small card-subtitle mb-2">Sub-Task Number:</span>
                                                             <br>
                                                             <li
                                                                 class="tags"
