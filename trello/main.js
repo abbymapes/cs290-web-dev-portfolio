@@ -4,24 +4,29 @@
  * @author Abby Mapes
  */
 
+ 
 const app = new Vue({
     data () {
         return {
             pageData: pageData,
+            selectedType: pageData.selectedType,
             pageBackground: pageData.pageBackground,
             lists: columns,
-            newTag: {
-                name: "", 
-                color: ""
-            },
+            currentList: "full",
             newList: {
                 listName: {
                     title: "", 
-                    isEditing: false
+                    isEditing: false,
                 },
-                cards: []
+                editingOrder: false,
+                showInSearch: true,
+                cards: [],
+                newCard: {}
             },
-            duplicateCardName: ""
+            duplicateCardName: "",
+            globalEdit: {
+                dragState: null,
+            }
         };
     },
 
@@ -54,7 +59,15 @@ const app = new Vue({
          */
         displayDate (dateString) {
             let deadlineDate = new Date(dateString);
-            return deadlineDate.toLocaleDateString() + ", " + deadlineDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            return deadlineDate.toLocaleDateString();
+        }, 
+
+        /*
+         * Returns a String of date to display for card
+         */
+        displayTime (dateString) {
+            let deadlineDate = new Date(dateString);
+            return deadlineDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         }, 
 
         /*
@@ -66,7 +79,7 @@ const app = new Vue({
             } else {
                 this.$set(cardTags, cardTags.length, {name: tagName});
             }
-            this.lists = columns;
+            this.refreshData();
         }, 
 
         /*
@@ -74,15 +87,15 @@ const app = new Vue({
          * so they can re-use it later, as well as adding the tag to the 
          * card the user added the tag to
          */
-        addNewTag(cardTags) {
-            this.$set(this.pageData.tags, this.pageData.tags.length, this.newTag);
-            this.$set(cardTags, cardTags.length, {name: this.newTag.name});
-            this.newTag= {
+        addNewTag(card) {
+            this.$set(this.pageData.tags, this.pageData.tags.length, card.newTag);
+            this.$set(card.tags, card.tags.length, {name: card.newTag.name});
+            card.newTag= {
                 name: "", 
                 color: ""
             };
             this.pageData = pageData;
-            this.lists = columns;
+            this.refreshData();
         }, 
 
         /*
@@ -90,15 +103,53 @@ const app = new Vue({
          * new list
          */
         submitList() {
+            this.newList.newCard = this.getEmptyNewCardList();
             this.$set(columns, columns.length, this.newList);
             this.newList= {
                 listName: {
                     title: "", 
-                    isEditing: false
+                    isEditing: false,
                 },
-                cards: []
+                editingOrder: false,
+                showInSearch: true,
+                cards: [], 
+                newCard: {}
             };
         }, 
+
+        /*
+         * Returns initial empty new card proprety for a list
+         */
+        getEmptyNewCardList() {
+            return {
+                isEditing: false,
+                card: {
+                    cardName: {
+                        title: "",
+                        isEditing: false
+                    },
+                    description : {
+                        title: "",
+                        isEditing: false 
+                    },
+                    color: "",
+                    showInSearch: true,
+                    deadline: {
+                        time: "",
+                        isEditing: false 
+                    },
+                    tags: [],
+                    comments: [], 
+                    newComment: "",
+                    duplicateCardName: "",
+                    newTag: {
+                        name: "", 
+                        color: ""
+                    },
+                    editingOrder: false
+                }
+            };
+        },
 
         /*
          * Returns the color of the card, or the default color if the 
@@ -115,10 +166,29 @@ const app = new Vue({
          * Adds comment to card when user enters a new one
          */
         enteredNewComment(commentList, card) {
-            this.$set(commentList, commentList.length, {text: card.newComment});
+            this.$set(commentList, commentList.length, {text: card.newComment, 
+                                                        isEditing: false,
+                                                        newComment: card.newComment,
+                                                        editingOrder: false});
             card.newComment = "";
-            this.lists = columns;
+            this.refreshData();
         }, 
+
+        /*
+         * Edits comment to display new text
+         */
+        editedComment(comment) {
+            comment.text = comment.newComment;
+            comment.isEditing = false;
+        },
+
+        /*
+         * Cancels edited comment and displays original comment
+         */
+        cancelledCommentEdit(comment) {
+            comment.newComment = comment.text;
+            comment.isEditing = false;
+        },
 
         /*
          * Returns index of tag in tag list
@@ -149,38 +219,310 @@ const app = new Vue({
         }, 
 
         /*
+         * Returns true if the tag is a valid name, meaning 
+         * it is unique
+         */
+        isValidTagName(newName) {
+            let isValid = true;
+            pageData.tags.forEach(tag => {
+                if (tag.name == newName) {
+                    isValid = false;
+                } 
+            });
+            return isValid;
+        }, 
+
+        /*
          * Deletes element at index specified from list parameeter
          */
-        deleteItem(index, list) {
+        deleteItem(list, index) {
             this.$delete(list, index);
-            this.lists = columns;
+            this.refreshData();
         }, 
+
         /*
          * Duplicates list with a new name
          */
         duplicateList(list) {
             let cards = JSON.parse(JSON.stringify(list.cards));
             this.newList.cards = cards;
+            this.newList.newCard = this.getEmptyNewCardList();
             this.$set(columns, columns.length, this.newList);
             this.newList= {
                 listName: {
                     title: "", 
-                    isEditing: false
+                    isEditing: false,
                 },
-                cards: []
+                editingOrder: false,
+                showInSearch: true,
+                cards: [], 
+                newCard: {}
             };
-            this.lists = columns;
+            this.refreshData();
+        }, 
+
+        /*
+         * Duplicates card with a new name
+         */
+        duplicateCard(card, cardList) {
+            let cardCopy = JSON.parse(JSON.stringify(card));
+            cardCopy.cardName.title = card.duplicateCardName;
+            cardCopy.duplicateCardName = "";
+            this.$set(cardList, cardList.length, cardCopy);
+            card.duplicateCardName = "";
+            this.refreshData();
+        }, 
+
+        /*
+         * Adds new card for the specified list
+         */
+        addNewCard(list, card) {
+            this.$set(list.cards, list.cards.length, card);
+            list.newCard = this.getEmptyNewCardList();
+            this.refreshData();
+        }, 
+
+        /*
+         * Clears new card property for list parameter
+         */
+        clearNewCard(list) {
+            list.newCard = this.getEmptyNewCardList();
+            this.refreshData();
+        },
+
+        /*
+         * Remember starting point of drag so item can be removed 
+         * after it is successfully dropped
+         */
+        startDrag (group, item, index) {
+            this.globalEdit.dragState = { group: group, item: item, index: index };
+        },
+
+        /*
+         * Add card to given group by dropping it
+         */
+        onDrop (group) {
+            this.deleteItem(this.globalEdit.dragState.group, this.globalEdit.dragState.index);
+            //this.removeLink(this.globalEdit.dragState.group, this.globalEdit.dragState.item);
+            this.addNewCard(group, this.globalEdit.dragState.item);
+            this.globalEdit.dragState = null;
+        },
+
+        /*
+         * Puts list[old] in list[newIndex] and shifts all other indexes accordingly
+         */
+        changeOrder(list, newIndex, old) {
+            let oldItem = list[old];
+            oldItem.editingOrder = false;
+
+            this.deleteItem(list, old);
+            let listCopy = JSON.parse(JSON.stringify(list));
+            listCopy.forEach((element, i) => {
+                listCopy[i].editingOrder = false;
+                if (i < newIndex) {
+                    this.$set(list, i, listCopy[i]);
+                } else if (i == newIndex) {
+                    this.$set(list, i, oldItem);
+                } else if (i > newIndex) {
+                    this.$set(list, i, listCopy[i-1]);
+                }
+            });
+            if (newIndex == list.length) {
+                this.$set(list, list.length, oldItem);
+            } else {
+                this.$set(list, list.length, listCopy[listCopy.length-1]);
+            }
+            this.refreshData();
+        },
+
+        /*
+         * Gets display text for the filter selected
+         */
+        getSearchName(selectedType) {
+            let name = "";
+            this.pageData.searchTypes.forEach(category  => {
+                if (category.type == selectedType) {
+                    name = category.displayText;
+                }
+            });
+            return name;
         }, 
         /*
-         * TODO: Implement searching
+         * Filter data to match inputted date and dateType
          */
-        searchData(list) {
+        searchDate() {
+            let localSearchTime = new Date(pageData.searchText);
+            let searchTime = new Date(Date.UTC(localSearchTime.getUTCFullYear(), localSearchTime.getUTCMonth(), localSearchTime.getUTCDate()));
+            searchTime.setHours(0,0,0,0);
+            columns.forEach((list, i) => {
+                let matchingCards = 0;
+                list.cards.forEach(card => {
+                    let localCardTime = new Date(card.deadline.time);
+                    let cardTime = new Date(Date.UTC(localCardTime.getUTCFullYear(), localCardTime.getUTCMonth(), localCardTime.getUTCDate()));
+                    cardTime.setHours(0,0,0,0);
 
+                    if (this.pageData.dateType == "Before") {
+                        card.showInSearch = (cardTime < searchTime);
+                        if (card.showInSearch) {
+                            matchingCards += 1;
+                        } 
+                    } else if (this.pageData.dateType == "On") {
+                        card.showInSearch = (+cardTime == +searchTime);
+                        if (card.showInSearch) {
+                            matchingCards += 1;
+                        } 
+                    } else {
+                        card.showInSearch = (cardTime > searchTime);
+                        if (card.showInSearch) {
+                            matchingCards += 1;
+                        } 
+                    }
+                });
+                list.showInSearch = (matchingCards > 0);
+            });
+            this.currentList = "date-filter";
+        },
+
+        /*
+         * Sets display for each list results based on type of search
+         */
+        searchText() {
+            let searchResults = [];
+            if (this.selectedType == "list-name") {
+                searchResults = this.searchListName();
+            } else if (this.selectedType == "task-name") {
+                searchResults = this.searchCard("title");
+            } else if (this.selectedType == "description") {
+                searchResults = this.searchCard("description");
+            } else if (this.selectedType == "sub-tasks") {
+                searchResults = this.searchCard("subtask");
+            }
+            this.currentList = "text-filter";
+        },
+
+        /*
+         * Sets showInSearch to true for all lists that match filter and 
+         * false for all lists that don't
+         */
+        searchListName() {
+            let searchText = this.pageData.searchText.toLowerCase();
+            columns.forEach((list, i) => {
+                list.showInSearch = (list.listName.title.toLowerCase().includes(searchText));
+            });
+        },
+
+        /*
+         * Sets showInSearch for all lists that include the search text in the specified property
+         * parameter, which is either 'title', 'description' or 'subtask', and for all according
+         * cards within that list
+         */
+        searchCard(property) {
+            let searchText = this.pageData.searchText.toLowerCase();
+            columns.forEach((list, i) => {
+                let matchingCards = 0;
+                list.cards.forEach(card => {
+                    if (property == "title") {
+                        card.showInSearch = (card.cardName.title.toLowerCase().includes(searchText));
+                        if (card.showInSearch) {
+                            matchingCards += 1;
+                        } 
+                    } else if (property == "description") {
+                        card.showInSearch = (card.description.title.toLowerCase().includes(searchText));
+                        if (card.showInSearch) {
+                            matchingCards += 1;
+                        } 
+                    } else {
+                        let subtaskContainsText = false;
+                        card.comments.forEach(comment => {
+                            if (comment.text.toLowerCase().includes(searchText)) {
+                                subtaskContainsText = true;
+                            }
+                        });
+                        card.showInSearch = subtaskContainsText;
+                        if (subtaskContainsText) {
+                            matchingCards += 1;
+                        }
+                    }
+                });
+                list.showInSearch = (matchingCards > 0);
+            });
+        },
+
+        /*
+         * Sets showInSearch to true for all lists that include cards that are tagged with the selected
+         * search tags (and all such cards), and false for all lists that don't
+         */
+        searchTags() {
+            let searchTags = this.pageData.searchTags;
+            columns.forEach((list, i) => {
+                let matchingCards = 0;
+                list.cards.forEach(card => {
+                    let containsTag = false;
+                    card.tags.forEach(tag => {
+                        if (searchTags.includes(tag.name)) {
+                            containsTag = true;
+                        }
+                    });
+                    card.showInSearch = containsTag;
+                    if (containsTag) {
+                        matchingCards += 1;
+                    }
+                });
+                list.showInSearch = (matchingCards > 0);
+            });
+            this.currentList = "tag-filter";
+        },
+
+        /*
+         * Refreshes data once deadlines of tasks have been changed
+         * Necessary for when user edits deadline of task while filtering 
+         * for certain deadlines. Ensures only tasks matching those deadlines
+         * show up
+         */
+        setDeadline(card) {
+            card.deadline.isEditing = false;
+            this.refreshData();
+        },
+
+        /*
+         * Clear filter and display all data
+         */
+        clearFilter() {
+            this.pageData.searchText = "";
+            this.pageData.searchTags = [];
+            this.pageData.dateType = "Before";
+            this.currentList = "full";
+            columns.forEach(list => {
+                list.showInSearch = true;
+                list.cards.forEach(card => {
+                    card.showInSearch = true;
+                });
+            });
+        },
+
+        /*
+         * Refreshes list of data to display on the screen, based on 
+         * the current list being shown. Current list types include :
+         * 'full', 'date-filter', 'text-filter' and 'tag-filter'
+         */
+        refreshData() {
+            this.lists = columns;
+            if (this.currentList == "full") {
+                this.clearFilter();
+            } else if (this.currentList == 'date-filter') {
+                this.searchDate();
+            } else if (this.currentList == 'text-filter') {
+                this.searchText();
+            } else {
+                this.searchTags();
+            }
         }
     },
 
     watch: {
-
+        selectedType() {
+            this.clearFilter();
+        }
     },
 
     mounted () {

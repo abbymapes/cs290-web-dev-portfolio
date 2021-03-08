@@ -4,7 +4,9 @@
  * @author Abby Mapes
  */
 
-
+main {
+    height: 110%;
+}
 body {
     height: fit-content;
 }
@@ -16,6 +18,38 @@ body {
      padding: 10px 0;
  }
 
+ .no-border {
+     border: none;
+ }
+
+ input {
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    text-align: inherit;
+    border-width: 0.5px;
+    border-style: inherit;
+ }
+
+ .fit-width {
+    width: 100%;
+ }
+
+ textarea {
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    text-align: inherit;
+    border-width: 0.5px;
+    border-style: solid;
+    width: 100%;
+ }
+
+ input.border {
+    border-width: 0.5px;
+    border-style: inherit;
+ }
+
  .top-bar {
      float: left;
      display: block;
@@ -23,35 +57,43 @@ body {
      width: 100%;
      margin: auto;
      background-color: white;
+     padding: 10px;
      padding-bottom: 20px;
  }
 
- .columns {
-    display: inline-block;
-}
+ .card-columns {
+    padding: 10px;
+ }
 
  .column {
     text-align: center;
     box-sizing: border-box;
     border-radius: 16px;
-    padding: 1rem;
     padding-bottom: 2rem;
-    margin: 20px;
     float: left;
     background-color: white;
     width: 350px;
 }
 
+.card-list {
+    background-color: rgb(255, 255, 255);
+    list-style: none;
+    font-weight: normal;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 5px;
+ }
+
  .card {
     background-color: rgb(255, 255, 255);
     list-style: none;
     font-weight: normal;
-    text-align: left;
     box-sizing: border-box;
+    padding-bottom: 1rem;
     border-radius: 5px;
-    margin: 5px;
-    padding: 1rem;
+    padding: 5px;
  }
+
  .task-count {
      float: right;
  }
@@ -65,15 +107,11 @@ body {
  }
 
  .comment-list {
-    border-style: solid;
-    border-width: 1px;
     background-color: white;
     height: fit-content;
  }
 
 .comment-item {
-    border-style: solid;
-    border-width: 1px;
     background-color: white;
     max-width: inherit;
     word-wrap: break-word;
@@ -82,6 +120,7 @@ body {
 
 .comment-input {
     width: 95%;
+    text-align: left;
 }
 
 .comment {
@@ -91,7 +130,6 @@ body {
 
  h2 {
      text-align: center;
-     width: 100%;
      color: black;
  }
 
@@ -105,12 +143,8 @@ body {
     text-align: right;
 }
 
-.overdue {
-    background-color: rgb(255, 98, 98);
-    outline-style: solid;
-    outline-color: black;
-    outline-width: 1px;
-    padding: 2px;
+.small {
+    font-size: 12pt;
 }
 
 .tag-section {
@@ -126,18 +160,44 @@ body {
     display: inline-block;
 }
 
+.overdue{
+    background-color: #ff000080;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+    padding-right: 5px;
+}
+
+.dropdown {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
 .btn-outline-danger {
-    float: left;
     border-style: none;
 }
 
-.btn-outline-success {
-    float: right;
-    border-style: none;
+.tag-card {
+    border: none;
+}
+
+
+.tag-footer {
+    text-align: right;
+}
+
+.add-tag {
+    text-align: right;
 }
 
 .search {
     text-align: right;
+    float: right;
 }
 
 .task-color-input {
@@ -151,4 +211,15 @@ body {
 
 .card-color-label {
     display: inline;
+}
+
+.filter-text {
+    padding-top: 10px;
+}
+
+.filter {
+    border-style: solid;
+    border-width: 0.5px;
+    border-color: black;
+    background-color:rgba(0, 0, 0, 0.25)
 }
