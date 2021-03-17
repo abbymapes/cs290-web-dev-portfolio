@@ -4,530 +4,510 @@
  * @author Abby Mapes
  */
 
- 
 const app = new Vue({
-    data () {
+    data() {
         return {
-            pageData: pageData,
-            selectedType: pageData.selectedType,
-            pageBackground: pageData.pageBackground,
-            lists: columns,
-            currentList: "full",
-            newList: {
-                listName: {
-                    title: "", 
-                    isEditing: false,
-                },
-                editingOrder: false,
-                showInSearch: true,
-                cards: [],
-                newCard: {}
-            },
-            duplicateCardName: "",
-            globalEdit: {
-                dragState: null,
-            }
+            trelloDataStore,
+            pageData: trelloDataStore.pageData,
+            selectedType: trelloDataStore.pageData.selectedType,
+            pageBackground: trelloDataStore.pageData.pageBackground,
+            lists: trelloDataStore.columns,
+            listDragging: false,
+            selectedDisplayName: "",
+            currentList: "full"
         };
     },
 
     methods: {
         /*
-         * Gets the color of a tag from the tag name
+         * Adds tag with tagName to the specified card in specified list
          */
-        getTagColor(tagName) {
-            let color = "";
-            this.pageData.tags.forEach(tagObject  => {
-                if (tagObject.name == tagName) {
-                    color = tagObject.color;
-                }
-            });
-            return color;
-        }, 
-
-        /*
-         * Determines whether the current date is later than 
-         * dateString 
-         */
-        deadlinePassed (dateString) {
-            let currentDate = new Date();
-            let deadlineDate = new Date(dateString);
-            return currentDate > deadlineDate;
-        }, 
-
-        /*
-         * Returns a String of date to display for card
-         */
-        displayDate (dateString) {
-            let deadlineDate = new Date(dateString);
-            return deadlineDate.toLocaleDateString();
-        }, 
-
-        /*
-         * Returns a String of date to display for card
-         */
-        displayTime (dateString) {
-            let deadlineDate = new Date(dateString);
-            return deadlineDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        }, 
-
-        /*
-         * Called when a user adds or removes a tag from a card
-         */
-        editTags(tagName, cardTags) {
-            if (this.hasTag(tagName, cardTags)) {
-                this.$delete(cardTags, this.getTagIndex(tagName, cardTags) );
-            } else {
-                this.$set(cardTags, cardTags.length, {name: tagName});
-            }
+        addTag(tagName, tagIndex, listIndex, cardIndex) {
+            this.trelloDataStore.addExistingTag(tagName, listIndex, cardIndex);
             this.refreshData();
-        }, 
+        },
+
+        /*
+         * Deletes tag with at tagIndex from the specified card in specified list
+         */
+        deleteTag(tagName, tagIndex, listIndex, cardIndex) {
+            this.trelloDataStore.deleteTag(tagIndex, listIndex, cardIndex);
+            this.refreshData();
+        },
+
+        /*
+         * Adds a new tag, that the user hasn't defined yet to page settings,
+         * so they can re-use it later
+         */
+        addTagToList(newTag) {
+            this.trelloDataStore.addNewTag(newTag);
+            this.pageData = trelloDataStore.pageData;
+            this.refreshData();
+        },
 
         /*
          * Adds a new tag, that the user hasn't defined yet to page settings,
          * so they can re-use it later, as well as adding the tag to the 
          * card the user added the tag to
          */
-        addNewTag(card) {
-            this.$set(this.pageData.tags, this.pageData.tags.length, card.newTag);
-            this.$set(card.tags, card.tags.length, {name: card.newTag.name});
-            card.newTag= {
-                name: "", 
-                color: ""
-            };
-            this.pageData = pageData;
+        addNewTag(newTag, listIndex, cardIndex) {
+            this.addTagToList(newTag);
+            this.trelloDataStore.addExistingTag(newTag.name, listIndex, cardIndex);
+            this.pageData = trelloDataStore.pageData;
             this.refreshData();
-        }, 
+        },
 
         /*
-         * Adds new list to the project when a user specifies a 
-         * new list
+         * Adds new blank list to the project with newName as the list name
+         * when  a user specifies a new list
          */
-        submitList() {
-            this.newList.newCard = this.getEmptyNewCardList();
-            this.$set(columns, columns.length, this.newList);
-            this.newList= {
-                listName: {
-                    title: "", 
-                    isEditing: false,
-                },
-                editingOrder: false,
+        addBlankList(newName) {
+            this.trelloDataStore.addNewList({
+                listName: newName,
                 showInSearch: true,
-                cards: [], 
-                newCard: {}
-            };
-        }, 
-
-        /*
-         * Returns initial empty new card proprety for a list
-         */
-        getEmptyNewCardList() {
-            return {
-                isEditing: false,
-                card: {
-                    cardName: {
-                        title: "",
-                        isEditing: false
-                    },
-                    description : {
-                        title: "",
-                        isEditing: false 
-                    },
-                    color: "",
-                    showInSearch: true,
-                    deadline: {
-                        time: "",
-                        isEditing: false 
-                    },
-                    tags: [],
-                    comments: [], 
-                    newComment: "",
-                    duplicateCardName: "",
-                    newTag: {
-                        name: "", 
-                        color: ""
-                    },
-                    editingOrder: false
-                }
-            };
-        },
-
-        /*
-         * Returns the color of the card, or the default color if the 
-         * user doesn't specify a card color
-         */
-        getCardColor(color) {
-            if (!color) {
-                return "#EEEEEE";
-            } 
-            return color;
-        }, 
-
-        /*
-         * Adds comment to card when user enters a new one
-         */
-        enteredNewComment(commentList, card) {
-            this.$set(commentList, commentList.length, {text: card.newComment, 
-                                                        isEditing: false,
-                                                        newComment: card.newComment,
-                                                        editingOrder: false});
-            card.newComment = "";
-            this.refreshData();
-        }, 
-
-        /*
-         * Edits comment to display new text
-         */
-        editedComment(comment) {
-            comment.text = comment.newComment;
-            comment.isEditing = false;
-        },
-
-        /*
-         * Cancels edited comment and displays original comment
-         */
-        cancelledCommentEdit(comment) {
-            comment.newComment = comment.text;
-            comment.isEditing = false;
-        },
-
-        /*
-         * Returns index of tag in tag list
-         */
-        getTagIndex (tagName, tagList) {
-            let index = -1;
-            let i = 0;
-            tagList.forEach(item => {
-                if (item.name == tagName) {
-                    index = i;
-                } 
-                i += 1;
+                cards: []
             });
-            return index;
-        },
-
-        /*
-         * Returns true if the tag list contains the tag name
-         */
-        hasTag(tagName, tagList) {
-            let isChecked = false;
-            tagList.forEach(tag => {
-                if (tag.name == tagName) {
-                    isChecked = true;
-                } 
-            });
-            return isChecked;
-        }, 
-
-        /*
-         * Returns true if the tag is a valid name, meaning 
-         * it is unique
-         */
-        isValidTagName(newName) {
-            let isValid = true;
-            pageData.tags.forEach(tag => {
-                if (tag.name == newName) {
-                    isValid = false;
-                } 
-            });
-            return isValid;
-        }, 
-
-        /*
-         * Deletes element at index specified from list parameeter
-         */
-        deleteItem(list, index) {
-            this.$delete(list, index);
-            this.refreshData();
-        }, 
-
-        /*
-         * Duplicates list with a new name
-         */
-        duplicateList(list) {
-            let cards = JSON.parse(JSON.stringify(list.cards));
-            this.newList.cards = cards;
-            this.newList.newCard = this.getEmptyNewCardList();
-            this.$set(columns, columns.length, this.newList);
-            this.newList= {
-                listName: {
-                    title: "", 
-                    isEditing: false,
-                },
-                editingOrder: false,
-                showInSearch: true,
-                cards: [], 
-                newCard: {}
-            };
-            this.refreshData();
-        }, 
-
-        /*
-         * Duplicates card with a new name
-         */
-        duplicateCard(card, cardList) {
-            let cardCopy = JSON.parse(JSON.stringify(card));
-            cardCopy.cardName.title = card.duplicateCardName;
-            cardCopy.duplicateCardName = "";
-            this.$set(cardList, cardList.length, cardCopy);
-            card.duplicateCardName = "";
-            this.refreshData();
-        }, 
-
-        /*
-         * Adds new card for the specified list
-         */
-        addNewCard(list, card) {
-            this.$set(list.cards, list.cards.length, card);
-            list.newCard = this.getEmptyNewCardList();
-            this.refreshData();
-        }, 
-
-        /*
-         * Clears new card property for list parameter
-         */
-        clearNewCard(list) {
-            list.newCard = this.getEmptyNewCardList();
             this.refreshData();
         },
 
         /*
-         * Remember starting point of drag so item can be removed 
-         * after it is successfully dropped
+         * Adds comment to specified card in specified list when user enters a new one
          */
-        startDrag (group, item, index) {
-            this.globalEdit.dragState = { group: group, item: item, index: index };
+        enteredNewComment(newComment, listIndex, cardIndex) {
+            this.trelloDataStore.addNewComment(newComment, listIndex, cardIndex);
+            this.refreshData();
         },
 
         /*
-         * Add card to given group by dropping it
+         * Edits comment at specified index in specified card within specified list
+         * to display new text stored newComment
          */
-        onDrop (group) {
-            this.deleteItem(this.globalEdit.dragState.group, this.globalEdit.dragState.index);
-            //this.removeLink(this.globalEdit.dragState.group, this.globalEdit.dragState.item);
-            this.addNewCard(group, this.globalEdit.dragState.item);
-            this.globalEdit.dragState = null;
+        editComment(newComment, listIndex, cardIndex, commentIndex) {
+            this.trelloDataStore.editComment(newComment, listIndex, cardIndex, commentIndex);
+            this.refreshData();
         },
 
         /*
-         * Puts list[old] in list[newIndex] and shifts all other indexes accordingly
+         * Changes card color to specified color
          */
-        changeOrder(list, newIndex, old) {
-            let oldItem = list[old];
-            oldItem.editingOrder = false;
+        changeCardColor(newColor, listIndex, cardIndex) {
+            this.trelloDataStore.changeCardColor(newColor, listIndex, cardIndex);
+            this.refreshData();
+        },
 
-            this.deleteItem(list, old);
-            let listCopy = JSON.parse(JSON.stringify(list));
-            listCopy.forEach((element, i) => {
-                listCopy[i].editingOrder = false;
-                if (i < newIndex) {
-                    this.$set(list, i, listCopy[i]);
-                } else if (i == newIndex) {
-                    this.$set(list, i, oldItem);
-                } else if (i > newIndex) {
-                    this.$set(list, i, listCopy[i-1]);
-                }
-            });
-            if (newIndex == list.length) {
-                this.$set(list, list.length, oldItem);
+        /*
+         * Deletes comment at specified index from specified card
+         * in specified list
+         */
+        deleteComment(listIndex, cardIndex, commentIndex) {
+            this.trelloDataStore.deleteComment(listIndex, cardIndex, commentIndex);
+            this.refreshData();
+        },
+
+        /*
+         * Deletes list at specified index
+         */
+        deleteList(listIndex) {
+            this.trelloDataStore.deleteList(listIndex);
+            this.refreshData();
+        },
+
+        /*
+         * Updates list in trello datastore
+         */
+        updateCardColumns(lists) {
+            this.trelloDataStore.updateColumns(lists);
+            this.refreshData();
+        },
+
+        /*
+         * Duplicates card at specified index in specified list and
+         * sets the new card name to newName 
+         */
+        duplicateCard(newName, listIndex, cardIndex) {
+            this.trelloDataStore.duplicateCard(newName, listIndex, cardIndex);
+            this.refreshData();
+        },
+
+        /*
+         * Duplicates list at listIndex and replaces name with newName
+         */
+        duplicateList(newName, listIndex) {
+            this.trelloDataStore.duplicateList(newName, listIndex);
+            this.refreshData();
+        },
+
+        /*
+         * Change background color of project page
+         */
+        changeBackgroundColor(color) {
+            this.trelloDataStore.changeBackground(color);
+            this.pageBackground = color;
+        },
+
+        /*
+         * Update project title to projectName
+         */
+        editProjectName(projectName) {
+            this.trelloDataStore.updateProjectName(projectName);
+        },
+
+        /*
+         * Updates description of card at specified index in specified list 
+         * to text 
+         */
+        editCardDescription(text, listIndex, cardIndex) {
+            this.trelloDataStore.updateDescription(text, listIndex, cardIndex);
+            this.refreshData();
+        },
+
+        /*
+         * Updates deadline of card at specified index in specified list 
+         * to deadline 
+         */
+        editCardDeadline(deadline, listIndex, cardIndex) {
+            this.trelloDataStore.updateDeadline(deadline, listIndex, cardIndex);
+            this.refreshData();
+        },
+
+        /*
+         * Deletes card at specified index in specified list
+         */
+        deleteCard(listIndex, cardIndex) {
+            this.trelloDataStore.deleteCard(listIndex, cardIndex);
+            this.refreshData();
+        },
+
+        /*
+         * Edits name of list, if nameType is 'List', or edits 
+         * name of card otherwise
+         */
+        editName(nameType, inputtedName, listIndex, cardIndex) {
+            if (nameType == "List") {
+                this.trelloDataStore.updateListName(inputtedName, listIndex);
             } else {
-                this.$set(list, list.length, listCopy[listCopy.length-1]);
+                this.trelloDataStore.updateCardName(inputtedName, listIndex, cardIndex);
             }
             this.refreshData();
         },
 
         /*
-         * Gets display text for the filter selected
+         * Edits the order of specified orderType, which is either a 
+         * List, Card, or Comment by switching item at oldIndex to newIndex
          */
-        getSearchName(selectedType) {
-            let name = "";
-            this.pageData.searchTypes.forEach(category  => {
-                if (category.type == selectedType) {
-                    name = category.displayText;
-                }
-            });
-            return name;
-        }, 
+        editOrder(orderType, listIndex, cardIndex, newIndex, oldIndex) {
+            if (orderType == "List") {
+                this.trelloDataStore.updateListOrder(newIndex, oldIndex);
+            } else if (orderType == "Card") {
+                this.trelloDataStore.updateCardOrder(listIndex, newIndex, oldIndex);
+            } else {
+                this.trelloDataStore.updateCommentOrder(listIndex, cardIndex, newIndex, oldIndex);
+            }
+            this.refreshData();
+        },
+
         /*
-         * Filter data to match inputted date and dateType
+         * Adds new card to the specified list
+         */
+        addNewCard(card, listIndex) {
+            this.trelloDataStore.addNewCard(card, listIndex);
+            this.refreshData();
+        },
+
+        /*
+         * Stores the most recent date search information so that if a user
+         * updates any content of a card being displayed in teh current filter, we can 
+         * reload the updated cards with the current filter (i.e. they can update cards 
+         * within the current filter and view changes accordingly based on filter)
+         */
+        storeRecentDateSearch(date, dateType, displayText) {
+            this.trelloDataStore.storeDateSearch(date, dateType);
+            this.selectedDisplayName = displayText;
+            this.searchDate();
+        },
+
+        /*
+         * Stores the most recent tag search information so that if a user
+         * updates the content of a card while viewing filtered cards by tags, we can 
+         * reload the data with the current filter (i.e. they can update cards 
+         * within the current filter and view changes accordingly based on filter)
+         */
+        storeRecentTagSearch(tags, displayText) {
+            this.trelloDataStore.storeTagsSearch(tags);
+            this.selectedDisplayName = displayText;
+            this.searchTags();
+        },
+
+        /*
+         * Determines list and card indices that should be displayed in the current 
+         * date search (which wasn't supported by the search component)
          */
         searchDate() {
-            let localSearchTime = new Date(pageData.searchText);
+            let localSearchTime = new Date(trelloDataStore.pageData.recentDateSearch);
             let searchTime = new Date(Date.UTC(localSearchTime.getUTCFullYear(), localSearchTime.getUTCMonth(), localSearchTime.getUTCDate()));
-            searchTime.setHours(0,0,0,0);
-            columns.forEach((list, i) => {
-                let matchingCards = 0;
-                list.cards.forEach(card => {
-                    let localCardTime = new Date(card.deadline.time);
-                    let cardTime = new Date(Date.UTC(localCardTime.getUTCFullYear(), localCardTime.getUTCMonth(), localCardTime.getUTCDate()));
-                    cardTime.setHours(0,0,0,0);
+            searchTime.setHours(0, 0, 0, 0);
+            let listsShown = [];
+            let cardsShown = [];
 
-                    if (this.pageData.dateType == "Before") {
-                        card.showInSearch = (cardTime < searchTime);
-                        if (card.showInSearch) {
-                            matchingCards += 1;
-                        } 
-                    } else if (this.pageData.dateType == "On") {
-                        card.showInSearch = (+cardTime == +searchTime);
-                        if (card.showInSearch) {
-                            matchingCards += 1;
-                        } 
+            trelloDataStore.columns.forEach((list, i) => {
+                let matchingCards = [];
+                list.cards.forEach((card, cardIndex) => {
+                    let localCardTime = new Date(card.deadline);
+                    let cardTime = new Date(Date.UTC(localCardTime.getUTCFullYear(), localCardTime.getUTCMonth(), localCardTime.getUTCDate()));
+                    cardTime.setHours(0, 0, 0, 0);
+
+                    let dateType = trelloDataStore.pageData.recentDateSearchType;
+
+                    if (dateType == "Before") {
+                        if (cardTime < searchTime) {
+                            matchingCards.push(cardIndex);
+                        }
+                    } else if (dateType == "On") {
+                        if (+cardTime == +searchTime) {
+                            matchingCards.push(cardIndex);
+                        }
                     } else {
-                        card.showInSearch = (cardTime > searchTime);
-                        if (card.showInSearch) {
-                            matchingCards += 1;
-                        } 
+                        if (cardTime > searchTime) {
+                            matchingCards.push(cardIndex);
+                        }
                     }
                 });
-                list.showInSearch = (matchingCards > 0);
+                if (matchingCards.length > 0) {
+                    listsShown.push(i);
+                }
+                cardsShown[i] = matchingCards;
             });
+            this.trelloDataStore.showCardSearchResults(listsShown, cardsShown);
             this.currentList = "date-filter";
         },
 
         /*
-         * Sets display for each list results based on type of search
-         */
-        searchText() {
-            let searchResults = [];
-            if (this.selectedType == "list-name") {
-                searchResults = this.searchListName();
-            } else if (this.selectedType == "task-name") {
-                searchResults = this.searchCard("title");
-            } else if (this.selectedType == "description") {
-                searchResults = this.searchCard("description");
-            } else if (this.selectedType == "sub-tasks") {
-                searchResults = this.searchCard("subtask");
-            }
-            this.currentList = "text-filter";
-        },
-
-        /*
-         * Sets showInSearch to true for all lists that match filter and 
-         * false for all lists that don't
-         */
-        searchListName() {
-            let searchText = this.pageData.searchText.toLowerCase();
-            columns.forEach((list, i) => {
-                list.showInSearch = (list.listName.title.toLowerCase().includes(searchText));
-            });
-        },
-
-        /*
-         * Sets showInSearch for all lists that include the search text in the specified property
-         * parameter, which is either 'title', 'description' or 'subtask', and for all according
-         * cards within that list
-         */
-        searchCard(property) {
-            let searchText = this.pageData.searchText.toLowerCase();
-            columns.forEach((list, i) => {
-                let matchingCards = 0;
-                list.cards.forEach(card => {
-                    if (property == "title") {
-                        card.showInSearch = (card.cardName.title.toLowerCase().includes(searchText));
-                        if (card.showInSearch) {
-                            matchingCards += 1;
-                        } 
-                    } else if (property == "description") {
-                        card.showInSearch = (card.description.title.toLowerCase().includes(searchText));
-                        if (card.showInSearch) {
-                            matchingCards += 1;
-                        } 
-                    } else {
-                        let subtaskContainsText = false;
-                        card.comments.forEach(comment => {
-                            if (comment.text.toLowerCase().includes(searchText)) {
-                                subtaskContainsText = true;
-                            }
-                        });
-                        card.showInSearch = subtaskContainsText;
-                        if (subtaskContainsText) {
-                            matchingCards += 1;
-                        }
-                    }
-                });
-                list.showInSearch = (matchingCards > 0);
-            });
-        },
-
-        /*
-         * Sets showInSearch to true for all lists that include cards that are tagged with the selected
-         * search tags (and all such cards), and false for all lists that don't
+         * Determines list and card indices that should be displayed in current
+         * tag search (which wasn't supported by the search component)
          */
         searchTags() {
-            let searchTags = this.pageData.searchTags;
-            columns.forEach((list, i) => {
-                let matchingCards = 0;
-                list.cards.forEach(card => {
+            let searchTags = trelloDataStore.pageData.recentTagSearch;
+            let listsShown = [];
+            let cardsShown = [];
+            trelloDataStore.columns.forEach((list, i) => {
+                let matchingCards = [];
+                list.cards.forEach((card, j) => {
                     let containsTag = false;
                     card.tags.forEach(tag => {
                         if (searchTags.includes(tag.name)) {
                             containsTag = true;
+                            matchingCards.push(j);
                         }
                     });
-                    card.showInSearch = containsTag;
-                    if (containsTag) {
-                        matchingCards += 1;
-                    }
                 });
-                list.showInSearch = (matchingCards > 0);
+                if (matchingCards.length > 0) {
+                    listsShown.push(i);
+                }
+                cardsShown[i] = matchingCards;
             });
-            this.currentList = "tag-filter";
+            this.trelloDataStore.showCardSearchResults(listsShown, cardsShown);
+            this.currentList = "tags-filter";
         },
 
         /*
-         * Refreshes data once deadlines of tasks have been changed
-         * Necessary for when user edits deadline of task while filtering 
-         * for certain deadlines. Ensures only tasks matching those deadlines
-         * show up
-         */
-        setDeadline(card) {
-            card.deadline.isEditing = false;
-            this.refreshData();
-        },
-
-        /*
-         * Clear filter and display all data
-         */
-        clearFilter() {
-            this.pageData.searchText = "";
-            this.pageData.searchTags = [];
-            this.pageData.dateType = "Before";
-            this.currentList = "full";
-            columns.forEach(list => {
-                list.showInSearch = true;
-                list.cards.forEach(card => {
-                    card.showInSearch = true;
-                });
-            });
-        },
-
-        /*
-         * Refreshes list of data to display on the screen, based on 
+         * Refreshes the data being to displayed on the screen based on 
          * the current list being shown. Current list types include :
-         * 'full', 'date-filter', 'text-filter' and 'tag-filter'
+         * 'full', 'date-filter', and 'tag-filter'
+         * 
+         * We don't need to refresh data for text searches, since the
+         * Search component does so for us
          */
         refreshData() {
-            this.lists = columns;
+            this.lists = trelloDataStore.columns;
             if (this.currentList == "full") {
                 this.clearFilter();
             } else if (this.currentList == 'date-filter') {
                 this.searchDate();
-            } else if (this.currentList == 'text-filter') {
-                this.searchText();
             } else {
                 this.searchTags();
             }
+        },
+
+        /*
+         * Takes in results returned from searching through with the Vue 
+         * Search component and determines the list and card indices that 
+         * should be displayed 
+         * 
+         * Note, instead of displaying a new "filtered" list like URLlinks does, 
+         * this Trello project edits the showInSearch boolean value in the data set
+         * which allows us to edit cards while filters are being displayed
+         */
+        handleSearchResults(results, displayText) {
+            this.selectedDisplayName = displayText;
+            if (results.some(group => group.matches) || results.length == 0) {
+                this.currentList = "text-filter";
+                let listsShown = [];
+                let cardsShown = [];
+
+                results.forEach(result => {
+                    let listIndex = result.refIndex;
+                    listsShown.push(listIndex);
+
+                    // If there are matches
+                    if (result.matches) {
+                        let matchingCards = [];
+                        // If the current search is a sub-task search, current match indices will 
+                        // return the index of the comment within a given card, so we have to parse through
+                        // cards to find the appropriate ones to include
+                        if (this.selectedType == 'sub-tasks') {
+                            result.matches.forEach(match => {
+                                let commentIndex = match.refIndex;
+                                let matchingComment = match.value;
+                                let list = this.lists[listIndex];
+                                list.cards.forEach((card, cardIndex) => {
+                                    if (card.comments[commentIndex] && card.comments[commentIndex].text == matchingComment) {
+                                        matchingCards.push(cardIndex);
+                                    }
+                                });
+                            });
+                        } else {
+                            // Otherwise, the current search matches return a refIndex that corresponds
+                            // the the card index, so we can add these straight to the list of cards to 
+                            // add for the current list at index listIndex
+                            result.matches.forEach(match => {
+                                let cardIndex = match.refIndex;
+                                if (cardIndex != null) {
+                                    matchingCards.push(cardIndex);
+                                }
+                            });
+                        }
+                        cardsShown[listIndex] = matchingCards;
+                    }
+                });
+
+                if (this.selectedType == "list-name") {
+                    // If we are filtering by list name, we will display all cards within that list
+                    this.trelloDataStore.showListSearchResults(listsShown, cardsShown);
+                } else {
+                    // If we are not filtering by list name (meaning we are filtering by data within a card), 
+                    // we will display only the cards that match the filter within each list
+                    this.trelloDataStore.showCardSearchResults(listsShown, cardsShown);
+                }
+            } else {
+                // No search took place
+                this.trelloDataStore.clearFilter();
+                this.currentList = "full";
+            }
+        },
+
+        /*
+         * Changes search type when user chooses a new filter 
+         */
+        changeSearchType(newFilter) {
+            this.trelloDataStore.changeFilter(newFilter);
+            this.selectedType = trelloDataStore.pageData.selectedType;
+        },
+
+        /*
+         * Clears the filter and displays all results
+         */
+        clearFilter() {
+            this.trelloDataStore.clearFilter();
+            this.currentList = "full";
         }
     },
-
+    computed: {
+        /*
+         * Boolean indicating whether the full list, or a filtered subset of the 
+         * Trello items are being shown
+         */
+        fullList() {
+            return (this.currentList == "full");
+        }
+    },
     watch: {
+        /*
+         * When changing filter type, clear the filter results
+         */
         selectedType() {
             this.clearFilter();
         }
     },
+    template:
+        `
+    <span>
+        <top-bar
+            :selected-type="selectedType"
+            :page-data="pageData"
+            :lists="lists"
+            @change-background-color="changeBackgroundColor"
+            @change-filter-type="changeSearchType"
+            @search-date="storeRecentDateSearch"
+            @search-tags="storeRecentTagSearch"
+            @search-text="handleSearchResults"
+            @clear-filter="clearFilter"
+            @new-list="addBlankList"
+        >
 
-    mounted () {
+        </top-bar>
 
-    }
+        <main :style="'background-color:' + pageBackground">
+            <project-name
+                class="center"
+                :text="pageData.projectName"
+                @done-editing="editProjectName"
+            ></project-name>
+            
+            <div :class="{'filter': !fullList}">
+                <h2 v-if="!fullList" class="filter-text">
+                    Lists Filtered By: {{selectedDisplayName}}
+                </h2>
+
+                <draggable
+                    :disabled="!fullList"
+                    class="card-columns"
+                    :list="lists"
+                    group="lists"
+                    @start="listDragging = true"
+                    @end="listDragging = false"
+                >
+                    <span
+                        v-for="(list, i) in lists"
+                        :key="i"
+                    >
+                            <list
+                                :tags="pageData.tags"
+                                :list="list"
+                                :lists="lists"
+                                :list-index="i"
+                                :disable-card-dragging="(listDragging || !fullList)"
+
+                                @change-order="editOrder"
+                                @delete-list="deleteList"
+                                @duplicate-list="duplicateList"
+                                
+                                @delete-card="deleteCard"
+                                @change-card-color="changeCardColor"
+                                @add-new-card="addNewCard"
+                                @duplicate-card="duplicateCard"
+
+                                @delete-comment="deleteComment"
+                                @entered-comment="enteredNewComment"
+
+                                @done-editing-name="editName"
+                                @done-editing-deadline="editCardDeadline"
+                                @done-editing-description="editCardDescription"
+                                @done-editing-comment="editComment"
+
+                                @add-new-tag="addNewTag"
+                                @add-new-tag-to-page="addTagToList"
+                                @add-tag="addTag"
+                                @delete-tag="deleteTag"
+
+                                @update-columns="updateCardColumns"
+                            >
+                            </list>
+                    </span>
+                </draggable>
+            </div>
+        </main>
+    </span>
+    `
 });
 
 app.$mount('#app');

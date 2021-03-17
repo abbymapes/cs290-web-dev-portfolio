@@ -7,7 +7,7 @@
  * @author Abby Mapes
  */
 
-
+/*
  let columns = [
 ];
 
@@ -48,8 +48,8 @@ let pageData = {
     dateType: "Before",
     searchTags: []
 };
- 
-/*
+ */
+
  let pageData = {
      projectName: {
          title: "My Monthly To-Do List",
@@ -770,4 +770,3 @@ let pageData = {
         }
     }
 ];
-*/
