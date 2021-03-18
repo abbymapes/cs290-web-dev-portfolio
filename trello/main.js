@@ -339,7 +339,7 @@ const app = new Vue({
          */
         handleSearchResults(results, displayText) {
             this.selectedDisplayName = displayText;
-            if (results.some(group => group.matches) || results.length == 0) {
+            if (results.some(group => group.matches) || results.length != this.lists.length) {
                 this.currentList = "text-filter";
                 let listsShown = [];
                 let cardsShown = [];
@@ -446,9 +446,8 @@ const app = new Vue({
 
         </top-bar>
 
-        <main :style="'background-color:' + pageBackground">
+        <main :style="'background-color:' + pageBackground" class="center">
             <project-name
-                class="center"
                 :text="pageData.projectName"
                 @done-editing="editProjectName"
             ></project-name>

@@ -8,6 +8,18 @@
  */
 
 const trelloDataStore = {
+    pageData : {
+        projectName: "Double Click To Enter A Project Name",
+        pageBackground: "#FFFFFF",
+        selectedType: "list-name",
+        tags: [],
+        recentDateSearch: "",
+        recentDateSearchType: "Before",
+        recentTagSearch: []
+    },
+
+    columns: [],
+    /*
     pageData: {
         projectName: "My Monthly To-Do List",
         pageBackground: "#fab8ff",
@@ -281,7 +293,7 @@ const trelloDataStore = {
             showInSearch: true,
             cards: []
         }
-    ],
+    ],*/
     /*
      * Returns reference to list at parameter index
      */
