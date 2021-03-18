@@ -253,6 +253,7 @@ Vue.component('trello-search', {
             :search="searchTerms"
             :fuse-opts="searchOptions"
             @fuse-results="searchText"
+            title="fuseSearch"
         />
     </span>
     `
