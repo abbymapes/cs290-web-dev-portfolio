@@ -1,0 +1,119 @@
+{
+    "ssr_get_course_offering_resp": {
+      "course_offering_result": {
+        "ssr_terms_offered_count": "6",
+        "ssr_crs_gen_msg": "Course Offering Details",
+        "course_offering": {
+          "crse_id": "023501",
+          "crse_offer_nbr": "1",
+          "institution": "DUKEU",
+          "institution_lov_descr": "Duke University",
+          "subject": "ITALIAN",
+          "subject_lov_descr": "Italian",
+          "catalog_nbr": "  89S",
+          "rqrmnt_group": null,
+          "descrlong": "Topics vary each semester offered. This course is restricted to first-year students. Instructor: Staff",
+          "course_title_long": "First Year Seminar in Italian",
+          "units_minimum": "1",
+          "units_maximum": "1",
+          "grading_basis": "GRD",
+          "grading_basis_lov_descr": "Graded",
+          "consent": "N",
+          "consent_lov_descr": "No Special Consent Required",
+          "ssr_drop_consent": "N",
+          "ssr_drop_consent_lov_descr": "No Special Consent Required",
+          "rqmnt_designtn": null,
+          "rqmnt_designtn_lov_descr": null,
+          "acad_career": "UGRD",
+          "acad_career_lov_descr": "Undergraduate",
+          "ssr_crse_typoff_cd": "OCCASIONAL",
+          "ssr_crse_typoff_cd_lov_descr": "Occasionally",
+          "acad_group": "A&S",
+          "acad_group_lov_descr": "Arts and Sciences",
+          "acad_org": "ROMANCE",
+          "acad_org_lov_descr": "Romance Studies Dept.",
+          "campus": "DUKE",
+          "campus_lov_descr": "Duke University",
+          "rqrmnt_group_descr": null,
+          "crse_topic_descr": null,
+          "crs_topic_id": "0",
+          "units_range": "1.00 ",
+          "course_components": {
+            "course_component": {
+              "crse_id": "023501",
+              "crse_id_lov_descr": "FIRST YEAR SEMINAR IN ITALIAN",
+              "ssr_component": "SEM",
+              "ssr_component_lov_descr": "Seminar",
+              "optional_section": "N"
+            }
+          },
+          "course_attributes": null,
+          "terms_offered": {
+            "term_offered": [
+              {
+                "crse_id": "023501",
+                "crse_offer_nbr": "1",
+                "institution": "DUKEU",
+                "institution_lov_descr": "Duke University",
+                "strm": "1540",
+                "strm_lov_descr": "2015 Fall Term",
+                "acad_career": "UGRD",
+                "acad_career_lov_descr": "Undergraduate"
+              },
+              {
+                "crse_id": "023501",
+                "crse_offer_nbr": "1",
+                "institution": "DUKEU",
+                "institution_lov_descr": "Duke University",
+                "strm": "1580",
+                "strm_lov_descr": "2016 Fall Term",
+                "acad_career": "UGRD",
+                "acad_career_lov_descr": "Undergraduate"
+              },
+              {
+                "crse_id": "023501",
+                "crse_offer_nbr": "1",
+                "institution": "DUKEU",
+                "institution_lov_descr": "Duke University",
+                "strm": "1630",
+                "strm_lov_descr": "2018 Spring Term",
+                "acad_career": "UGRD",
+                "acad_career_lov_descr": "Undergraduate"
+              },
+              {
+                "crse_id": "023501",
+                "crse_offer_nbr": "1",
+                "institution": "DUKEU",
+                "institution_lov_descr": "Duke University",
+                "strm": "1700",
+                "strm_lov_descr": "2019 Fall Term",
+                "acad_career": "UGRD",
+                "acad_career_lov_descr": "Undergraduate"
+              },
+              {
+                "crse_id": "023501",
+                "crse_offer_nbr": "1",
+                "institution": "DUKEU",
+                "institution_lov_descr": "Duke University",
+                "strm": "1710",
+                "strm_lov_descr": "2020 Spring Term",
+                "acad_career": "UGRD",
+                "acad_career_lov_descr": "Undergraduate"
+              },
+              {
+                "crse_id": "023501",
+                "crse_offer_nbr": "1",
+                "institution": "DUKEU",
+                "institution_lov_descr": "Duke University",
+                "strm": "1750",
+                "strm_lov_descr": "2021 Spring Term",
+                "acad_career": "UGRD",
+                "acad_career_lov_descr": "Undergraduate"
+              }
+            ]
+          }
+        }
+      },
+      "@xmlns": "http://xmlns.oracle.com/Enterprise/Tools/services"
+    }
+  }

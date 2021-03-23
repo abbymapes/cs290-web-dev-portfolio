@@ -176,3 +176,15 @@ input {
   text-align: center;
   vertical-align: middle;
 }
+
+ul {
+  text-align: left;
+}
+
+.project-plan {
+  text-align: left;
+}
+
+.wireframe {
+  width: 100%;
+}
