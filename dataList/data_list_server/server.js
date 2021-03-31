@@ -23,7 +23,7 @@ const sortingOptions = [
   "Course Name (Z-A) - name-desc",
   "Catalog Number (ascending) - num-asc",
   "Catalog Number (descending) - num-desc"
-]
+];
 
 // Log all requests made to the server
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
@@ -51,7 +51,7 @@ app.get('/',
     (req, res) => {
         res.status(200);
         res.send('<a href="/api/subjects.json">Get the Data!</a>');
-    },
+    }
 );
 
 /*
@@ -66,7 +66,7 @@ app.post('/api/getSubjects', async (req, res, next) => {
     let dataToSend = {
       classes: currentCourses.slice(0, 20),
       classCount: currentCourses.length
-    }
+    };
     res.status(200);
     res.json(dataToSend);
   } catch (error) {
@@ -103,8 +103,8 @@ app.post('/api/filterClasses', (req, res, next) => {
     // selected or a sort by category is selected
     if (requestedFilters.length > 0) {
       // If a filter is selected, filter results by specified filtered
-      for (course of currentCourses) {
-        for (filter of requestedFilters) {
+      for (var course of currentCourses) {
+        for (var filter of requestedFilters) {
           let startRange = filter.split("-")[0];
           let catNum = (course.catalogNumber.split("-")[0].match(/\d/g)).join("");
           let courseNumber = Math.floor(catNum / 100) * 100;
@@ -123,7 +123,7 @@ app.post('/api/filterClasses', (req, res, next) => {
     let dataToSend = {
       classes: filteredResults.slice(0, 20),
       classCount: filteredResults.length
-    }
+    };
     res.status(200);
     res.json(dataToSend);
   }
@@ -284,7 +284,7 @@ function sortClasses(sortBy) {
  */
 function sortByNameAsc(a, b) {
   var nameA = a.title.toUpperCase();
-  var nameB = b.title.toUpperCase()
+  var nameB = b.title.toUpperCase();
   return (nameA > nameB ? 1 : (nameA < nameB ? -1 : 0));
 }
 
@@ -293,7 +293,7 @@ function sortByNameAsc(a, b) {
  */
 function sortByNameDesc(a, b) {
   var nameA = a.title.toUpperCase();
-  var nameB = b.title.toUpperCase()
+  var nameB = b.title.toUpperCase();
   return (nameA < nameB ? 1 : (nameA > nameB ? -1 : 0));
 }
 
@@ -302,7 +302,7 @@ function sortByNameDesc(a, b) {
  */
 function sortByNumAsc(a, b) {
   var numA = a.catalogNumber.toUpperCase();
-  var numB = b.catalogNumber.toUpperCase()
+  var numB = b.catalogNumber.toUpperCase();
   return (numA > numB ? 1 : (numA < numB ? -1 : 0));
 }
 
@@ -311,7 +311,7 @@ function sortByNumAsc(a, b) {
  */
 function sortByNumDesc(a, b) {
   var numA = a.catalogNumber.toUpperCase();
-  var numB = b.catalogNumber.toUpperCase()
+  var numB = b.catalogNumber.toUpperCase();
   return (numA < numB ? 1 : (numA > numB ? -1 : 0));
 }
 

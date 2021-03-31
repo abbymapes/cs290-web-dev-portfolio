@@ -23,11 +23,11 @@ let accessToken = apiSecrets.accessToken;
  */
 async function fetchCoursesForSubjects(subjects) {
 	let courses = [];
-	for (subjectCode of subjects) {
+	for (var subjectCode of subjects) {
     let response = await fetch (`${API_BASE}subject/${subjectCode}?access_token=${accessToken}`);
     let jsonData = await response.json();
     let results = jsonData.results || [jsonData];
-    for (result of results) {
+    for (var result of results) {
       if (result.error) {
         throw new Error(`Duke Catalog API Error: ${jsonData.error}`);
       }
@@ -35,15 +35,15 @@ async function fetchCoursesForSubjects(subjects) {
       if (validClassList(result)) {
           classes = result.ssr_get_courses_resp.course_search_result.subjects.subject.course_summaries.course_summary;
       }
-      for (crse of classes) {
+      for (var crse of classes) {
         if (validCourseInfo(crse)) {
           let course = {};
-          course['courseId'] = crse.crse_id;
-          course['offerNumber'] = crse.crse_offer_nbr;
-          course['catalogNumber'] = crse.catalog_nbr;
-          course['title'] = crse.course_title_long;
-          course['subjectName'] = crse.subject_lov_descr;
-          course['subjectCode'] = subjectCode;
+          course.courseId = crse.crse_id;
+          course.offerNumber = crse.crse_offer_nbr;
+          course.catalogNumber = crse.catalog_nbr;
+          course.title = crse.course_title_long;
+          course.subjectName = crse.subject_lov_descr;
+          course.subjectCode = subjectCode;
           courses.push(course);
         }
       }
@@ -82,25 +82,25 @@ async function fetchCourseInfo(course) {
 	let results = jsonData.results || [jsonData];
   let validCourse = false;
 
-  for (result of results) {
+  for (var result of results) {
     if (validCourseDetails(result)) {
       validCourse  = true;
       let courseInfo = result.ssr_get_course_offering_resp.course_offering_result.course_offering;
       // Optional values
-      course['description'] = (courseInfo.descrlong ? courseInfo.descrlong : "");
-      course['type'] = (courseInfo.acad_career_lov_descr ? courseInfo.acad_career_lov_descr : "");
+      course.description = (courseInfo.descrlong ? courseInfo.descrlong : "");
+      course.type = (courseInfo.acad_career_lov_descr ? courseInfo.acad_career_lov_descr : "");
       
       let codes = [];
       if (validCourseAttributes(courseInfo)) {
         let attributes = courseInfo.course_attributes.course_attribute;
         let numAttributes = attributes.length;
         if (numAttributes > 0) {
-          codes = [numAttributes];
-          attributes.forEach((attribute, i) => {
-              codes[i] = attribute.crse_attr_value_lov_descr;
-          });
+          codes = [];
+          for (var attribute of attributes) {
+            codes.push(attribute.crse_attr_value_lov_descr);
+          }
         }
-      course['courseCodes'] = codes;
+      course.courseCodes = codes;
       }
     }
   }
@@ -134,11 +134,12 @@ function validCourseDetails(result) {
  * Returns true if the subject results parameter from Duke's Catalog API has a valid class list
  */
 function validClassList(results) {
-    return (results.ssr_get_courses_resp && results.ssr_get_courses_resp.course_search_result
-        && results.ssr_get_courses_resp.course_search_result.subjects
-        && results.ssr_get_courses_resp.course_search_result.subjects.subject
-        && results.ssr_get_courses_resp.course_search_result.subjects.subject.course_summaries
-        && results.ssr_get_courses_resp.course_search_result.subjects.subject.course_summaries.course_summary)
+    return (results.ssr_get_courses_resp && 
+            results.ssr_get_courses_resp.course_search_result &&
+            results.ssr_get_courses_resp.course_search_result.subjects &&
+            results.ssr_get_courses_resp.course_search_result.subjects.subject &&
+            results.ssr_get_courses_resp.course_search_result.subjects.subject.course_summaries &&
+            results.ssr_get_courses_resp.course_search_result.subjects.subject.course_summaries.course_summary);
 }
 
 /*
