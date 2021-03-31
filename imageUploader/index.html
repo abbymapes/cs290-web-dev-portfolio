@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Abby Mapes">
+    <title>CompSci 290, Spring 2021 : Image Uploader</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- DEV-only for easier refreshing: stop the web browser from ever caching this page or its images -->
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <script async src="https://www2.cs.duke.edu/courses/compsci290/spring21/resources/code/js/SimpleImage.js"></script>
+    <script defer src="../main.js"></script>
+    <link rel="stylesheet" href="../style.css">
+  </head>
+
+  <body>
+    <div id="content">
+      <div class="nav-bar">
+        <a href="../index.html" class="home">Home</a>
+        <a href="../interests/index.html">Interests</a>
+        <a href="../projectList.html">Course Deliverables</a>
+      </div>
+      <header>
+        <h1>Image Uploader</h1>
+      </header>
+      <br>
+      <div class="text-section image-uploader">
+        <div class="center">
+          <label for="fileInput">Image: </label><input type="file" id="fileInput" accept="image/*" onchange="loadImage()"/>
+        </div>
+        <div class="center">
+          Resize: 
+          <button id="large" onclick="resize()">Fit to Frame</button>
+        </div>
+
+        <canvas id="image-display">
+          <!-- Area used to display uploaded image to be filtered -->
+        </canvas>
+        
+        <div class="center">
+          <button id="create" onclick="scan()">Begin Scan</button>
+        </div>
+        <div class="center">
+          <label for="horizontal">Adjust Horizontal Position:</label> <input type="range" id="horizontal" min="0" max="255" value="128" oninput="scan()"/><br>
+          <label for="vertical">Adjust Vertical Position:</label><input type="range" id="vertical" min="0" max="255" value="128" oninput="scan()"/><br>
+          <label for="width">Adjust Scan Width:</label> <input type="range" id="width" min="0" max="50" value="10" oninput="scan()"/><br>
+          <label for="color">Adjust Scan Colors: </label><input type="range" id="color" min="0" max="255" value="128" oninput="scan()"/><br>
+          <button id="clearFilter" onclick="clearFilter()">Clear Filter</button>
+          <button id="clearCanvas" onclick="clearCanvas()">Clear Image</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
