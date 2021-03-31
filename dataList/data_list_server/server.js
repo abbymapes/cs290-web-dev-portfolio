@@ -28,22 +28,8 @@ const sortingOptions = [
 // Log all requests made to the server
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 
-// setup CORS options for maximum security
-const whitelist = ['https://compsci290_2021spring.dukecs.io'];
-const corsOptions = {
-  origin: (origin, callback) => {
-    // only allow sites listed above or dev-server proxies to access server data
-    if (whitelist.indexOf(origin) !== -1 || !origin || origin == "http://localhost:8080") {
-      callback(null, true);
-    } else {
-      const err = new Error('CORS Error: This site is not authorized to access this resource.');
-      err.status = 401;
-      callback(err);
-    }
-  },
-};
 // Allow connections from anywhere
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 /*
