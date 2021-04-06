@@ -21,7 +21,7 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 
 // setup CORS options for maximum security
 const whitelist = ['https://compsci290_2021spring.dukecs.io'];
-const corsOptions = {
+/*const corsOptions = {
   origin: (origin, callback) => {
     // only allow sites listed above or dev-server proxies to access server data
     if (whitelist.indexOf(origin) !== -1 || !origin || origin == "http://localhost:8080") {
@@ -32,9 +32,9 @@ const corsOptions = {
       callback(err);
     }
   },
-};
+};*/
 // Allow connections from anywhere
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 // provide some response to visiting the server directly (i.e., its homepage)
