@@ -6,7 +6,7 @@
 
 const admin = require('firebase-admin');
 const fetch = require('node-fetch');
-const { DUKE_API } = require('./secrets');
+const { DUKE_API } = require('./secrets/secrets');
 const URL_BASE = DUKE_API.URL_BASE;
 const API_KEY = DUKE_API.API_KEY;
 

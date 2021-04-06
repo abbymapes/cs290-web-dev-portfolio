@@ -7,7 +7,7 @@
 
 const admin = require('firebase-admin');
 
-const serviceAccount = require('../ui/src/secrets/bluebook-153fe-firebase-adminsdk-slbd7-d46ac8681d.json');
+const serviceAccount = require('./secrets/bluebook-153fe-firebase-adminsdk-slbd7-d46ac8681d.json');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
