@@ -50,21 +50,21 @@ app.get('/',
         User data, (which represents a document that will 
           be stored in the Firestore "users" collection)
         <br>
-        <a href="/api/user.json">Get User Data</a>
+        <a href="/bluebook/user.json">Get User Data</a>
         <br><br>
         Following data (which represents the documents from the 
           "follows" collection in Firestore that will be 
           fetched for the current user id, and displayed in their
           user page.
         <br>
-        <a href="/api/friends.json">Get Following Data!</a>
+        <a href="/bluebook/friends.json">Get Following Data!</a>
         <br><br>
         Class Reaction data data (which represents the documents from the 
           "reactions" collection in Firestore that will be 
           fetched for the current user id, and displayed in their
           user page. 
         <br>
-        <a href="/api/reactions.json">Get Class Reaction Data!</a>`);
+        <a href="/bluebook/reactions.json">Get Class Reaction Data!</a>`);
     }
 );
 
