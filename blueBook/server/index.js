@@ -19,6 +19,9 @@ const datastore = require('./datastore');
 // Log all requests made to the server
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log('App listening on port ' + PORT));
+
 // setup CORS options for maximum security
 const whitelist = ['https://compsci290_2021spring.dukecs.io'];
 const corsOptions = {
