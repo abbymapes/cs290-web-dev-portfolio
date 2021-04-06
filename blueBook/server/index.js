@@ -37,7 +37,7 @@ const corsOptions = {
   },
 };
 // Allow connections from anywhere
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 // provide some response to visiting the server directly (i.e., its homepage)
