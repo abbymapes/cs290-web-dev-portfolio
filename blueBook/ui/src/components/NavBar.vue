@@ -1,0 +1,83 @@
+The NavBar component represents a navigation bar that is used in various parts of the app and
+displays given titles.
+
+@author Abby Mapes
+
+<template>
+  <div class="nav-bar">
+    <a
+      v-for="(section, i) in sections"
+      :key="i"
+      :class="isCurrentPage(section.value) + ' ' + isCenterClass"
+      @click="changedPage = true; selectedPage = section.value"
+    >
+        {{section.name}}
+    </a>
+  </div>
+</template>
+
+<script>
+/* eslint-disable */
+import userState from '../main';
+
+export default {
+  name: "NavBar",
+  props: {
+    sections: {
+      type: Array,
+      default: () => []
+    },
+    currentPage: String,
+    isCentered: Boolean
+  },
+  data() {
+    return {
+      selectedPage: this.currentPage,
+      changedPage: true
+    };
+  },
+  methods: {
+    isCurrentPage(name) {
+      return name == this.currentPage ? "home" : "";
+    }
+  },
+  computed: {
+    isCenterClass() {
+        return this.isCentered ? 'centered' : '';
+    }
+  },
+  watch: {
+    selectedPage() {
+      if (this.changedPage) {
+          console.log(this.selectedPage);
+          this.$emit("change-page", this.selectedPage);
+          this.changedPage = false;
+      }
+    },
+    currentPage() {
+        this.selectedPage = this.currentPage;
+    }
+  },
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.nav-bar {
+  margin: 20px;
+  width: 100%;
+}
+
+.nav-bar a.centered {
+  font-size: 20pt;
+  float: none;
+  display: inline-block;
+  padding: 50px;
+}
+
+.nav-bar a.home a.centered {
+  font-size: 20pt;
+  float: none;
+  display: inline-block;
+}
+</style>
