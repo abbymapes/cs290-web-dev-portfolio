@@ -38,7 +38,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // provide some response to visiting the server directly (i.e., its homepage)
-app.get('/bluebook',
+app.get('/',
     async (req, res) => {
         res.status(200);
         res.send(`
