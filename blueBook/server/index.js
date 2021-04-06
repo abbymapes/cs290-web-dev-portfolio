@@ -47,7 +47,7 @@ app.get('/',
         res.send(`
         The following data outlines the structure for:
         <br><br>
-        User data, (which represents a documents that will 
+        User data, (which represents a document that will 
           be stored in the Firestore "users" collection)
         <br>
         <a href="/api/user.json">Get User Data</a>
