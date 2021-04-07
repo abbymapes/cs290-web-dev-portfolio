@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Abby Mapes">
+    <title>CompSci 290, Spring 2021 : Final Progress Report 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+    <script src="https://unpkg.com/vue"></script>
+
+    <link rel="stylesheet" href="../../style.css">
+</head>
+
+<body>
+    <div id="content">
+        <div class="nav-bar">
+            <a href="../../index.html" class="home">Home</a>
+            <a href="../../interests/index.html">Interests</a>
+            <a href="../../projectList.html">Course Deliverables</a>
+        </div>
+
+        <header>
+            <h1>Final Progress Report 1</h1>
+        </header>
+
+        <div class="text-section center">
+            <h2>Demo</h2>
+            <video width="320" height="240" controls>
+                <source src="FinalProjectDemo1.mov" type="video/mp4" alt="Final Project Demo 1">
+                <source src="FinalProjectDemo1.mov" type="video/ogg" alt="Final Project Demo 1">
+                Your browser does not support the video tag.
+            </video>
+            <br>
+            <a href="https://tranquil-hollows-68915.herokuapp.com/">Here</a> is some of the data from my server I used for this demo.
+            <br>
+            <br>
+            <h2>Data</h2>
+            <p>
+                To implement BlueBook, I will use the following data:
+                <br>
+                <br>
+                <b>Class Data</b>
+                <br>
+                In order to drive my web app, I will use data from the Duke Curriculum API, which provides JSON streams
+                of data that contain various course details. Since this API is very slow to fetch information for
+                multiple classes at a time, I’ve written a code to preload the necessary data I need for my web app.
+                I’ve stored the following fields from the API for each course: catalogNumber, courseCodes, courseId,
+                description, offerNumber, subjectCode, subjectName, title, and type. Along with the fields from the Duke
+                Curriculum API, I’ve added some fields to drive my web app– including a count of “interesting” ratings
+                and a sum of “interesting” ratings that I will use to calculate an average “interesting” rating for each
+                course, based on user inputted ratings. Additionally, I added a “difficulty” sum and “difficulty” count
+                to do the same for a difficulty rating. <a href="./exampleClassData.json">Here</a> is the JSON data structure I will use for each course.
+                <br>
+                <br>
+                <b>User Data</b>
+                <br>
+                In order to display user profiles, I need to store the following information for each user: uid,
+                displayName, email, picture, majors, minors, certificates, subjects. This information will all be
+                inputted by the user when creating their profile, or by liking subjects when interacting with Bluebook.
+                <a href="./exampleUserData.json">Here</a> is the JSON data structure I will use for each user.
+                <br>
+                <br>
+                <b>Reaction Data</b>
+                <br>
+                In order to store user reactions to different class, I need to store the following information for each
+                time a user reacts to a class (by either liking, disliking, or adding the class to their wishlist):
+                type, userId, courseId, reactionId, date, courseTitle, catalogNumber, subjectCode. This information will
+                allow me to display a reaction component (either for each user or for the people they are following)
+                without having to fetch information from other collections in Firestore. <a href="./exampleReactionData.json">Here</a> is the JSON data structure
+                I will use for each reaction.
+                <br>
+                <br>
+                <b>Follows Data</b>
+                <br>
+                For each user, I will store following information in order to retrieve a list of their friends and the
+                class reactions that will fill their feed. For each following relationship, I will store the followerId
+                and the followingId, which correspond to the user Id of person A following the userId of person B. This
+                data will be entered by users when they follow or unfollow each other. <a href="./exampleFollowsData.json">Here</a> is the JSON data structure I
+                will use for each follows relationship.
+                <br>
+                <br>
+                <b>Comment Data</b>
+                <br>
+                For each comment made on a reaction post or a course page, I will store the following information for
+                each comment: reactionId, courseId, userId, commentText, date. This data will be entered by users when
+                they post comments on other people’s reaction posts or on a course page. <a href="./exampleCommentData.json">Here</a> is the JSON data structure
+                I will use for each comment.
+                <br>
+                <br>
+                <b>Subjects Data</b>
+                <br>
+                For each subject in this data structure, which I’ve created based on the subjects listed in Duke’s
+                registration website, I stored a document containing a subjectCode and displayName property in
+                Firestore. This will allow us to fetch display names for subjects based on their subject codes from a
+                user’s list of subjects or a course’s subjectCode data. <a href="./exampleSubjectData.json">Here</a> is 
+                the JSON data structure I will use for subjects data.
+            <br>
+            <br>
+            <h2>Progress</h2>
+            <p>
+                Based on my plan for Weeks 1 plan, I planned to complete the following features:
+            <ul>
+                <li>
+                    Set up Firestore database
+                    <ul>
+                        <li>
+                            I loaded the Firestore database with course information from Duke API– this took longer than expected due to the slowness of the API itself to fetch each class.
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Set up Home, Log In & Sign Up Screens
+                    <ul>
+                        <li>
+                            I haven’t started the homepage yet. But, I may not add the homepage and instead send users straight to the explore page (which is available to both guests and users). When actually implementing my app within my portfolio, I realized that a homepage wouldn’t really be necessary. 
+                            Additionally, I haven’t begun the login page or the sign up page. Again, once starting I realized it would be easier to work on the rest of the functionality itself, since it will be easier during development to have full access to the site without having to log in or sign up first. I also wanted to wait until we had more experience with OAuth in class to see the best way to do this, rather than spending extra time figuring it out before we talked about it.
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Create Navigation Bar
+                    <ul>
+                        <li>
+                            I’ve created a custom NavBar component that has the functionally set up to limit users based on whether or not they are logged in (which will be a global variable). For dev purposes, I’ve disabled this until I create the log in and sign up pages. 
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <br>
+            Based on my week 2 plan, I planned to create these features:
+            <ul>
+                <li>
+                    Create components with small synthetic dataset
+                    <ul>
+                        <li>
+                            <b>Class Component: </b>  I’ve created a class component, which is displayed in the User profile page.
+                        </li>
+                        <li>
+                            <b>User Component: </b> I’ve created a User component, which is also displayed in the User profile page under the friend section.
+                        </li>
+                        <li>
+                            <b>Reaction Component: </b> I've created the class component with a variable that changes the color based on the reaction type. Now, I just need to implement the rest of the reaction component that will be displayed in the feed page, including user name and comment section.  
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Set up pages, but don’t need to implement reactivity / connecting to database yet
+                    <ul>
+                        <li>
+                            <b>Set up class page</b>: I’ve set up the skeleton for the class page. All I need to do now is load the data in Firebase and add buttons for users to interact with classes.
+                        </li>
+                        <li>
+                            <b>Set up course code page, subject page, and reaction page</b>: I haven’t set up these pages, as I was focusing on the User profile section for demo 1, but this is what I will focus on next. 
+                        </li>
+                        <li>
+                            <b>Set up User page</b>: I set up a fully functioning User page that displays user classes, subjects that they like and friends. I also made it so that, based on the current user ID, the user page will change. So, if a user clicks on someone else, the User page will be different than if they click on their profile– however, it is the same component. 
+                        </li>
+                        <li>
+                            <b>Set up Feed page</b>: I've set up a skeleton of the feed page and made sure it works to navigate to in NavBar, but nothing else yet.
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Test all above features on small synthetic dataset (inputted by me)
+                    <ul>
+                        <li>
+                            I’ve ensured that all components and pages that I’ve implemented work properly with a small synthetic dataset, including missing properties and different variations of displays, before adding more intractability.
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <br>
+            <br>
+            <h2>Concerns</h2>
+            <p>
+                So far, I haven’t reached anything that may block my progress, besides the amount of time it took me to implement the features I have so far. My project plan was a little ambitious for the amount of time I had over these past 2 weeks because we also had our DataList project due last Thursday. As a result, I couldn’t get started as much as I wanted to until after I turned that in. Hopefully, moving forward the features won’t take me as long to set up and get going. 
+            </p>
+            <br>
+            <br>
+            <h2>Learning</h2>
+            <p>
+                From working on this project, I’ve learned a lot about the terminal and working with the command line, for better or for worse. From accidently “unstaging” my committed files, which caused me to lose lots of work, to create new remote branches on git, I feel like I’ve learned a lot about working with the command line and feel more comfortable doing so. This is something I’m glad to have gained 
+            </p>
+            <br>
+            <br>
+            <h2>Plan</h2>
+            <p>
+                For the next deadline, I plan to focus on the following things:
+                <ul>
+                    <li>
+                        Set up the reaction component– this will be displayed in the feed page and, when clicked, display a modal with the comments for the reaction component
+                    </li>
+                    <li>
+                        Set up the class page– this will display information about each class, as well as contain reaction buttons, rating buttons, and a comment section
+                    </li>
+                    <li>
+                        Load data from Firebase, rather than from hard coded data
+                    </li>
+                    <li>
+                        Set up feed page– display reaction components for users
+                    </li>
+                    <li>
+                        Set up subject page– this will display courses for the subject
+                    </li>
+                    <li>
+                        Set up course code page– this will display courses for a certain course code
+                    </li>
+                </ul>
+            </p>
+            <br>
+            <br>
+            <h2>Summary</h2>
+            <p>
+                So far, I’m proud of the progress I’ve made. It took a long time to fetch all the courses and load them into the database (without running into issues along the way) and to implement my ideas from scratch. However, I’m a little worried about the project’s feasibility. Due to the time it took me to load my database and work on the project from last week, I didn’t get as much as I had planned for Demo 1, but I spent much more time on it than I expected. I think that moving forward, with the base I’ve created with a navigation bar, redirecting the main web app and displaying data, I will be able to implement things quicker. I think there was a learning curve in starting completely from scratch to create the first demo. 
+            </p>
+            <br>
+            <br>
+        </div>
+
+        <footer>
+            <!-- Copy and pasted via Create Commons Lisence (as specified on coursepage)-->
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+                <img alt="Creative Commons License" style="border-width:0"
+                    src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a>
+            <br />
+            <div class="credit">
+                This work is licensed under a
+                <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+                    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+                </a>
+                <br>
+                All photos and wireframes were created by me, Abby Mapes.
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

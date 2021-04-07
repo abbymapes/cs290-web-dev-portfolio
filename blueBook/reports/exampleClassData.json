@@ -1,0 +1,23 @@
+{ 
+    "catalogNumber": "161",
+    "courseCodes": [
+        "(CCI) Cross Cultural Inquiry",
+        "(ALP) Arts, Literature & Performance",
+        "(CZ) Civilizations"
+    ],
+    "courseId": "000029",
+    "description": "An introduction to the history of Japanese cinema focusing on issues including the relation between the tradition-modernity or Japan-West in the development of Japanese cinema, the influence of Japanese films on the theory and practice of cinema abroad, and the ways in which cinema has served as a reflection of and an active agent in the transformation of Japanese society.  Instructor: Chow",
+    "difficulty": {
+        "ratingCount": 0,
+        "ratingSum": 0
+    },
+    "interesting": {
+        "ratingCount": 0,
+        "ratingSum": 0
+    },
+    "offerNumber": 1,
+    "subjectCode": "AMES",
+    "subjectName": "Asian & Middle Eastern Studies",
+    "title": "Japanese Cinema",
+    "type": "Undergraduate"
+}
