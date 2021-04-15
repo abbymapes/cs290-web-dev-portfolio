@@ -50,26 +50,64 @@ app.get('/',
     async (req, res) => {
         res.status(200);
         res.send(`
-        The following data outlines the structure for:
+        The following data outlines some of data pulled from the 
+        collections in Firestore and sent to the front-end of my web app
+        for this demo:
+
         <br><br>
-        User data, (which represents a document that will 
-          be stored in the Firestore "users" collection)
+        User data (which is sent to front-end to create the user page)
         <br>
-        <a href="/bluebook/user.json">Get User Data</a>
+        <a href="/bluebook/getUser?userId=testId">Get User Data</a>
+
         <br><br>
-        Following data (which represents the documents from the 
-          "follows" collection in Firestore that will be 
-          fetched for the current user id, and displayed in their
-          user page.
+        Courses for subject COMPSCI (which is sent to front-end to create the 
+            subject page)
         <br>
-        <a href="/bluebook/friends.json">Get Following Data!</a>
+        <a href="/bluebook/getCoursesForSubject?subjectCode=COMPSCI">Get Courses for Subject</a>
+
         <br><br>
-        Class Reaction data data (which represents the documents from the 
-          "reactions" collection in Firestore that will be 
-          fetched for the current user id, and displayed in their
-          user page. 
+        Courses for attribute (NS) Natural Science (which is sent to front-end to create the 
+            subject page)
         <br>
-        <a href="/bluebook/reactions.json">Get Class Reaction Data!</a>`);
+        <a href="/bluebook/getCoursesForAttribute?attribute=(NS)%20Natural%20Sciences">Get Courses for Attribute</a>
+
+        <br><br>
+        Course information for the course with courseId 000028 
+        (this is sent to front-end to create the course page)
+        <br>
+        <a href="/bluebook/getCourseInformation?courseId=000028">Get Course Information</a>
+
+        <br><br>
+        Reaction comments for the reaction with reactionId 'testId000028'
+        (this is sent to front-end to create the reaction component in the feed and user page)
+        <br>
+        <a href="/bluebook/getReactionComments?reactionId=testId000028">Get Comments for Reaction</a>
+
+        <br><br>
+        User interaction information for the user with ID 'testId' and the course with id '000028'
+        (this is sent to front-end to create the course page with the appropriate rankings and 
+            reactions for the current user)
+        <br>
+        <a href="/bluebook/getUserInteractions?userId=testId&courseId=000028">Get User Interactions</a>
+
+        <br><br>
+        Friends data which represents the friends of the current user in Firestore, 
+        (which is displayed in their user page "friends" section)
+        <br>
+        <a href="/bluebook/getFriends?userId=testId">Get Friends Data!</a>
+
+        <br><br>
+        Class Reaction data (which represents the reaction data for 
+            the specified user, which will be displayed in their user page) 
+        <br>
+        <a href="/bluebook/getReactions?userId=testId">Get Reaction Data!</a>
+        
+        <br><br>
+        Friends Reaction data (which represents the reaction data for 
+            the specified user's friends, which will be displayed in their feed page) 
+        <br>
+        <a href="/bluebook/getFriendsReactions?userId=testId">Get Friends' Reaction Data!</a>
+        `);
     });
 
 app.get('/bluebook/getCoursesForSubject', async (req, res, next) => {
@@ -454,8 +492,8 @@ app.get('/bluebook/getFriendsReactions', async (req, res, next) => {
 
 // loads course information into Firebase
 app.post('/bluebook/loadCourses', (req, res) => {
-    const subjects = req.body;
-    fetchCoursesForSubjects(subjects, datastore.db);
+    //const subjects = req.body;
+    //fetchCoursesForSubjects(subjects, datastore.db);
     res.status(200);
 });
 
@@ -480,6 +518,13 @@ app.get('/bluebook/reactions.json',
         const reactions = await datastore.getReactions('testId');
         res.json(reactions);
     });
+
+app.get('/bluebook/courseInfo.json',
+async (req, res) => {
+    res.status(200);
+    const courseInformaiton = await datastore.getCourseInformation('000028');
+    res.json(courseInformaiton);
+});
 
 // handle errors thrown by the application code
 // NOTE, this actually must be defined LAST in order to catch any errors from others
