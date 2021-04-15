@@ -33,75 +33,64 @@ User Page, based on the current user's friends.
 </template>
 
 <script>
-/* eslint-disable */
-import User from './User';
-import VueHorizontalList from "vue-horizontal-list";
-import userState from '../main';
+import VueHorizontalList from 'vue-horizontal-list';
+import User from './User.vue';
+import userState from '../userState';
 
 export default {
-  name: "PeopleSection",
-  components: {
-      User,
-      VueHorizontalList
-  },
-  props: {
-      requestedUid: String
-  },
-  data() {
-    return {
-        loading: false,
-        friends: [],
-        options: {
-            responsive: [
-                { end: 576, size: 1 },
-                { start: 576, end: 768, size: 2 },
-                { start: 768, end: 992, size: 3 },
-                { size: 4 },
-            ],
-            position: {
-                start: -1,
+    name: 'PeopleSection',
+    components: {
+        User,
+        VueHorizontalList,
+    },
+    props: {
+        requestedUid: String,
+    },
+    data() {
+        return {
+            loading: false,
+            friends: [],
+            options: {
+                responsive: [
+                    { end: 576, size: 1 },
+                    { start: 576, end: 768, size: 2 },
+                    { start: 768, end: 992, size: 3 },
+                    { size: 4 },
+                ],
+                position: {
+                    start: -1,
+                },
+            },
+        };
+    },
+    methods: {
+        goToUserPage(userId) {
+            this.$emit('user-page', userId);
+        },
+        async getUserFriends(requestedUid) {
+            const response = await fetch(`${userState.SERVER_URL}/bluebook/getFriends?userId=${requestedUid}`);
+            const result = await response.json();
+            if (response.ok) {
+                this.friends = result;
+            } else {
+                this.$emit('show-error', result.message);
             }
-        }
-    }
-  },
-  methods: {
-      goToUserPage(uid) {
-          this.$emit('user-page', uid);
-      },
-      async getUserFriends(requestedUid) {
-          // TODO: fetch list of friends names from Database "follows" collection (via server)
-          // from requestedUid
-          let response = await fetch(userState.SERVER_URL + `/bluebook/getFriends?uid=` + requestedUid);
-          let result = await response.json();
-          // ensure valid response (HTTP-status is 200-299)
-          // and expected data (not error JSON object)
-          if (response.ok) {
-            // convert server data into Vue data or update existing Vue data
-            return(result);
-          } else {
-            // TODO: take care of errors
-            //this.errorMessage = result.message;
-            //this.showError = true;
-            return {};
-          }
-      }
+        },
+    },
+    computed: {
 
-  },
-  computed: {
+    },
+    watch: {
 
-  }, 
-  watch : {
-
-  },
-  async mounted () {
-    this.loading = true;
-    this.friends = await this.getUserFriends(this.requestedUid);
-    this.loading = false;
-  }
+    },
+    async mounted() {
+        this.loading = true;
+        await this.getUserFriends(this.requestedUid);
+        this.loading = false;
+    },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .people-section {
     width: 90%;

@@ -7,26 +7,25 @@ log into BlueBook.
 </template>
 
 <script>
-/* eslint-disable */
 
 export default {
-  name: "LogInPage",
-  props: {
-  },
-  data() {
-    return {
+    name: 'LogInPage',
+    props: {
+    },
+    data() {
+        return {
 
-    }
-  },
-  methods: {
+        };
+    },
+    methods: {
 
-  },
-  computed: {
+    },
+    computed: {
 
-  }, 
-  watch : {
+    },
+    watch: {
 
-  }
+    },
 };
 </script>
 

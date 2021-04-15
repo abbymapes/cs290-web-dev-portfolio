@@ -17,51 +17,48 @@ displays given titles.
 </template>
 
 <script>
-/* eslint-disable */
-import userState from '../main';
 
 export default {
-  name: "NavBar",
-  props: {
-    sections: {
-      type: Array,
-      default: () => []
+    name: 'NavBar',
+    props: {
+        sections: {
+            type: Array,
+            default: () => [],
+        },
+        currentPage: String,
+        isCentered: Boolean,
     },
-    currentPage: String,
-    isCentered: Boolean
-  },
-  data() {
-    return {
-      selectedPage: this.currentPage,
-      changedPage: true
-    };
-  },
-  methods: {
-    isCurrentPage(name) {
-      return name == this.currentPage ? "home" : "";
-    }
-  },
-  computed: {
-    isCenterClass() {
-        return this.isCentered ? 'centered' : '';
-    }
-  },
-  watch: {
-    selectedPage() {
-      if (this.changedPage) {
-          console.log(this.selectedPage);
-          this.$emit("change-page", this.selectedPage);
-          this.changedPage = false;
-      }
+    data() {
+        return {
+            selectedPage: this.currentPage,
+            changedPage: true,
+        };
     },
-    currentPage() {
-        this.selectedPage = this.currentPage;
-    }
-  },
+    methods: {
+        isCurrentPage(name) {
+            return name === this.currentPage ? 'home' : '';
+        },
+    },
+    computed: {
+        isCenterClass() {
+            return this.isCentered ? 'centered' : '';
+        },
+    },
+    watch: {
+        selectedPage() {
+            if (this.changedPage) {
+                console.log(this.selectedPage);
+                this.$emit('change-page', this.selectedPage);
+                this.changedPage = false;
+            }
+        },
+        currentPage() {
+            this.selectedPage = this.currentPage;
+        },
+    },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .nav-bar {
   margin: 20px;

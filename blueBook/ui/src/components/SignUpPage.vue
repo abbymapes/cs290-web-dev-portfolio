@@ -7,26 +7,25 @@ which allows users to create an account.
 </template>
 
 <script>
-/* eslint-disable */
 
 export default {
-  name: "SignUpPage",
-  props: {
-  },
-  data() {
-    return {
+    name: 'SignUpPage',
+    props: {
+    },
+    data() {
+        return {
 
-    }
-  },
-  methods: {
+        };
+    },
+    methods: {
 
-  },
-  computed: {
+    },
+    computed: {
 
-  }, 
-  watch : {
+    },
+    watch: {
 
-  }
+    },
 };
 </script>
 

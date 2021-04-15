@@ -7,29 +7,26 @@ classes, subjects, subject codes, or users.
 </template>
 
 <script>
-/* eslint-disable */
-
 export default {
-  name: "ExplorePage",
-  props: {
-  },
-  data() {
-    return {
+    name: 'ExplorePage',
+    props: {
+    },
+    data() {
+        return {
 
-    }
-  },
-  methods: {
+        };
+    },
+    methods: {
 
-  },
-  computed: {
+    },
+    computed: {
 
-  }, 
-  watch : {
+    },
+    watch: {
 
-  }
+    },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>

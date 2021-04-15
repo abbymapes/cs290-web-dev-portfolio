@@ -8,10 +8,11 @@ provided as a prop.
             <h1>Classes</h1>
             <b-card-group columns>
                 <class
-                    v-for="(item, i) in classes"
-                    :key="i"
-                    :type="type"
-                    @selected="goToCoursePage"
+                    v-for="item in classes"
+                    :key="item.courseId"
+                    type='course'
+                    :course="item"
+                    @selected-course="goToCoursePage"
                 >
                 </class>
             </b-card-group>
@@ -20,43 +21,31 @@ provided as a prop.
 </template>
 
 <script>
-/* eslint-disable */
-import Class from "./Class"
+import Class from './Class.vue';
 
 export default {
-  name: "ClassesSection",
-  components: {
-      Class
-  },
-  props: {
-    classes: {
-      type: Array,
-      default: () => []
-    }
-  },
-  data() {
-    return {
-        classesLoading: false
-    }
-  },
-  methods: {
-      goToCoursePage(course) {
-        this.$emit("selected", course);
-      }
-  },
-  computed: {
-
-  }, 
-  watch : {
-
-  },
-  async mounted () {
-    this.classesLoading = true;
-    this.classesLoading = false;
-  }
+    name: 'ClassesSection',
+    components: {
+        Class,
+    },
+    props: {
+        classes: {
+            type: Array,
+            default: () => [],
+        },
+    },
+    data() {
+        return {
+            classesLoading: false,
+        };
+    },
+    methods: {
+        goToCoursePage(course) {
+            this.$emit('course-page', course);
+        },
+    },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>

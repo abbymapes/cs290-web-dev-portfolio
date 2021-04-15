@@ -16,39 +16,50 @@ including the title and catalog number.
 </template>
 
 <script>
-/* eslint-disable */
-
 export default {
-  name: "Class",
-  components: {
-  },
-  props: {
-    type: String,
-    course: Object
-  },
-  data() {
-    return {
-    }
-  },
-  methods: {
-      goToCoursePage(course) {
-        this.$emit("selected", course);
-      }
-  },
-  computed: {
-      getBorderStyle() {
-          return (this.type == "like" ? "success" :
-                (this.type == "dislike" ? "danger" :
-                (this.type == "wishlist" ? "warning" : "light")));
-      }
-  }, 
-  watch : {
-
-  }
+    name: 'Class',
+    components: {
+    },
+    props: {
+        type: String,
+        course: Object,
+        reactionId: {
+            type: String,
+            required: false,
+        },
+    },
+    data() {
+        return {
+            styles: {
+                like: 'success',
+                dislike: 'danger',
+                wishlist: 'warning',
+            },
+        };
+    },
+    methods: {
+        goToCoursePage(course) {
+            if (this.isReaction) {
+                this.$emit('selected-reaction', this.type, this.course, this.reactionId);
+            } else {
+                this.$emit('selected-course', course);
+            }
+        },
+    },
+    computed: {
+        getBorderStyle() {
+            if (this.styles[this.type]) {
+                return this.styles[this.type];
+            }
+            return 'dark';
+        },
+        isReaction() {
+            return (!!this.reactionId);
+        },
+    },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 b-card {
     height: 100%;

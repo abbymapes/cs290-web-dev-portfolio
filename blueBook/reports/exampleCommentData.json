@@ -1,7 +1,14 @@
-{
-    "reactionId": "938200",
-    "courseId": "",
-    "userId": "testId",
-    "commentText": "When did you take this?",
-    "date": "2012-04-21T18:25:43-05:00"
-}
+[
+    {
+        "reactionId": "938200",
+        "userId": "testId",
+        "commentText": "When did you take this?",
+        "date": "2021-03-21T18:25:43-05:00"
+    },
+    {
+        "courseId": "000028",
+        "userId": "exFollowingID1",
+        "commentText": "This is the best class ever!",
+        "date": "2021-04-11T18:25:43-05:00"
+    }
+]

@@ -15,33 +15,31 @@ which is shown in the Friends section or the search section.
 </template>
 
 <script>
-/* eslint-disable */
 
 export default {
-  name: "User",
-  components: {
-  },
-  props: {
-    user: Object
-  },
-  data() {
-    return {
-    }
-  },
-  methods: {
-      goToUserPage() {
-        this.$emit('selected', this.user.uid);
-      }
-  },
-  computed: {
-  }, 
-  watch : {
+    name: 'User',
+    components: {
+    },
+    props: {
+        user: Object,
+    },
+    data() {
+        return {
+        };
+    },
+    methods: {
+        goToUserPage() {
+            this.$emit('selected', this.user.userId);
+        },
+    },
+    computed: {
+    },
+    watch: {
 
-  }
+    },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     b-card {
         height: 100%;

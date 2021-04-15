@@ -1,14 +1,9 @@
 { 
-    "type": "like",
-    "userId": "testId",
     "courseId": "000029",
-    "reactionId": "0028421",
-    "date": "2012-04-21T18:25:43-05:00",
-    "interesting": {
-        "ratingCount": 0,
-        "ratingSum": 0
-    },
-    "subjectCode": "AMES",
-    "catalogNumber": "161",
-    "title": "Japanese Cinema"
+    "date": "2021-04-11T18:25:43-05:00",
+    "dislike": true,
+    "like": false,
+    "reactionId": "testId000029",
+    "userId": "testId",
+    "wishlist": false
 }
