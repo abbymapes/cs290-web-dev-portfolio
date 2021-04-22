@@ -1167,11 +1167,11 @@ async function getFilteredAttributes(search) {
     await db.collection('attributes').orderBy('name').get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                const { name } = doc.data().name;
+                let attrName = doc.data().name;
                 if (isValidAttributeDocument(doc.data()) 
-                && name.toLowerCase().includes(search.toLowerCase())) {
+                && (attrName.toLowerCase()).includes(search.toLowerCase())) {
                     const attribute = {
-                        name,
+                        name: attrName,
                     };
                     attributes.push(attribute);
                     totalAttributes += 1;
