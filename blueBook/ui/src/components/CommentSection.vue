@@ -5,9 +5,11 @@ who left the comment.
     <tr v-for="(comment, i) in comments" :key="i">
       <div v-if="!isCreator(comment.user.userId)" class="not-creator">
         <div class="not-creator">
-          <span class="avatar" @click="goToUserPage(comment.user.userId)">
-            <img :src="comment.user.picture" />
-          </span>
+          <b-avatar size="2rem"
+              @click="goToUserPage(comment.user.userId)"
+              :src="comment.user.picture"
+              :alt="comment.user.displayName + 'Profile Picture'"
+          ></b-avatar>
           <span class="name" @click="goToUserPage(comment.user.userId)">{{
             comment.user.displayName
           }}</span>
@@ -25,9 +27,10 @@ who left the comment.
               <span class="text">{{ comment.commentText }}</span>
             </span>
           </span>
-          <span class="avatar">
-            <img :src="comment.user.picture" />
-          </span>
+          <b-avatar size="2rem"
+              :src="comment.user.picture"
+              :alt="comment.user.displayName + 'Profile Picture'"
+          ></b-avatar>
         </span>
         <b-button
           class="delete-button"
@@ -59,7 +62,7 @@ export default {
     },
     methods: {
         isCreator(userId) {
-            return userId === userState.currentUid;
+            return userId === userState.currentUser.userId;
         },
 
         goToUserPage(userId) {
@@ -78,21 +81,6 @@ export default {
   display: flex;
 }
 
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(255, 192, 203, 0.2);
-  display: inline-block;
-  text-align: center;
-}
-
-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
-
 .name {
   font-weight: bold;
   padding: 1em;
@@ -102,7 +90,7 @@ img {
 .body {
   padding: 1em;
   font-size: 16px;
-  max-width: 560px;
+  max-width: 90%;
   word-break: break-word;
 }
 

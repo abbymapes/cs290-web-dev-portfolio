@@ -4,13 +4,20 @@ which is shown in the Friends section or the search section.
 @author Abby Mapes
 <template>
     <b-card
-        :img-src="user.picture"
-        :img-alt="user.name + ' Profile Picture'"
-        img-top
-        :title="user.displayName"
         @click="goToUserPage"
         border-variant="light"
     >
+        <b-avatar size="10rem"
+            :src="user.picture"
+            :alt="user.displayName + 'Profile Picture'"
+        ></b-avatar>
+        <b-card-title class="title">
+            {{user.displayName}}
+        </b-card-title>
+        <b-card-body v-if="user.visits != null">
+            Times Visiting Site: {{user.visits}}
+        </b-card-body>
+
     </b-card>
 </template>
 
@@ -45,12 +52,7 @@ export default {
         height: 100%;
         margin: 1%;
     }
-    img {
-        height: 200px;
-        width: 200px;
-        border-radius: 50%;
-        border: black;
-        border-width: 1px;
-        border-style: solid;
+    title {
+        margin-top: 10px;
     }
 </style>

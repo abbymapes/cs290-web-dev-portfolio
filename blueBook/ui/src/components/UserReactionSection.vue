@@ -19,7 +19,7 @@ based on the user's reactions.
             </vue-horizontal-list>
             <div v-else class="empty">
                 <b-card
-                    bg-variant="dark"
+                    bg-variant="light"
                     class="empty"
                 >
                     <b-card-body class="no-classes">
@@ -40,7 +40,7 @@ based on the user's reactions.
             </vue-horizontal-list>
             <div v-else class="empty">
                 <b-card
-                    bg-variant="dark"
+                    bg-variant="light"
                     class="empty"
                 >
                     <b-card-body class="no-classes">
@@ -62,7 +62,7 @@ based on the user's reactions.
             </vue-horizontal-list>
             <div v-else class="empty">
                 <b-card
-                    bg-variant="dark"
+                    bg-variant="light"
                     class="empty"
                 >
                     <b-card-body class="no-classes">
@@ -158,11 +158,10 @@ export default {
 }
 
 .empty {
-    height: 100px;
+    height: 100%;
 }
 
 .no-classes {
     font-size: 16pt;
-    color: white;
 }
 </style>

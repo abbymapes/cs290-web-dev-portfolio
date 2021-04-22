@@ -9,30 +9,35 @@ Start Date:
 - Project Plan: March 20, 2021
 - Progress Report 1: April 1, 2021
 - Progress Report 2: April 8, 2021
+- Final Report: April 9, 2021
 
 Finish Date: 
 - Project Plan: March 22, 2021
 - Progress Report 1: April 7, 2021
 - Progress Report 2: April 14, 2021
+- Final Report: 
 
 Hours Spent: 
 - Project Plan: ~8 hours
 - Progress Report 1: ~20 hours
 - Progress Report 2: ~30 hours
+- Final Report: ~50 hours
 
 ### Collaboration
 
-People consulted:
-
 Resources used:
+- Firebase Authentication (https://firebase.google.com/docs/auth)
+- Firebase Firestore (https://firebase.google.com/docs/firestore) 
+
+Asset attributions:
 - Duke's API Catalog (https://api-catalog.oit.duke.edu/apis/1)
 - Bootstrap Vue (https://bootstrap-vue.org/)
 - Vue-Horizontal-List (https://github.com/fuxingloh/vue-horizontal-list/tree/master/examples)
 - Bootstrap-Vue-Pagination (https://bootstrap-vue.org/docs/components/pagination)
 - Bootstrap-Vue-Textarea (https://bootstrap-vue.org/docs/components/form-textarea)
 - Bootstrap-Vue-Form-Rating (https://bootstrap-vue.org/docs/components/form-rating)
-
-Asset attributions:
+- Vue2-Waterfall Grid: https://github.com/PLDaily/vue2-waterfall
+- Vue-Avatar: https://bootstrap-vue.org/docs/components/avatar
 
 ### Assignment Notes
 

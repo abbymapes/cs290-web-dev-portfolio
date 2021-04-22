@@ -6,7 +6,11 @@ User Page, based on the current user's friends.
     <div >
         <b-overlay :show="loading" no-center class="overlay">
             <h1>Friends</h1>
-            <vue-horizontal-list v-if="friends.length > 0" :items="friends" :options="options">
+            <vue-horizontal-list
+                v-if="friends.length > 0"
+                :items="friends"
+                :options="options"
+            >
                 <template v-slot:default="{ item }">
                 <div class="item">
                     <user
@@ -20,7 +24,7 @@ User Page, based on the current user's friends.
             </vue-horizontal-list>
             <div v-else class="empty">
                 <b-card
-                    bg-variant="dark"
+                    bg-variant="light"
                     class="empty"
                 >
                     <b-card-body class="no-classes">
@@ -51,6 +55,11 @@ export default {
             loading: false,
             friends: [],
             options: {
+                list: {
+                    class: 'slider',
+                    windowed: 1200,
+                    padding: 0,
+                },
                 responsive: [
                     { end: 576, size: 1 },
                     { start: 576, end: 768, size: 2 },
@@ -102,11 +111,15 @@ export default {
 }
 
 .empty {
-    height: 100px;
+    height: 100%;
 }
 
 .no-classes {
     font-size: 16pt;
-    color: white;
+}
+
+.slider {
+    margin-left: 0px;
+    margin-right: 0px;
 }
 </style>

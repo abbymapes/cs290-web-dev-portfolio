@@ -6,108 +6,126 @@ the current user's profile, or a different user's page.
   <div>
     <b-overlay :show="pageLoading" no-center class="overlay">
       <span v-if="validUser">
-        <h1>{{this.user.displayName}}</h1>
-        <div class="avatar">
-          <img
-              :src="this.user.picture"
-              :alt="this.user.displayName + 'Profile Picture'"
-              @load="pageLoading = false"
-          >
-        </div>
-        <br>
-        <span v-if='validFollowStatus'>
+        <b-avatar
+          size="10rem"
+          :src="user.picture"
+          :alt="user.displayName + 'Profile Picture'"
+        ></b-avatar>
+        <h1>{{ user.displayName }}</h1>
+        <span v-if="loggedIn">
+          <span v-if="validFollowStatus">
             <b-button
-                v-if="!isViewingProfile && !isFollowing"
-                variant="outline-success"
-                @click="addFriend"
-                class="button"
-                >Add Friend</b-button
+              v-if="!isViewingProfile && !isFollowing"
+              variant="outline-success"
+              @click="addFriend"
+              class="button"
+              >Add Friend</b-button
             >
             <b-button
-                v-if="!isViewingProfile && isFollowing"
-                variant="outline-danger"
-                @click="removeFriend"
-                class="button"
-                >Remove Friend</b-button
+              v-if="!isViewingProfile && isFollowing"
+              variant="outline-danger"
+              @click="removeFriend"
+              class="button"
+              >Remove Friend</b-button
             >
             <div v-if="isViewingProfile">
-                <b-button
-                    variant="outline-primary"
-                    @click="editProfile"
-                    class="button"
-                    >Edit Profile</b-button
-                >
-                <b-button
-                    variant="outline-primary"
-                    @click="signOut"
-                    class="button"
-                    >Sign Out</b-button
-                >
+              <b-button
+                variant="outline-primary"
+                @click="editProfile"
+                class="button"
+                >Edit Profile</b-button
+              >
+              <b-button
+                variant="outline-primary"
+                @click="signOut"
+                class="button"
+                >Sign Out</b-button
+              >
             </div>
+          </span>
+          <span v-else>
+            We couldn't retrieve your relationship with this user. Please
+            refresh the page and try again.
+          </span>
         </span>
-        <span v-else>
-            We couldn't retrieve your relationship with this user.
-             Please refresh the page and try again.
-        </span>
+        <b-modal
+            v-model="editingProfile"
+            hide-footer
+            scrollable
+            lazy
+            size="lg"
+        >
+          <edit-profile
+            :user="user"
+            @show-error="showEditError"
+            @cancel-edit="cancelEdit"
+            @refresh-user="refreshUser">
+          </edit-profile>
+        </b-modal>
         <nav-bar
-            :sections="sectionTitles"
-            :currentPage="currentSection"
-            :isCentered="true"
-            @change-page="changeSection"
+          :sections="sectionTitles"
+          :currentPage="currentSection"
+          :isCentered="true"
+          @change-page="changeSection"
         ></nav-bar>
         <user-reaction-section
-            v-if="currentSection=='classes' && validReactions"
-            :requestedUid="requestedUid"
-            @show-reaction="displayReactionModal"
-            @show-error="showReactionError"
+          v-if="currentSection == 'classes' && validReactions"
+          :requestedUid="requestedUid"
+          @show-reaction="displayReactionModal"
+          @show-error="showReactionError"
         >
         </user-reaction-section>
-        <span v-else-if="currentSection=='classes' && !validReactions">
-          We couldn't load reactions for this user. Please refresh the page and try again.
+        <span v-else-if="currentSection == 'classes' && !validReactions">
+          We couldn't load reactions for this user. Please refresh the page and
+          try again.
         </span>
         <subjects-section
-            v-if="currentSection=='subjects' && validSubjects"
-            :subjectList="fullSubjectList"
-            @subject-page="goToSubjectPage"
-            @show-error="showSubjectError"
+          v-if="currentSection == 'subjects' && validSubjects"
+          :subjectList="fullSubjectList"
+          @subject-page="goToSubjectPage"
+          @show-error="showSubjectError"
         ></subjects-section>
-        <span v-else-if="currentSection=='subjects' && !validSubjects">
-          We couldn't load the subjects for this user. Please refresh the page and try again.
+        <span v-else-if="currentSection == 'subjects' && !validSubjects">
+          We couldn't load the subjects for this user. Please refresh the page
+          and try again.
         </span>
         <people-section
-            v-if="currentSection=='friends' && validFriends"
-            :requestedUid="requestedUid"
-            @user-page="goToUserPage"
-            @show-error="showPeopleError"
+          v-if="currentSection == 'friends' && validFriends"
+          :requestedUid="requestedUid"
+          @user-page="goToUserPage"
+          @show-error="showPeopleError"
         ></people-section>
-        <span v-else-if="currentSection=='friends' && !validFriends">
-          We couldn't load the friends for this user. Please refresh the page and try again.
+        <span v-else-if="currentSection == 'friends' && !validFriends">
+          We couldn't load the friends for this user. Please refresh the page
+          and try again.
         </span>
-      <reaction-modal
-        :show="showReaction"
-        :reactionId="selectedReactionId"
-        :type="selectedReactionType"
-        :course="selectedReactionCourse"
-        :user="user"
-        @close-reaction="closeReaction"
-        @course-page="goToCoursePage"
-        @user-page="goToUserPage"
-      >
-      </reaction-modal>
-    </span>
-    <span v-else>
-      We couldn't find this user. Please refresh the page and try again.
-    </span>
-  </b-overlay>
-  <b-modal v-model="showError">
-    <div class="modal-body">
-      {{ errorMessage }}
-    </div>
-  </b-modal>
+        <reaction-modal
+          :show="showReaction"
+          :reactionId="selectedReactionId"
+          :type="selectedReactionType"
+          :course="selectedReactionCourse"
+          :user="user"
+          :isAdmin="isAdmin"
+          @close-reaction="closeReaction"
+          @course-page="goToCoursePage"
+          @user-page="goToUserPage"
+        >
+        </reaction-modal>
+      </span>
+      <span v-else>
+        We couldn't find this user. Please refresh the page and try again.
+      </span>
+    </b-overlay>
+    <b-modal v-model="showError" class="my-4">
+      <div class="modal-body">
+        {{ errorMessage }}
+      </div>
+    </b-modal>
   </div>
 </template>
 
 <script>
+import EditProfile from './EditProfile.vue';
 import NavBar from './NavBar.vue';
 import UserReactionSection from './UserReactionSection.vue';
 import SubjectsSection from './SubjectsSection.vue';
@@ -118,6 +136,7 @@ import userState from '../userState';
 export default {
     name: 'UserPage',
     components: {
+        EditProfile,
         NavBar,
         UserReactionSection,
         SubjectsSection,
@@ -126,10 +145,16 @@ export default {
     },
     props: {
         requestedUid: String,
+        isAdmin: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
     },
     data() {
         return {
             pageLoading: false,
+            currentUid: userState.currentUser.userId,
             user: {},
             currentSection: 'classes',
             sectionTitles: [
@@ -159,6 +184,7 @@ export default {
             isFollowing: false,
             validFollowStatus: true,
             followId: '',
+            editingProfile: false,
         };
     },
     methods: {
@@ -184,7 +210,9 @@ export default {
         },
 
         async getRequestedUserProfile(userId) {
-            const response = await fetch(`${userState.SERVER_URL}/bluebook/getUser?userId=${userId}`);
+            const response = await fetch(
+                `${userState.SERVER_URL}/bluebook/getUser?userId=${userId}`,
+            );
             const result = await response.json();
             if (response.ok) {
                 this.user = result;
@@ -199,7 +227,9 @@ export default {
             if (this.isViewingProfile) {
                 this.isFollowing = false;
             } else {
-                const response = await fetch(`${userState.SERVER_URL}/bluebook/getFollowingStatus?currentUserId=${userState.currentUid}&userId=${this.requestedUid}`);
+                const response = await fetch(
+                    `${userState.SERVER_URL}/bluebook/getFollowingStatus?currentUserId=${this.currentUid}&userId=${this.requestedUid}`,
+                );
                 const result = await response.json();
                 if (response.ok) {
                     this.validFollowStatus = true;
@@ -218,21 +248,31 @@ export default {
         },
         async addFriend() {
             this.pageLoading = true;
-            const response = await fetch(`${userState.SERVER_URL}/bluebook/addFollow?currentUserId=${userState.currentUid}&userId=${this.requestedUid}`);
-            const result = await response.json();
-            if (response.ok) {
-                this.validFollowStatus = true;
-                this.isFollowing = true;
-                this.followId = result;
+            if (this.isValidFollow) {
+                const response = await fetch(
+                    `${userState.SERVER_URL}/bluebook/addFollow?currentUserId=${this.currentUid}&userId=${this.requestedUid}`,
+                );
+                const result = await response.json();
+                if (response.ok) {
+                    this.validFollowStatus = true;
+                    this.isFollowing = true;
+                    this.followId = result;
+                } else {
+                    this.errorMessage = result.message;
+                    this.showError = true;
+                }
             } else {
-                this.errorMessage = result.message;
+                console.log('BAD USER INPUT: Unable to add follow due to invalid input.');
+                this.errorMessage = 'Invalid follow: cannot add follow document with empty followingId or followerId. Please try again.';
                 this.showError = true;
             }
             this.pageLoading = false;
         },
         async removeFriend() {
             this.pageLoading = true;
-            const response = await fetch(`${userState.SERVER_URL}/bluebook/removeFollow?followId=${this.followId}`);
+            const response = await fetch(
+                `${userState.SERVER_URL}/bluebook/removeFollow?followId=${this.followId}`,
+            );
             const result = await response.json();
             if (response.ok) {
                 this.validFollowStatus = true;
@@ -245,10 +285,31 @@ export default {
             this.pageLoading = false;
         },
         editProfile() {
-            // TODO: edit profile, allow user to change name, majors, subjects, email, picture
+            this.editingProfile = true;
+        },
+        async refreshUser() {
+            this.editingProfile = false;
+            this.pageLoading = true;
+            if (this.requestedUid !== '') {
+                this.resetReactionData();
+                this.resetUserData();
+                await this.getRequestedUserProfile(this.requestedUid);
+                await this.getFollowingStatus();
+            }
+            this.pageLoading = false;
         },
         signOut() {
-            // TODO: sign out button logs current user out
+            this.pageLoading = true;
+            userState.auth
+                .signOut()
+                .then(() => {
+                    this.$emit('sign-out');
+                })
+                .catch((error) => {
+                    this.errorMessage = `An error occurred while signing out: ${error}.`;
+                    this.showError = true;
+                });
+            this.pageLoading = false;
         },
         changeSection(newSection) {
             this.pageLoading = true;
@@ -287,10 +348,24 @@ export default {
             this.showError = true;
             this.errorMessage = message;
         },
+        showEditError(message) {
+            this.editingProfile = false;
+            this.showError = true;
+            this.errorMessage = message;
+        },
+        cancelEdit() {
+            this.editingProfile = false;
+        },
     },
     computed: {
+        loggedIn() {
+            if (this.isAdmin) {
+                return false;
+            }
+            return this.currentUid.length > 0;
+        },
         isViewingProfile() {
-            return (userState.currentUid === this.requestedUid);
+            return this.currentUid === this.requestedUid;
         },
         fullSubjectList() {
             const userSubjects = [];
@@ -320,6 +395,9 @@ export default {
             });
             return userSubjects;
         },
+        isValidFollow() {
+            return (this.currentUid !== '' && this.requestedUid !== '');
+        },
     },
     watch: {
         async requestedUid() {
@@ -348,27 +426,14 @@ export default {
 
 <style scoped>
 .content {
-    text-align: center;
-}
-
-.avatar {
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
   text-align: center;
-  margin: auto;
-}
-
-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: black;
-  border-width: 1px;
-  border-style: solid;
 }
 
 .button {
   margin: 10px;
+}
+.modal {
+    text-align: center;
+    font-family: 'Montserrat';
 }
 </style>

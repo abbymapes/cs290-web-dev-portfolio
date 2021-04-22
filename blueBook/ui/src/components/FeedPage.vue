@@ -63,6 +63,7 @@ export default {
                 transitionDuration: '.5',
             },
             disablePage: false,
+            currentUid: userState.currentUser.userId,
         };
     },
     methods: {
@@ -79,7 +80,7 @@ export default {
             this.$emit('user-page', userId);
         },
         async getFeedReaction() {
-            const response = await fetch(`${userState.SERVER_URL}/bluebook/getFriendsReactions?userId=${userState.currentUid}`);
+            const response = await fetch(`${userState.SERVER_URL}/bluebook/getFriendsReactions?userId=${this.currentUid}`);
             const result = await response.json();
             if (response.ok) {
                 this.reactions = result;
@@ -105,23 +106,6 @@ export default {
 </script>
 
 <style scoped>
-.avatar {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  text-align: center;
-  margin: auto;
-}
-
-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: black;
-  border-width: 1px;
-  border-style: solid;
-}
-
 .class {
   width: 50%;
   margin: auto;

@@ -6,39 +6,55 @@ The SubjectSection component represents the display for a collection of Subject 
   <div>
     <b-overlay :show="subjectsLoading" no-center class="overlay">
       <h1>Subjects</h1>
-      <b-card-group columns>
-        <b-card
-          v-for="(item, i) in subjectNames"
-          :key="i"
-          @click="goToSubjectPage(item.code, item.name)"
-          :title="getType(item.type)"
+        <waterfall
+            :options="options"
         >
-          <b-card-text class="subjectName">
-            {{ item.name }}
-          </b-card-text>
-        </b-card>
-      </b-card-group>
+            <waterfall-item
+                v-for="(item, i) in subjectNames"
+                class="waterfall-item"
+                :order="i"
+                :key="i"
+            >
+                <b-card
+                    :title="getType(item.type, item.code)"
+                    @click="goToSubjectPage(item.code, item.name)"
+                >
+                    <b-card-text class="subject-name">
+                        {{ item.name }}
+                    </b-card-text>
+                </b-card>
+            </waterfall-item>
+        </waterfall>
     </b-overlay>
   </div>
 </template>
 
 <script>
-
+import { Waterfall, WaterfallItem } from 'vue2-waterfall';
 import userState from '../userState';
 
 export default {
     name: 'SubjectsSection',
-    components: {},
+    components: {
+        Waterfall,
+        WaterfallItem,
+    },
     props: {
         subjectList: {
             type: Array,
             default: () => [],
+        },
+        hasSubjectNames: {
+            type: Boolean,
+            default: false,
+            required: false,
         },
     },
     data() {
         return {
             subjectsLoading: false,
             subjectNames: [],
+            options: {},
         };
     },
     methods: {
@@ -66,9 +82,9 @@ export default {
             }
         },
 
-        getType(type) {
+        getType(type, code) {
             if (!type || !['major', 'minor', 'certificate', 'other'].includes(type)) {
-                return '';
+                return code;
             }
             if (type === 'other') {
                 return 'Interested In';
@@ -76,15 +92,30 @@ export default {
             return type.charAt(0).toUpperCase() + type.slice(1);
         },
     },
+    watch: {
+        async subjectList() {
+            this.subjectsLoading = true;
+            if (this.hasSubjectNames) {
+                this.subjectNames = this.subjectList;
+            } else {
+                await this.getSubjectNames();
+            }
+            this.subjectsLoading = false;
+        },
+    },
     async mounted() {
         this.subjectsLoading = true;
-        await this.getSubjectNames();
+        if (this.hasSubjectNames) {
+            this.subjectNames = this.subjectList;
+        } else {
+            await this.getSubjectNames();
+        }
         this.subjectsLoading = false;
     },
 };
 </script>
 <style scoped>
-.subjectName {
+.subject-name {
   font-size: 25pt;
 }
 </style>

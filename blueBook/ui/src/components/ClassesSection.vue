@@ -6,27 +6,39 @@ provided as a prop.
     <div>
         <b-overlay :show="classesLoading" no-center class="overlay">
             <h1>Classes</h1>
-            <b-card-group columns>
-                <class
-                    v-for="item in classes"
-                    :key="item.courseId"
-                    type='course'
-                    :course="item"
-                    @selected-course="goToCoursePage"
+            <div>
+                <waterfall
+                    :options="options"
                 >
-                </class>
-            </b-card-group>
+                    <waterfall-item
+                        v-for="(item, index) in classes"
+                        class="waterfall-item"
+                        :order="index"
+                        :key="index"
+                    >
+                        <class
+                            type='course'
+                            :course="item"
+                            @selected-course="goToCoursePage"
+                        >
+                        </class>
+                    </waterfall-item>
+                </waterfall>
+            </div>
         </b-overlay>
     </div>
 </template>
 
 <script>
+import { Waterfall, WaterfallItem } from 'vue2-waterfall';
 import Class from './Class.vue';
 
 export default {
     name: 'ClassesSection',
     components: {
         Class,
+        Waterfall,
+        WaterfallItem,
     },
     props: {
         classes: {
@@ -37,6 +49,7 @@ export default {
     data() {
         return {
             classesLoading: false,
+            options: {},
         };
     },
     methods: {

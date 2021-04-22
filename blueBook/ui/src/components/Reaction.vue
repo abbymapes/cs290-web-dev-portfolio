@@ -5,20 +5,23 @@ for a user, including the reaction type, the class, and the user's name.
 
 <template>
   <b-overlay :show="loading" rounded="sm">
-      <div v-if="!showReactionError && !loading" class="modal-body center">
+      <div v-if="!showReactionError && !loading" class="modal-body reaction">
         <div
+          class="left"
           @click="goToUserPage(user.userId)"
         >
-            <div class="avatar">
-                <img
+            <h1>
+            <b-avatar size="5rem"
                 :src="user.picture"
                 :alt="user.displayName + 'Profile Picture'"
-                class="small-avatar"
-                />
-            </div>
-            <h1>{{ user.displayName }} {{ reactionVerb }}</h1>
+            ></b-avatar>
+            {{ user.displayName }}</h1>
         </div>
-        <br />
+        <span class="type">{{ reactionVerb }}
+            <b-icon v-if="type=='like'" icon="hand-thumbs-up" aria-hidden="true"></b-icon>
+            <b-icon v-else-if="type=='dislike'" icon="hand-thumbs-down" aria-hidden="true"></b-icon>
+            <b-icon v-else-if="type=='wishlist'" icon="bag-plus" aria-hidden="true"></b-icon>
+        </span>
         <class
           :type="type"
           :course="course"
@@ -28,7 +31,7 @@ for a user, including the reaction type, the class, and the user's name.
         <br>
         <h2>Comments</h2>
         <b-overlay :show="commentsLoading" rounded="sm">
-            <div>
+            <div v-if="loggedIn">
                 <b-input-group
                     size="sm"
                     class="mb-3"
@@ -46,6 +49,7 @@ for a user, including the reaction type, the class, and the user's name.
                             size="sm"
                             text="Button"
                             variant="success"
+                            :disabled="newComment.trim().length == 0"
                             @click="postComment">
                             Post
                         </b-button>
@@ -67,7 +71,7 @@ for a user, including the reaction type, the class, and the user's name.
             ></b-pagination>
         </b-overlay>
       </div>
-      <div v-else class="modal-body">Error retrieving Reaction</div>
+      <div v-else class="modal-body">Error retrieving Reaction: {{errorMessage}}</div>
     </b-overlay>
 </template>
 
@@ -87,10 +91,16 @@ export default {
         type: String,
         course: Object,
         user: Object,
+        isAdmin: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
     },
     data() {
         return {
             loading: false,
+            currentUid: userState.currentUser.userId,
             showReactionError: false,
             errorMessage: '',
             comments: [],
@@ -142,31 +152,37 @@ export default {
 
         async postComment() {
             this.commentsLoading = true;
-            this.errorMessage = '';
-            this.comments = [];
-            const comment = {
-                reactionId: this.reactionId,
-                userId: userState.currentUid,
-                commentText: this.newComment,
-            };
-            const response = await fetch(
-                `${userState.SERVER_URL
-                }/bluebook/postReactionComment`,
-                {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
+            if (this.isValidComment) {
+                this.errorMessage = '';
+                this.comments = [];
+                const comment = {
+                    reactionId: this.reactionId,
+                    userId: this.currentUid,
+                    commentText: this.newComment,
+                };
+                const response = await fetch(
+                    `${userState.SERVER_URL
+                    }/bluebook/postReactionComment`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(comment),
                     },
-                    body: JSON.stringify(comment),
-                },
-            );
-            const result = await response.json();
-            this.newComment = '';
-            if (response.ok) {
-                this.comments = result;
+                );
+                const result = await response.json();
+                this.newComment = '';
+                if (response.ok) {
+                    this.comments = result;
+                } else {
+                    this.errorMessage = result.message;
+                    this.showReactionError = true;
+                }
             } else {
-                this.errorMessage = result.message;
+                console.log('BAD USER INPUT: Unable to comment on reaction due to invalid input.');
+                this.errorMessage = 'Invalid comment: cannot write comment document with empty userId or courseId. Please try again.';
                 this.showReactionError = true;
             }
             this.commentsLoading = false;
@@ -189,11 +205,17 @@ export default {
         },
     },
     computed: {
+        loggedIn() {
+            if (this.isAdmin) {
+                return false;
+            }
+            return this.currentUid.length > 0;
+        },
         reactionVerb() {
             if (['like', 'dislike'].includes(this.type)) {
-                return `${this.type}s`;
+                return `${this.type.toUpperCase()}S`;
             }
-            return 'wants to take';
+            return 'WANTS TO TAKE';
         },
         numPages() {
             return (Math.ceil(this.totalComments / this.perPage));
@@ -204,6 +226,11 @@ export default {
         },
         totalComments() {
             return this.comments.length;
+        },
+        isValidComment() {
+            return (this.requestedCourseId !== ''
+            && this.currentUid !== ''
+            && this.newComment.trim() !== '');
         },
     },
 
@@ -216,8 +243,9 @@ export default {
 </script>
 
 <style scoped>
-.center {
-    text-align: center;
+.reaction {
+  font-family: 'Montserrat';
+  text-align: center;
 }
 
 .class {
@@ -225,20 +253,12 @@ export default {
   margin: auto;
 }
 
-.avatar {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  text-align: center;
-  margin: auto;
+.left {
+    text-align: left;
 }
 
-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: black;
-  border-width: 1px;
-  border-style: solid;
+.type {
+    font-size: 20pt;
+    font-weight: bold;
 }
 </style>

@@ -17,6 +17,7 @@ that reaction.
       :type="type"
       :course="course"
       :user="user"
+      :isAdmin="isAdmin"
       @course-page="goToCoursePage"
       @user-page="goToUserPage"
     >
@@ -38,6 +39,11 @@ export default {
         type: String,
         course: Object,
         user: Object,
+        isAdmin: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
     },
     data() {
         return {

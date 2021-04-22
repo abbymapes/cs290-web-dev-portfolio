@@ -154,6 +154,7 @@ component displays information for the course provided as a prop.
                             size="sm"
                             text="Button"
                             variant="success"
+                            :disabled="newComment.trim().length == 0"
                             @click="postComment">
                             Post
                         </b-button>
@@ -201,11 +202,16 @@ export default {
     props: {
         requestedCourseId: String,
         course: Object,
+        isAdmin: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
     },
     data() {
         return {
             loading: false,
-            loggedIn: false,
+            currentUid: userState.currentUser.userId,
             showError: false,
             disablePage: false,
             errorMessage: '',
@@ -272,30 +278,37 @@ export default {
         },
         async updateUserReaction(reaction) {
             this.loading = true;
-            const response = await fetch(
-                `${userState.SERVER_URL
-                }/bluebook/updateUserReaction?courseId=${
-                    this.requestedCourseId
-                }&userId=${
-                    userState.currentUid}`,
-                {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
+            if (this.isValidReaction(reaction)) {
+                const response = await fetch(
+                    `${userState.SERVER_URL
+                    }/bluebook/updateUserReaction?courseId=${
+                        this.requestedCourseId
+                    }&userId=${
+                        this.currentUid}`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(reaction),
                     },
-                    body: JSON.stringify(reaction),
-                },
-            );
-            const result = await response.json();
-            if (response.ok) {
-                this.courseInfo = result.courseInfo;
-                this.userReaction = result.reaction;
-                this.userRating = result.rating;
-                this.difficultyRating = result.rating.difficulty;
-                this.interestingRating = result.rating.interesting;
+                );
+                const result = await response.json();
+                if (response.ok) {
+                    this.courseInfo = result.courseInfo;
+                    this.userReaction = result.reaction;
+                    this.userRating = result.rating;
+                    this.difficultyRating = result.rating.difficulty;
+                    this.interestingRating = result.rating.interesting;
+                } else {
+                    this.errorMessage = result.message;
+                    this.showError = true;
+                    this.disablePage = true;
+                }
             } else {
-                this.errorMessage = result.message;
+                console.log('BAD USER INPUT: Unable to react to course due to invalid input.');
+                this.errorMessage = 'Invalid reaction: cannot write reaction document with empty userId or courseId. Please try again.';
                 this.showError = true;
                 this.disablePage = true;
             }
@@ -303,30 +316,37 @@ export default {
         },
         async updateUserRating(rating) {
             this.loading = true;
-            const response = await fetch(
-                `${userState.SERVER_URL
-                }/bluebook/updateUserRating?courseId=${
-                    this.requestedCourseId
-                }&userId=${
-                    userState.currentUid}`,
-                {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
+            if (this.isValidRating) {
+                const response = await fetch(
+                    `${userState.SERVER_URL
+                    }/bluebook/updateUserRating?courseId=${
+                        this.requestedCourseId
+                    }&userId=${
+                        this.currentUid}`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(rating),
                     },
-                    body: JSON.stringify(rating),
-                },
-            );
-            const result = await response.json();
-            if (response.ok) {
-                this.courseInfo = result.courseInfo;
-                this.userReaction = result.reaction;
-                this.userRating = result.rating;
-                this.difficultyRating = result.rating.difficulty;
-                this.interestingRating = result.rating.interesting;
+                );
+                const result = await response.json();
+                if (response.ok) {
+                    this.courseInfo = result.courseInfo;
+                    this.userReaction = result.reaction;
+                    this.userRating = result.rating;
+                    this.difficultyRating = result.rating.difficulty;
+                    this.interestingRating = result.rating.interesting;
+                } else {
+                    this.errorMessage = result.message;
+                    this.showError = true;
+                    this.disablePage = true;
+                }
             } else {
-                this.errorMessage = result.message;
+                console.log('BAD USER INPUT: Unable to rate course due to invalid input.');
+                this.errorMessage = 'Invalid rating: cannot write rating document with empty userId or courseId. Please try again.';
                 this.showError = true;
                 this.disablePage = true;
             }
@@ -378,35 +398,40 @@ export default {
         },
         async postComment() {
             this.commentsLoading = true;
-            this.errorMessage = '';
-            this.comments = [];
-            this.totalComments = 0;
-
-            const comment = {
-                courseId: this.requestedCourseId,
-                userId: userState.currentUid,
-                commentText: this.newComment,
-            };
-            const response = await fetch(
-                `${userState.SERVER_URL
-                }/bluebook/postCourseComment`,
-                {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
+            if (this.isValidComment) {
+                this.errorMessage = '';
+                this.comments = [];
+                this.totalComments = 0;
+                const comment = {
+                    courseId: this.requestedCourseId,
+                    userId: this.currentUid,
+                    commentText: this.newComment,
+                };
+                const response = await fetch(
+                    `${userState.SERVER_URL
+                    }/bluebook/postCourseComment`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(comment),
                     },
-                    body: JSON.stringify(comment),
-                },
-            );
-            const result = await response.json();
-            this.newComment = '';
-            if (response.ok) {
-                this.comments = result;
-                this.totalComments = result.length;
+                );
+                const result = await response.json();
+                this.newComment = '';
+                if (response.ok) {
+                    this.comments = result;
+                    this.totalComments = result.length;
+                } else {
+                    this.errorMessage = result.message;
+                    this.showError = true;
+                }
             } else {
-                this.errorMessage = result.message;
-                this.showReactionError = true;
+                console.log('BAD USER INPUT: Unable to comment on course due to invalid input.');
+                this.errorMessage = 'Invalid comment: cannot write comment document with empty userId or courseId. Please try again.';
+                this.showError = true;
             }
             this.commentsLoading = false;
         },
@@ -424,23 +449,49 @@ export default {
                 this.totalComments = result.length;
             } else {
                 this.errorMessage = result.message;
-                this.showReactionError = true;
+                this.showError = true;
             }
             this.commentsLoading = false;
         },
 
         goToAttributePage(attribute) {
-            console.log(attribute);
             this.$emit('attribute-page', attribute);
+        },
+        isValidRating(rating) {
+            return (this.requestedCourseId !== ''
+            && this.currentUid !== ''
+            && rating.difficulty !== null
+            && rating.interesting !== null);
+        },
+        isValidReaction(reaction) {
+            return (this.requestedCourseId !== ''
+            && this.currentUid !== ''
+            && reaction.like !== null
+            && reaction.dislike !== null
+            && reaction.wishlist !== null
+            && !(reaction.like && reaction.dislike)
+            && !(reaction.like && reaction.wishlist)
+            && !(reaction.dislike && reaction.wishlist));
         },
     },
     computed: {
+        loggedIn() {
+            if (this.isAdmin) {
+                return false;
+            }
+            return this.currentUid.length > 0;
+        },
         numPages() {
             return (Math.ceil(this.totalComments / this.perPage));
         },
         displayComments() {
             const firstComment = ((this.currentPage - 1) * this.perPage);
             return this.comments.slice(firstComment, firstComment + this.perPage);
+        },
+        isValidComment() {
+            return (this.requestedCourseId !== ''
+            && this.currentUid !== ''
+            && this.newComment.trim() !== '');
         },
     },
     watch: {
@@ -465,11 +516,10 @@ export default {
     },
     async mounted() {
         this.loading = true;
-        this.loggedIn = userState.loggedIn;
         await this.getCourseInformation();
         if (this.loggedIn) {
             await this.getUserInteractions(
-                userState.currentUid,
+                this.currentUid,
                 this.requestedCourseId,
             );
         }
@@ -491,7 +541,7 @@ h3 {
   text-align: left;
 }
 .empty {
-  height: 100px;
+  height: 100%;
 }
 
 .no-classes {
@@ -513,20 +563,5 @@ h3 {
   width: 30%;
   margin: auto;
 }
-.avatar {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  text-align: center;
-  margin: auto;
-}
 
-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: black;
-  border-width: 1px;
-  border-style: solid;
-}
 </style>

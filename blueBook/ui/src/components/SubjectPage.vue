@@ -48,11 +48,45 @@ view courses for this subject.
                 Add Subject to Profile
             </b-button>
         </div>
+        <div class="search">
+            <b-input-group
+                size="sm"
+                class="mb-3"
+                prepend="Course Titles"
+            >
+            <b-form-input
+                v-model='searchText'
+                :aria-label="'Search courses for ' + subjectName"
+                @keyup.enter="searchResults"
+            ></b-form-input>
+            <b-input-group-append>
+                <b-button
+                v-if="!isFiltered"
+                    size="sm"
+                    variant="outline-primary"
+                    @click="searchResults"
+                >Search</b-button>
+                <b-button
+                    v-if="isFiltered"
+                    size="sm"
+                    variant="outline-danger"
+                    @click="clearSearch"
+                >Clear Search</b-button>
+            </b-input-group-append>
+            </b-input-group>
+        </div>
         <classes-section
           :classes="courses"
           @course-page="goToCoursePage"
         >
         </classes-section>
+        <b-button
+            v-if="courses.length > 0 && hasMoreResults"
+            @click='getMoreClasses'
+            variant="outline-primary"
+        >
+            See More Courses
+        </b-button>
         <b-modal v-model="showError">
             <div class="modal-body">
               {{ errorMessage }}
@@ -74,18 +108,29 @@ export default {
     props: {
         subjectCode: String,
         subjectName: String,
+        isAdmin: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
     },
     data() {
         return {
+            currentUid: userState.currentUser.userId,
             loading: false,
             courses: [],
             showError: false,
             errorMessage: '',
-            loggedIn: false,
             userMajors: [],
             userMinors: [],
             userCertificates: [],
             userSubjects: [],
+            currentStart: 0,
+            totalResults: 0,
+            perPage: 25,
+            lastValue: '',
+            searchText: '',
+            isFiltered: false,
         };
     },
     methods: {
@@ -93,10 +138,14 @@ export default {
             this.$emit('course-page', course);
         },
         async getCourses() {
-            const response = await fetch(`${userState.SERVER_URL}/bluebook/getCoursesForSubject?subjectCode=${encodeURIComponent(this.subjectCode)}`);
+            const response = await fetch(`${userState.SERVER_URL}/bluebook/getCoursesForSubject?subjectCode=${encodeURIComponent(this.subjectCode)}&start=${encodeURIComponent(this.lastValue)}&limit=${this.perPage}`);
             const result = await response.json();
             if (response.ok) {
-                this.courses = result;
+                this.isFiltered = false;
+                this.courses = this.courses.concat(result.results);
+                this.totalResults = result.totalResults;
+                this.lastValue = result.lastValue;
+                this.currentStart += this.perPage;
             } else {
                 this.errorMessage = result.message;
                 this.showError = true;
@@ -121,24 +170,30 @@ export default {
         },
         async updateUserSubjects(subjects) {
             this.loading = true;
-            const response = await fetch(
-                `${userState.SERVER_URL
-                }/bluebook/updateUserSubjects?userId=${
-                    userState.currentUid}`,
-                {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
+            if (this.loggedIn) {
+                const response = await fetch(
+                    `${userState.SERVER_URL
+                    }/bluebook/updateUserSubjects?userId=${
+                        this.currentUid}`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(subjects),
                     },
-                    body: JSON.stringify(subjects),
-                },
-            );
-            const result = await response.json();
-            if (response.ok) {
-                this.userSubjects = result;
+                );
+                const result = await response.json();
+                if (response.ok) {
+                    this.userSubjects = result;
+                } else {
+                    this.errorMessage = result.message;
+                    this.showError = true;
+                }
             } else {
-                this.errorMessage = result.message;
+                console.log('BAD USER INPUT: Unable to add course to profile due to invalid input.');
+                this.errorMessage = 'Invalid subjects: cannot update subjects for user document with empty userId. Please try again.';
                 this.showError = true;
             }
             this.loading = false;
@@ -154,8 +209,60 @@ export default {
             newSubjects.push(this.subjectCode);
             await this.updateUserSubjects(newSubjects);
         },
+        async getMoreClasses() {
+            this.loading = true;
+            if (this.hasMoreResults) {
+                await this.getCourses();
+            }
+            this.loading = false;
+        },
+        async getFilteredResults() {
+            const response = await fetch(`${userState.SERVER_URL}/bluebook/getFilteredCoursesForSubject?subjectCode=${encodeURIComponent(this.subjectCode)}&searchTerm=${encodeURIComponent(this.searchText)}`);
+            const result = await response.json();
+            if (response.ok) {
+                this.isFiltered = true;
+                this.courses = this.courses.concat(result.results);
+                this.totalResults = result.totalResults;
+                this.currentStart += this.totalResults;
+                this.lastValue = result.lastValue;
+                this.validResults = true;
+            } else {
+                this.validSubjects = false;
+                this.errorMessage = result.message;
+                this.showError = true;
+            }
+        },
+        async searchResults() {
+            this.loading = true;
+            this.courses = [];
+            this.lastValue = '';
+            this.totalResults = 0;
+            this.currentStart = 0;
+            await this.getFilteredResults();
+            this.loading = false;
+        },
+
+        async clearSearch() {
+            this.loading = true;
+            this.searchText = '';
+            this.courses = [];
+            this.lastValue = '';
+            this.totalResults = 0;
+            this.currentStart = 0;
+            await this.getCourses();
+            this.loading = false;
+        },
     },
     computed: {
+        loggedIn() {
+            if (this.isAdmin) {
+                return false;
+            }
+            return this.currentUid.length > 0;
+        },
+        hasMoreResults() {
+            return (this.currentStart < this.totalResults);
+        },
         likesSubject() {
             return (this.userSubjects.includes(this.subjectCode));
         },
@@ -172,12 +279,11 @@ export default {
     watch: {
     },
     async mounted() {
-        this.loggedIn = userState.loggedIn;
         this.loading = true;
         await this.getCourses();
         if (this.loggedIn) {
             await this.getUsersSubjects(
-                userState.currentUid,
+                this.currentUid,
             );
         }
         this.loading = false;

@@ -61,20 +61,39 @@ export default {
 
 <style scoped>
 .nav-bar {
-  margin: 20px;
+  margin: 10px;
   width: 100%;
 }
 
 .nav-bar a.centered {
-  font-size: 20pt;
-  float: none;
-  display: inline-block;
-  padding: 50px;
+    font-size: 14pt;
+    padding: 20px;
+    float: none;
+    display: inline-block;
 }
 
 .nav-bar a.home a.centered {
-  font-size: 20pt;
+  font-size: 14pt;
   float: none;
   display: inline-block;
+}
+
+@media screen and (min-width: 900px) {
+    .nav-bar {
+        margin: 20px;
+    }
+    .nav-bar a.centered {
+        font-size: 18pt;
+        padding: 30px;
+    }
+    .nav-bar a.home a.centered {
+        font-size: 18pt;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .log-in {
+        padding: 30px;
+    }
 }
 </style>
