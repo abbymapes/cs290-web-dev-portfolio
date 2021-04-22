@@ -8,41 +8,47 @@
 
 const express = require('express');
 const morgan = require('morgan');
+const morganBody = require('morgan-body');
 const cors = require('cors');
 
 const app = express();
-const { fetchCoursesForSubjects } = require('./dukeAPI');
+// const { fetchCoursesForSubjects } = require('./dukeAPI');
 const datastore = require('./datastore');
 
 //---------------------------------------------------------------------
 // set up middleware apps that manage "all" URL requests
 // log all requests made to the server
 // Log all requests made to the server
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
+app.use(morgan('\n\n:method :url :status :res[content-length] - :response-time ms'));
+app.use(express.json());
+morganBody(app, {
+    logRequestBody: true,
+    logAllReqHeader: true,
+    logResponseBody: true,
+    logAllResHeader: true,
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
 
 // setup CORS options for maximum security
-/*
 const whitelist = ['https://compsci290_2021spring.dukecs.io'];
 const corsOptions = {
     origin: (origin, callback) => {
     // only allow sites listed above or dev-server proxies to access server data
-        if (whitelist.indexOf(origin) !== -1 || !origin || origin == 'http://localhost:8080') {
+        if (whitelist.indexOf(origin) !== -1 || !origin || origin === 'http://localhost:8080') {
             callback(null, true);
         } else {
             const err = new Error(
-              'CORS Error: This site is not authorized to access this resource.'
+                'CORS Error: This site is not authorized to access this resource.',
             );
             err.status = 401;
             callback(err);
         }
     },
 };
-*/
 // Allow connections from anywhere
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // provide some response to visiting the server directly (i.e., its homepage)
@@ -50,70 +56,107 @@ app.get('/',
     async (req, res) => {
         res.status(200);
         res.send(`
-        The following data outlines some of data pulled from the 
-        collections in Firestore and sent to the front-end of my web app
-        for this demo:
-
+        <h1>Welcome to the Bluebook Server</h1> Below are links to the JSON
+        data that the server pulls, proccesses, and aggregates from Firestore and
+        sends to Bluebook's Vue pages.
+        
         <br><br>
-        User data (which is sent to front-end to create the user page)
+        <h2>User data</h2>
+        This data contains information about a user that is used to 
+        create the user profile page. Note, the link below provides
+        the data for the user with userId = 'testId'.
         <br>
         <a href="/bluebook/getUser?userId=testId">Get User Data</a>
 
         <br><br>
-        Courses for subject COMPSCI (which is sent to front-end to create the 
-            subject page)
+        This data contains all the "friends" of the current user, which is used 
+        to create the user profile page. Note, the link below provides
+        the list of friends for the user with userId = 'testId'.
         <br>
-        <a href="/bluebook/getCoursesForSubject?subjectCode=COMPSCI">Get Courses for Subject</a>
+        <a href="/bluebook/getFriends?userId=testId">Get Friends Data</a>
 
         <br><br>
-        Courses for attribute (NS) Natural Science (which is sent to front-end to create the 
-            subject page)
+        This data contains all users in Bluebook, which is used 
+        to create the explore page.
         <br>
-        <a href="/bluebook/getCoursesForAttribute?attribute=(NS)%20Natural%20Sciences">Get Courses for Attribute</a>
+        <a href="/bluebook/getFilteredDocuments?collection=users&searchTerm=">Get Users</a>
 
         <br><br>
-        Course information for the course with courseId 000028 
-        (this is sent to front-end to create the course page)
+        This data contains all users in Bluebook, including their count of visits to the site, which is used 
+        to create the admin page for administrators.
+        <br>
+        <a href="/bluebook/getUsersForAdmin">Get Users for Admin</a>
+
+        <h2>Subject Data</h2>
+        This data contains all subjects in Bluebook, which is used 
+        to create the explore page.
+        <br>
+        <a href="/bluebook/getAllSubjects">Get Subjects</a>
+
+        <h2>Attribute Data</h2>
+        This data contains all course attributes in Bluebook, which is used 
+        to create the explore page.
+        <br>
+        <a href="/bluebook/getFilteredDocuments?collection=attributes&searchTerm=">Get Attributes</a>
+
+        <h2>Course Data</h2>
+        This is the data that includes courses for a specified subject code, which 
+        is used to create the subject page. Note, the link below provides the data for
+        the first 50 courses for the subject with subjectCode = COMPSCI.
+        <br>
+        <a href="/bluebook/getCoursesForSubject?subjectCode=COMPSCI&start=&limit=50">Get Courses for Subject</a>
+
+        <br><br>
+        This is the data that includes courses for a specified course attribute, which 
+        is used to create the course attribute page. Note, the link below provides the data for
+        the first 50 courses for the attribute with name = (NS) Natural Sciences.
+        <br>
+        <a href="/bluebook/getCoursesForAttribute?attribute=(NS)%20Natural%20Sciences&start=&limit=50">Get Courses for Attribute</a>
+
+        <br><br>
+        This is the data that includes information about a course, which is used to create the
+        course page. Note, the link below provides the data for the course with courseId = 000028.
         <br>
         <a href="/bluebook/getCourseInformation?courseId=000028">Get Course Information</a>
 
         <br><br>
-        Reaction comments for the reaction with reactionId 'testId000028'
-        (this is sent to front-end to create the reaction component in the feed and user page)
-        <br>
-        <a href="/bluebook/getReactionComments?reactionId=testId000028">Get Comments for Reaction</a>
-
-        <br><br>
-        User interaction information for the user with ID 'testId' and the course with id '000028'
-        (this is sent to front-end to create the course page with the appropriate rankings and 
-            reactions for the current user)
+        This is the data that contains the appropriate state of a course page for a user 
+        who is logged in, i.e. the reaction that the user has given the course (if any) and 
+        the appropriate ratings that the user has previously rated the course. Note, the link below provides the data for
+        the course with courseId = 000028 and the user with userId = 'testId'.
         <br>
         <a href="/bluebook/getUserInteractions?userId=testId&courseId=000028">Get User Interactions</a>
 
-        <br><br>
-        Friends data which represents the friends of the current user in Firestore, 
-        (which is displayed in their user page "friends" section)
+        <h2>Reaction Data</h2>
+        This is the data that contains the reaction information for a user, which is 
+        used to create the reaction section in their profile (i.e. which courses they've liked, 
+        disliked, and added to their wishlist). Note: the link below provides the data for the reactions
+        made by the user with userId = 'testId'.
         <br>
-        <a href="/bluebook/getFriends?userId=testId">Get Friends Data!</a>
+        <a href="/bluebook/getReactions?userId=testId">Get Reaction Data</a>
 
         <br><br>
-        Class Reaction data (which represents the reaction data for 
-            the specified user, which will be displayed in their user page) 
+        This is the data that contains the reaction comments for a reaction, which is 
+        used to create the reaction which is shown in the user profile and the feed page.
+        Note: the link below provides the data for the reaction
+        made by the user with userId = 'testId' for course with courseId = '000028'.
         <br>
-        <a href="/bluebook/getReactions?userId=testId">Get Reaction Data!</a>
+        <a href="/bluebook/getReactionComments?reactionId=testId000028">Get Comments for Reaction</a>
         
         <br><br>
-        Friends Reaction data (which represents the reaction data for 
-            the specified user's friends, which will be displayed in their feed page) 
+        This is the data that contains the reactions for all friends of a user, which is 
+        used to create the user's feed page. Note: the link below provides the reaction data for the
+        feed page of the user with userId = 'testId'.
         <br>
-        <a href="/bluebook/getFriendsReactions?userId=testId">Get Friends' Reaction Data!</a>
+        <a href="/bluebook/getFriendsReactions?userId=testId">Get Friends' Reaction Data</a>
         `);
     });
 
 app.get('/bluebook/getCoursesForSubject', async (req, res, next) => {
     try {
-        const { subjectCode } = req.query;
-        const courses = await datastore.getCoursesForSubject(subjectCode);
+        const { subjectCode, start, limit } = req.query;
+        const number = Number(limit);
+        const courses = await datastore.getCoursesForSubject(subjectCode, start, number);
         res.status(200);
         res.json(courses);
     } catch (error) {
@@ -129,8 +172,9 @@ app.get('/bluebook/getCoursesForSubject', async (req, res, next) => {
 
 app.get('/bluebook/getCoursesForAttribute', async (req, res, next) => {
     try {
-        const { attribute } = req.query;
-        const courses = await datastore.getCoursesForAttribute(attribute);
+        const { attribute, start, limit } = req.query;
+        const number = Number(limit);
+        const courses = await datastore.getCoursesForAttribute(attribute, start, number);
         res.status(200);
         res.json(courses);
     } catch (error) {
@@ -476,7 +520,6 @@ app.get('/bluebook/getFriendsReactions', async (req, res, next) => {
     try {
         const { userId } = req.query;
         const reactions = await datastore.getFriendsReactions(userId);
-        console.log(reactions);
         res.status(200);
         res.json(reactions);
     } catch (error) {
@@ -490,14 +533,164 @@ app.get('/bluebook/getFriendsReactions', async (req, res, next) => {
     }
 });
 
+app.get('/bluebook/getDocuments', async (req, res, next) => {
+    try {
+        const { collection, start, numResults } = req.query;
+        const limit = Number(numResults);
+        let results = {};
+        if (collection === 'courses') {
+            results = await datastore.getCourses(start, limit);
+        } else if (collection === 'subjects') {
+            results = await datastore.getSubjects(start, limit);
+        } else if (collection === 'attributes') {
+            results = await datastore.getAttributes();
+        } else if (collection === 'users') {
+            results = await datastore.getUsers(start, limit);
+        }
+        res.status(200);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        // create error object with useful message
+        const err = new Error(`${error} --- Please try again`);
+        // set status code to return with response
+        err.status = 503;
+        // forward error on to next middleware handler (the error handler defined below)
+        next(err);
+    }
+});
+
+app.get('/bluebook/getFilteredDocuments', async (req, res, next) => {
+    try {
+        const { collection, searchTerm } = req.query;
+        let results = {};
+        if (collection === 'subjects') {
+            results = await datastore.getFilteredSubjects(searchTerm);
+        } else if (collection === 'attributes') {
+            results = await datastore.getFilteredAttributes(searchTerm);
+        } else if (collection === 'users') {
+            results = await datastore.getFilteredUsers(searchTerm);
+        }
+        res.status(200);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        // create error object with useful message
+        const err = new Error(`${error} --- Please try again`);
+        // set status code to return with response
+        err.status = 503;
+        // forward error on to next middleware handler (the error handler defined below)
+        next(err);
+    }
+});
+
+app.get('/bluebook/getFilteredCoursesForSubject', async (req, res, next) => {
+    try {
+        const { subjectCode, searchTerm } = req.query;
+        const results = await datastore.getFilteredCoursesForSubject(subjectCode, searchTerm);
+        res.status(200);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        // create error object with useful message
+        const err = new Error(`${error} --- Please try again`);
+        // set status code to return with response
+        err.status = 503;
+        // forward error on to next middleware handler (the error handler defined below)
+        next(err);
+    }
+});
+
+app.get('/bluebook/getFilteredCoursesForAttribute', async (req, res, next) => {
+    try {
+        const { attribute, searchTerm } = req.query;
+        const results = await datastore.getFilteredCoursesForAttribute(attribute, searchTerm);
+        res.status(200);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        // create error object with useful message
+        const err = new Error(`${error} --- Please try again`);
+        // set status code to return with response
+        err.status = 503;
+        // forward error on to next middleware handler (the error handler defined below)
+        next(err);
+    }
+});
+
+app.get('/bluebook/getAllSubjects', async (req, res, next) => {
+    try {
+        const subjects = await datastore.getAllSubjects();
+        res.status(200);
+        res.json(subjects);
+    } catch (error) {
+        console.log(error);
+        // create error object with useful message
+        const err = new Error(`${error} --- Please try again`);
+        // set status code to return with response
+        err.status = 503;
+        // forward error on to next middleware handler (the error handler defined below)
+        next(err);
+    }
+});
+
+app.post('/bluebook/createUserDocument', async (req, res, next) => {
+    try {
+        const user = req.body;
+        const userId = await datastore.createUserDocument(user);
+        res.status(200);
+        res.json(userId);
+    } catch (error) {
+        console.log(error);
+        // create error object with useful message
+        const err = new Error(`${error} --- Please try again`);
+        // set status code to return with response
+        err.status = 503;
+        // forward error on to next middleware handler (the error handler defined below)
+        next(err);
+    }
+});
+
+app.get('/bluebook/updateUserVisits', async (req, res, next) => {
+    try {
+        const { userId } = req.query;
+        await datastore.increaseVisit(userId);
+        res.status(200);
+    } catch (error) {
+        console.log(error);
+        // create error object with useful message
+        const err = new Error(`${error} --- Please try again`);
+        // set status code to return with response
+        err.status = 503;
+        // forward error on to next middleware handler (the error handler defined below)
+        next(err);
+    }
+});
+
+app.get('/bluebook/getUsersForAdmin', async (req, res, next) => {
+    try {
+        const results = await datastore.getUsersForAdmin();
+        res.status(200);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        // create error object with useful message
+        const err = new Error(`${error} --- Please try again`);
+        // set status code to return with response
+        err.status = 503;
+        // forward error on to next middleware handler (the error handler defined below)
+        next(err);
+    }
+});
+
 // loads course information into Firebase
 app.post('/bluebook/loadCourses', (req, res) => {
-    //const subjects = req.body;
-    //fetchCoursesForSubjects(subjects, datastore.db);
+    // const subjects = req.body;
+    // fetchCoursesForSubjects(subjects, datastore.db);
     res.status(200);
 });
 
-// displays json data for project demos
+// Retrieves json data for project demos
 app.get('/bluebook/user.json',
     async (req, res) => {
         res.status(200);
@@ -520,11 +713,11 @@ app.get('/bluebook/reactions.json',
     });
 
 app.get('/bluebook/courseInfo.json',
-async (req, res) => {
-    res.status(200);
-    const courseInformaiton = await datastore.getCourseInformation('000028');
-    res.json(courseInformaiton);
-});
+    async (req, res) => {
+        res.status(200);
+        const courseInformaiton = await datastore.getCourseInformation('000028');
+        res.json(courseInformaiton);
+    });
 
 // handle errors thrown by the application code
 // NOTE, this actually must be defined LAST in order to catch any errors from others
