@@ -61,14 +61,6 @@ async function updateUser(user) {
     if (user) {
         if (user.uid !== currentUser.userId) {
             currentUser.userId = user.uid;
-            const response = await fetch(
-                `${SERVER_URL}/bluebook/updateUserVisits?userId=${user.uid}`,
-            );
-            if (response.ok) {
-                console.log('Updated user visit count.');
-            } else {
-                console.log('Failed to update user visit count.');
-            }
         }
     } else {
         currentUser.userId = '';

@@ -167,9 +167,21 @@ export default {
             this.currentUid = userId;
             if (this.loggedIn) {
                 await this.getCurrentUser(this.currentUid);
+                await this.updateVisits(this.currentUid);
             }
             this.currentPage = this.startPage;
             this.pageLoading = false;
+        },
+
+        async updateVisits(userId) {
+            const response = await fetch(
+                `${userState.SERVER_URL}/bluebook/updateUserVisits?userId=${userId}`,
+            );
+            if (response.ok) {
+                console.log('Updated user visit count.');
+            } else {
+                console.log('Failed to update user visit count.');
+            }
         },
 
         signOutUser() {
@@ -252,6 +264,7 @@ export default {
         this.currentUid = userState.currentUser.userId;
         if (this.loggedIn) {
             await this.getCurrentUser(this.currentUid);
+            await this.updateVisits(this.currentUid);
         }
         this.currentPage = this.startPage;
         this.pageLoading = false;
