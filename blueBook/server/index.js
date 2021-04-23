@@ -656,6 +656,7 @@ app.get('/bluebook/updateUserVisits', async (req, res, next) => {
         const { userId } = req.query;
         await datastore.increaseVisit(userId);
         res.status(200);
+        res.send('Updated user successfully.')
     } catch (error) {
         console.log(error);
         // create error object with useful message
@@ -688,6 +689,7 @@ app.post('/bluebook/loadCourses', (req, res) => {
     // const subjects = req.body;
     // fetchCoursesForSubjects(subjects, datastore.db);
     res.status(200);
+    res.send('Complete');
 });
 
 // Retrieves json data for project demos
