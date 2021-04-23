@@ -6,5 +6,7 @@
     "minors": [],
     "picture": "https://st.depositphotos.com/2218212/2938/i/950/depositphotos_29387653-stock-photo-facebook-profile.jpg",
     "subjects": ["PSY", "GSF", "PHYSEDU", "MATH"],
-    "userId": "testId"
+    "userId": "testId",
+    "isAdmin": false,
+    "visits": 1
 }

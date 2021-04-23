@@ -28,46 +28,85 @@
 
         <div class="text-section center">
             <h2>Links</h2>
-            <a href="https://drive.google.com/file/d/10zKIyGHAw2m61cfq1g0N6luI_5K2Cndh/view?usp=sharing" class="projects">Here</a> is a
+            <a href="https://drive.google.com/file/d/10zKIyGHAw2m61cfq1g0N6luI_5K2Cndh/view?usp=sharing"
+                class="projects">Here</a> is a
             link to my final project demo video.
             <br>
-            <a href="https://tranquil-hollows-68915.herokuapp.com/" class="projects">Here</a> the data returned by my server.
+            <a href="https://tranquil-hollows-68915.herokuapp.com/" class="projects">Here</a> the data returned by my
+            server.
             <br>
             <a href="ui/dist/index.html" class="projects">Here</a> is a link to the main BlueBook App page.
             <br>
             <br>
             <h2>High Level Description of Bluebook</h2>
             <p>
-                For my final project, I made Bluebook– a website that adds a social aspect to Duke’s registration process. On BlueBook, Duke students can react to classes by liking, disliking, or adding them to their wishlist, comment and rate classes, add their friends, see the classes their friends have reacted to, and explore new classes based on subjects and course codes. Ultimately, BlueBook acts like a social network for Duke students, centered around the registration process. BlueBook differs from RateMyProfessor and other class ranking websites for a few reasons. First off, BlueBook is specific to Duke. The website is structured by the course credits, graduation requirements, and course offerings at Duke. Additionally, to react to and rate classes, users must have a valid Duke email, which minimizes the amount of spam on BlueBook. Finally, rather than viewing a general consensus of certain classes, users on BlueBook can view what classes their friends and peers have enjoyed, making the user’s experience personalized to their own Duke network and interests. BlueBook aims to help guide students through the registration process, so that, over their four years here, they can explore more of the courses and opportunities that Duke has to offer.
+                For my final project, I made Bluebook– a website that adds a social aspect to Duke’s registration
+                process. On BlueBook, Duke students can react to classes by liking, disliking, or adding them to their
+                wishlist, comment and rate classes, add their friends, see the classes their friends have reacted to,
+                and explore new classes based on subjects and course codes. Ultimately, BlueBook acts like a social
+                network for Duke students, centered around the registration process. BlueBook differs from
+                RateMyProfessor and other class ranking websites for a few reasons. First off, BlueBook is specific to
+                Duke. The website is structured by the course credits, graduation requirements, and course offerings at
+                Duke. Additionally, to react to and rate classes, users must have a valid Duke email, which minimizes
+                the amount of spam on BlueBook. Finally, rather than viewing a general consensus of certain classes,
+                users on BlueBook can view what classes their friends and peers have enjoyed, making the user’s
+                experience personalized to their own Duke network and interests. BlueBook aims to help guide students
+                through the registration process, so that, over their four years here, they can explore more of the
+                courses and opportunities that Duke has to offer.
             </p>
-                <br>
-                <br>
+            <br>
+            <br>
             <h2>High Level Description of How Bluebook Works</h2>
             <p>
-                All data stored for Bluebook is stored in Firestore and that data is only accessed by the server. When a user loads any page of Bluebook, the front-end fetches the data needed to render the current display from the server. When receiving requests for data, Bluebook’s server reads the appropriate data from Firestore, checks that the data retrieved is valid (meaning it contains all fields necessary for the front-end to work without crashing), processes the data and sends the JSON to the front-end to be displayed. All querying, filtering, and paginating of data is done by the server, allowing the Vue pages to simply display the data it receives. Whenever a user interacts with Bluebook in a way that adds data to Firestore (i.e. liking classes, rating classes, leaving comments, following users, changing their preferences etc.), the front-end Vue pages check that the user’s input is valid, meaning that it contains all the fields and values necessary to be stored in the appropriate Firebase collection, and, if so, send the data to the server to be written to Firestore. This way, all user input validation is done in the front-end, before any invalid data reaches the server, and all JSON validation is done in the server, before any invalid JSON data reaches the front-end. Additionally, all reads and writes to Firestore are done by the server, allowing our server to edit any data in the database and return the updated data to the front-end. This keeps our front-end display consistent with the state of our database.
+                All data stored for Bluebook is stored in Firestore and that data is only accessed by Bluebook’s server.
+                When a user loads any page of Bluebook, the front-end Vue pages fetch the data needed to render the
+                current display from the server. When receiving requests for data, Bluebook’s server reads the
+                appropriate data from Firestore, checks that the data is valid (meaning it contains all fields necessary
+                for the front-end to work without crashing), processes the data and sends the JSON to the front-end to
+                be displayed. All querying, filtering, and paginating of data is done by the server, allowing the Vue
+                pages to simply display the data it receives. Whenever a user interacts with Bluebook in a way that adds
+                data to Firestore (i.e. liking classes, rating classes, leaving comments, following users, changing
+                their preferences etc.), the front-end Vue pages check that the user’s input is valid, meaning that it
+                contains all the fields and values necessary to be stored in the appropriate Firebase collection, and,
+                if so, the front-end sends the data to the server to be written to Firestore. This way, all user input
+                validation is done in the front-end, before any invalid data reaches the server, and all JSON validation
+                is done in the server, before any invalid JSON data reaches the front-end. Additionally, all reads and
+                writes to Firestore are done by the server, allowing our server to edit any data in the database and
+                return the updated data to the front-end. This keeps our front-end display consistent with the state of
+                our database.
             </p>
             <br>
             <br>
             <h2>Asset Attributions</h2>
             <p>
-                <ul>
-                    <li>
-                        <a href='https://api-catalog.oit.duke.edu/apis/1'>Duke’s Curriculum API</a>. In order to retrieve the information about Duke’s course offerings that fuels Bluebook, I pulled data from the Duke Curriculum API,  which provides JSON streams of data that contain various course details, including a list of all classes, class synopsis, curriculum details and class sections, and loaded them into Firebase. The Duke Curriculum API gives members of the Duke community access to the courses offered at Duke. So, all data used for Bluebook is authentic, as it is pulled directly from Duke’s Curriculum API. All other data used for Bluebook is inputted directly by its users. 
-                    </li>
-                    <li>
-                        <a href='https://firebase.google.com/docs/auth'>Firebase Authentication</a> and <a href='https://firebase.google.com/docs/firestore'>Firebase Firestore</a>. In order to store the data for Bluebook, I used Firebase Firestore and Firebase Authentication, along with their documentations.
-                    </li>
-                    <li>
-                        <a href='https://bootstrap-vue.org/'>Bootstrap Vue</a>
-                    </li>
-                    <li>
-                        <a href='https://github.com/fuxingloh/vue-horizontal-list/tree/master/examples'>Vue-Horizontal-List</a>
-                    </li>
-                    <li>
-                        <a href='https://github.com/PLDaily/vue2-waterfall'>Vue2-Waterfall Grid</a>
-                    </li>
-                </ul>
-                
+            <ul>
+                <li>
+                    <a href='https://api-catalog.oit.duke.edu/apis/1'>Duke’s Curriculum API</a>. In order to retrieve
+                    the information about Duke’s course offerings that fuels Bluebook, I pulled data from the Duke
+                    Curriculum API, which provides JSON streams of data that contain various course details, including a
+                    list of all classes, class synopsis, curriculum details and class sections, and loaded them into
+                    Firebase. The Duke Curriculum API gives members of the Duke community access to the courses offered
+                    at Duke. So, all data used for Bluebook is authentic, as it is pulled directly from Duke’s
+                    Curriculum API. All other data used for Bluebook is inputted directly by its users.
+                </li>
+                <li>
+                    <a href='https://firebase.google.com/docs/auth'>Firebase Authentication</a> and <a
+                        href='https://firebase.google.com/docs/firestore'>Firebase Firestore</a>. In order to store the
+                    data for Bluebook, I used Firebase Firestore and Firebase Authentication, along with their
+                    documentations.
+                </li>
+                <li>
+                    <a href='https://bootstrap-vue.org/'>Bootstrap Vue</a>
+                </li>
+                <li>
+                    <a
+                        href='https://github.com/fuxingloh/vue-horizontal-list/tree/master/examples'>Vue-Horizontal-List</a>
+                </li>
+                <li>
+                    <a href='https://github.com/PLDaily/vue2-waterfall'>Vue2-Waterfall Grid</a>
+                </li>
+            </ul>
+
             </p>
         </div>
 
