@@ -615,9 +615,12 @@ async function getReactions(userId) {
                 querySnapshot.forEach(async (doc) => {
                     if (isValidReactionDocument(doc.data())) {
                         if (doc.data().like || doc.data().dislike || doc.data().wishlist) {
+                            const dateInMillis  = doc.data().date._seconds * 1000;
+                            let date = new Date(dateInMillis);
                             const reaction = {
                                 reactionId: doc.id,
                                 courseId: doc.data().courseId,
+                                date
                             };
                             if (doc.data().like) {
                                 reaction.type = 'like';
@@ -641,10 +644,13 @@ async function getReactions(userId) {
                 liked = await Promise.all(likedPromises);
                 disliked = await Promise.all(dislikedPromises);
                 wishlist = await Promise.all(wishlistPromises);
+                liked.sort(compareReactions);
+                disliked.sort(compareReactions);
+                wishlist.sort(compareReactions);
                 return {
-                    liked,
-                    disliked,
-                    wishlist,
+                    liked: liked.map(reaction => getReactionWithDateString(reaction)),
+                    disliked: disliked.map(reaction => getReactionWithDateString(reaction)),
+                    wishlist: wishlist.map(reaction => getReactionWithDateString(reaction)),
                 };
             });
         return reactions;
@@ -824,16 +830,21 @@ async function getFriendsMap(userId) {
 async function getFriendsReactions(userId) {
     const friends = await getFriendsMap(userId);
     const friendUserIds = Object.getOwnPropertyNames(friends);
+    let allReactions = [];
     if (friendUserIds.length > 0) {
-        const reactions = await db.collection('reactions').where('userId', 'in', friendUserIds).orderBy('date', 'desc').get()
+        for (const friendId of friendUserIds) {
+            const reactions = await db.collection('reactions').where('userId', '==', friendId).get()
             .then(async (querySnapshot) => {
                 const promises = [];
                 querySnapshot.forEach((doc) => {
                     if (isValidReactionDocument(doc.data())) {
                         if (doc.data().like || doc.data().dislike || doc.data().wishlist) {
                             const user = friends[doc.data().userId];
+                            const dateInMillis  = doc.data().date._seconds * 1000;
+                            let date = new Date(dateInMillis);
                             const reaction = {
                                 reactionId: doc.id,
+                                date,
                                 user,
                             };
                             if (doc.data().like) {
@@ -853,9 +864,28 @@ async function getFriendsReactions(userId) {
             .catch((error) => {
                 throw new Error(`Error retrieving reaction friends of ${userId}: ${error}`);
             });
-        return reactions;
+            allReactions = allReactions.concat(reactions);
+        }
     }
-    return [];
+    allReactions.sort(compareReactions);
+    const formattedReactions = allReactions.map(reaction => getReactionWithDateString(reaction));
+    return formattedReactions;
+}
+
+function compareReactions(reaction1, reaction2) {
+    if (reaction1.date > reaction2.date) {
+        return -1;
+    } else if (reaction1.date < reaction2.date) {
+        return 1;
+    }
+    return 0;
+}
+
+function getReactionWithDateString(reaction) {
+    let newReaction = reaction;
+    let dateString = reaction.date.toDateString() + ' at ' + reaction.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    newReaction.date = dateString;
+    return newReaction;
 }
 
 /*
