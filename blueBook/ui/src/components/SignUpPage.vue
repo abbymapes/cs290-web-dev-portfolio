@@ -65,6 +65,7 @@ which allows users to create an account.
                 v-model="form.email"
                 type="email"
                 placeholder="Enter email"
+                autocomplete="username"
                 required
               ></b-form-input>
               <b-form-invalid-feedback
@@ -87,6 +88,7 @@ which allows users to create an account.
               <b-form-input
                 id="password-input-1"
                 v-model="form.password"
+                autocomplete="new-password"
                 placeholder="Enter password"
                 type="password"
                 required
@@ -112,6 +114,7 @@ which allows users to create an account.
                 id="password-input-2"
                 v-model="form.confirmPassword"
                 placeholder="Confirm password"
+                autocomplete="new-password"
                 type="password"
                 required
               ></b-form-input>

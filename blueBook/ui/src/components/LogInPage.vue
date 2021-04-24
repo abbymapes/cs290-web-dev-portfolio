@@ -18,6 +18,7 @@ log into BlueBook.
                 id="duke-email"
                 v-model="email"
                 type="email"
+                autocomplete="username"
                 placeholder="Enter email"
                 required
               ></b-form-input>
@@ -37,6 +38,7 @@ log into BlueBook.
                 id="password-input-1"
                 v-model="password"
                 placeholder="Enter password"
+                autocomplete="current-password"
                 type="password"
                 required
               ></b-form-input>
