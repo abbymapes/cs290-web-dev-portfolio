@@ -13,6 +13,7 @@ based on the user's reactions.
                     <class type="like"
                     :course="item"
                     :reaction-id="item.reactionId"
+                    :date="item.date"
                     @selected-reaction="displayReactionModal"></class>
                 </div>
                 </template>
@@ -34,6 +35,7 @@ based on the user's reactions.
                 <div class="item">
                     <class type="dislike" :course="item"
                     :reaction-id="item.reactionId"
+                    :date="item.date"
                     @selected-reaction="displayReactionModal"></class>
                 </div>
                 </template>
@@ -56,6 +58,7 @@ based on the user's reactions.
                 <div class="item">
                     <class type="wishlist" :course="item"
                     :reaction-id="item.reactionId"
+                    :date="item.date"
                     @selected-reaction="displayReactionModal"></class>
                 </div>
                 </template>
@@ -109,8 +112,8 @@ export default {
         };
     },
     methods: {
-        displayReactionModal(type, course, reactionId) {
-            this.$emit('show-reaction', type, course, reactionId);
+        displayReactionModal(type, course, reactionId, date) {
+            this.$emit('show-reaction', type, course, reactionId, date);
         },
 
         goToCoursePage(course) {

@@ -4,7 +4,7 @@ reactions to different classes.
 @author Abby Mapes
 <template>
   <div>
-    <h1>Feed</h1>
+    <h1 id='page-name'>Feed</h1>
     <b-overlay :show="loading" rounded="sm">
       <span v-if="!disablePage && reactions.length > 0">
         <b-card
@@ -15,6 +15,7 @@ reactions to different classes.
           <reaction
             :reactionId="reaction.reactionId"
             :type="reaction.type"
+            :date="reaction.date"
             :course="reaction.course"
             :user="reaction.user"
             @course-page="goToCoursePage"
@@ -107,14 +108,7 @@ export default {
 
 <style scoped>
 .class {
-  width: 50%;
+  width: 100%;
   margin: auto;
-}
-
-.reaction-feed{
-  width: 50%;
-  margin: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
 }
 </style>

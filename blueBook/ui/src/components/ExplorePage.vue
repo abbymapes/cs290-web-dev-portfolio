@@ -4,7 +4,7 @@ classes, subjects, subject codes, or users.
 @author Abby Mapes
 <template>
   <div>
-  <h1>Explore</h1>
+  <h1 id='page-name'>Explore</h1>
     <b-overlay :show="pageLoading" no-center class="overlay">
       <div class="search">
         <b-input-group

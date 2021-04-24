@@ -4,7 +4,7 @@ log into BlueBook.
 @author Abby Mapes
 <template>
   <div>
-  <h1>Log In</h1>
+  <h1 id='page-name'>Log In</h1>
   <b-overlay :show="loading" rounded="sm">
       <div v-if="validPage" class="log-in">
         <b-form @submit="onSubmit" @reset="onReset">

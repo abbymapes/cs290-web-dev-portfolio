@@ -5,7 +5,7 @@ provided as a prop.
 <template>
     <div>
         <b-overlay :show="classesLoading" no-center class="overlay">
-            <h1>Classes</h1>
+            <h1 id='section-title'>Classes</h1>
             <div>
                 <waterfall
                     :options="options"

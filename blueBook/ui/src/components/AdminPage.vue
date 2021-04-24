@@ -9,13 +9,14 @@ The AdminPage component represents the display for an admin account.
           :src="user.picture"
           :alt="user.displayName + 'Profile Picture'"
         ></b-avatar>
-        <h1>{{ user.displayName }}</h1>
+        <h1 id='page-name'>{{ user.displayName }}</h1>
 
         <div>
             <b-button
             variant="outline-primary"
             @click="signOut"
             class="button"
+            aria-label='Sign Out'
             >Sign Out</b-button
             >
         </div>

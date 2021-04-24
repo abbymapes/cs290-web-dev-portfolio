@@ -27,6 +27,10 @@ export default {
             type: String,
             required: false,
         },
+        date: {
+            type: String,
+            required: false,
+        },
     },
     data() {
         return {
@@ -40,7 +44,7 @@ export default {
     methods: {
         goToCoursePage(course) {
             if (this.isReaction) {
-                this.$emit('selected-reaction', this.type, this.course, this.reactionId);
+                this.$emit('selected-reaction', this.type, this.course, this.reactionId, this.date);
             } else {
                 this.$emit('selected-course', course);
             }

@@ -4,7 +4,7 @@ their profile on their user page.
 @author Abby Mapes
 <template>
   <div class="edit-profile">
-    <h1>Edit Profile</h1>
+    <h1 class='modal-title'>Edit Profile</h1>
     <b-overlay :show="loading" rounded="sm">
       <div v-if="validPage" class="sign-up">
         <b-form @submit="onSubmit" @reset="onReset">

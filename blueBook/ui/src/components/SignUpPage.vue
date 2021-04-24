@@ -4,7 +4,7 @@ which allows users to create an account.
 @author Abby Mapes
 <template>
   <div>
-    <h1>Sign Up</h1>
+    <h1 id='page-name'>Sign Up</h1>
     <b-overlay :show="loading" rounded="sm">
       <div v-if="validPage" class="sign-up">
         <b-form @submit="onSubmit" @reset="onReset">

@@ -5,7 +5,7 @@ User Page, based on the current user's friends.
 <template>
     <div >
         <b-overlay :show="loading" no-center class="overlay">
-            <h1>Friends</h1>
+            <h1 id='section-title'>Friends</h1>
             <vue-horizontal-list
                 v-if="friends.length > 0"
                 :items="friends"

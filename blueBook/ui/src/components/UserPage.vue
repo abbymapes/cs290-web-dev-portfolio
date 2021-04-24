@@ -11,7 +11,7 @@ the current user's profile, or a different user's page.
           :src="user.picture"
           :alt="user.displayName + 'Profile Picture'"
         ></b-avatar>
-        <h1>{{ user.displayName }}</h1>
+        <h1 id='page-name'>{{ user.displayName }}</h1>
         <span v-if="loggedIn">
           <span v-if="validFollowStatus">
             <b-button
@@ -19,6 +19,7 @@ the current user's profile, or a different user's page.
               variant="outline-success"
               @click="addFriend"
               class="button"
+              aria-label='Add Friend'
               >Add Friend</b-button
             >
             <b-button
@@ -26,6 +27,7 @@ the current user's profile, or a different user's page.
               variant="outline-danger"
               @click="removeFriend"
               class="button"
+              aria-label='Remove Friend'
               >Remove Friend</b-button
             >
             <div v-if="isViewingProfile">
@@ -33,12 +35,14 @@ the current user's profile, or a different user's page.
                 variant="outline-primary"
                 @click="editProfile"
                 class="button"
+                aria-label='Edit Profile'
                 >Edit Profile</b-button
               >
               <b-button
                 variant="outline-primary"
                 @click="signOut"
                 class="button"
+                aria-label='Sign Out'
                 >Sign Out</b-button
               >
             </div>
@@ -84,7 +88,8 @@ the current user's profile, or a different user's page.
           :subjectList="fullSubjectList"
           @subject-page="goToSubjectPage"
           @show-error="showSubjectError"
-        ></subjects-section>
+        >
+        </subjects-section>
         <span v-else-if="currentSection == 'subjects' && !validSubjects">
           We couldn't load the subjects for this user. Please refresh the page
           and try again.
@@ -103,6 +108,7 @@ the current user's profile, or a different user's page.
           :show="showReaction"
           :reactionId="selectedReactionId"
           :type="selectedReactionType"
+          :date="selectedReactionDate"
           :course="selectedReactionCourse"
           :user="user"
           :isAdmin="isAdmin"
@@ -174,6 +180,7 @@ export default {
             showReaction: false,
             selectedReactionId: '',
             selectedReactionType: '',
+            selectedReactionDate: '',
             selectedReactionCourse: {},
             showError: false,
             errorMessage: '',
@@ -202,9 +209,10 @@ export default {
             this.$emit('subject-page', code, name);
         },
 
-        displayReactionModal(type, course, reactionId) {
+        displayReactionModal(type, course, reactionId, date) {
             this.showReaction = true;
             this.selectedReactionId = reactionId;
+            this.selectedReactionDate = date;
             this.selectedReactionType = type;
             this.selectedReactionCourse = course;
         },
@@ -327,6 +335,7 @@ export default {
             this.showReaction = false;
             this.selectedReactionId = '';
             this.selectedReactionType = '';
+            this.selectedReactionDate = '';
             this.selectedReactionCourse = {};
         },
         resetUserData() {

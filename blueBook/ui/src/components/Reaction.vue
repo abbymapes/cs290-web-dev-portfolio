@@ -6,11 +6,12 @@ for a user, including the reaction type, the class, and the user's name.
 <template>
   <b-overlay :show="loading" rounded="sm">
       <div v-if="!showReactionError && !loading" class="modal-body reaction">
+        <div class="date">{{ date }}</div>
         <div
           class="left"
           @click="goToUserPage(user.userId)"
         >
-            <h1>
+            <h1 class='reaction-header'>
             <b-avatar size="5rem"
                 :src="user.picture"
                 :alt="user.displayName + 'Profile Picture'"
@@ -68,6 +69,7 @@ for a user, including the reaction type, the class, and the user's name.
                 :per-page="perPage"
                 aria-controls="comment-section"
                 pills
+                hide-goto-end-buttons
             ></b-pagination>
         </b-overlay>
       </div>
@@ -88,6 +90,7 @@ export default {
     },
     props: {
         reactionId: String,
+        date: String,
         type: String,
         course: Object,
         user: Object,
@@ -260,5 +263,10 @@ export default {
 .type {
     font-size: 20pt;
     font-weight: bold;
+}
+
+.date {
+    font-size: 12pt;
+    text-align: right;
 }
 </style>

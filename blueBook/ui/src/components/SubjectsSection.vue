@@ -5,7 +5,7 @@ The SubjectSection component represents the display for a collection of Subject 
 <template>
   <div>
     <b-overlay :show="subjectsLoading" no-center class="overlay">
-      <h1>Subjects</h1>
+      <h1 id='section-title'>Subjects</h1>
         <waterfall
             :options="options"
         >

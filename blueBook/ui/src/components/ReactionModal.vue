@@ -14,6 +14,7 @@ that reaction.
   >
     <reaction
       :reactionId="reactionId"
+      :date="date"
       :type="type"
       :course="course"
       :user="user"
@@ -35,6 +36,7 @@ export default {
     },
     props: {
         show: Boolean,
+        date: String,
         reactionId: String,
         type: String,
         course: Object,

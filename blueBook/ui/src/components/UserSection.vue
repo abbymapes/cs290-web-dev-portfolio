@@ -5,7 +5,7 @@ The UserSection component represents the display for a collection of Users,
 <template>
   <div>
     <b-overlay :show="loading" no-center class="overlay">
-      <h1>Users</h1>
+      <h1 id='section-title'>Users</h1>
         <waterfall
             :options="options"
         >

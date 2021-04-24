@@ -47,7 +47,6 @@ export default {
     watch: {
         selectedPage() {
             if (this.changedPage) {
-                console.log(this.selectedPage);
                 this.$emit('change-page', this.selectedPage);
                 this.changedPage = false;
             }

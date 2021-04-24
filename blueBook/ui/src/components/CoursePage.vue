@@ -7,7 +7,7 @@ component displays information for the course provided as a prop.
   <div class="body">
     <b-overlay :show="loading" no-center class="overlay">
       <span v-if="!disablePage">
-        <h1>{{ course.title }}</h1>
+        <h1 id='page-name'>{{ course.title }}</h1>
         <h2>{{ course.subjectCode + " " + course.catalogNumber }}</h2>
 
         <div class="reactions" v-if="loggedIn">
@@ -62,7 +62,7 @@ component displays information for the course provided as a prop.
         </div>
         <br />
         <div class="center">
-          <label for="avg-rating-interesting">Average Interesting Rating: </label>
+          <label for="avg-rating-interesting">Average Interesting Rating:</label>
           <b-form-rating
             id="avg-rating-interesting"
             :value="courseInfo.interesting"
@@ -72,7 +72,7 @@ component displays information for the course provided as a prop.
             variant="primary"
             class="mb-2 rating"
           ></b-form-rating>
-          <label for="avg-rating-difficulty">Average Difficulty Rating: </label>
+          <label for="avg-rating-difficulty">Average Difficulty Rating:</label>
           <b-form-rating
             id="avg-rating-difficulty"
             :value="courseInfo.difficulty"
@@ -96,7 +96,7 @@ component displays information for the course provided as a prop.
           :options="options"
         >
           <template v-slot:default="{ item }">
-            <div class="item">
+            <div class="item attributes">
               <b-card border-variant="primary" @click="goToAttributePage(item)">
                 <b-card-body>
                   {{ item }}
@@ -105,9 +105,9 @@ component displays information for the course provided as a prop.
             </div>
           </template>
         </vue-horizontal-list>
-        <div v-else class="empty">
+        <div v-else class="empty no-attributes">
           <b-card outline-variant="dark" class="empty">
-            <b-card-body class="no-classes"> No Course Attributes </b-card-body>
+            <b-card-body class="no-classes">No Course Attributes</b-card-body>
           </b-card>
         </div>
         <br />
@@ -135,7 +135,7 @@ component displays information for the course provided as a prop.
         </div>
         <h3 class="center">Comments</h3>
           <b-overlay :show="commentsLoading" rounded="sm">
-              <div>
+              <div class='comment-section'>
                   <b-input-group
                     v-if='loggedIn'
                     size="sm"
@@ -173,6 +173,7 @@ component displays information for the course provided as a prop.
                   :per-page="perPage"
                   aria-controls="comment-section"
                   pills
+                  hide-goto-end-buttons
               ></b-pagination>
           </b-overlay>
       </span>

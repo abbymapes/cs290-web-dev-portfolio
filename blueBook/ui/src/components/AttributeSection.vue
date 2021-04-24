@@ -5,7 +5,7 @@ The AttributeSection component represents the display for a collection of Attrib
 <template>
   <div>
     <b-overlay :show="loading" no-center class="overlay">
-      <h1>Course Attributes</h1>
+      <h1 id='section-title'>Course Attributes</h1>
         <waterfall
             :options="options"
         >
@@ -16,6 +16,7 @@ The AttributeSection component represents the display for a collection of Attrib
                 :key="i"
             >
                 <b-card
+                    :id='getItemCode(item.name)'
                     @click="goToAttributePage(item.name)"
                 >
                     <b-card-text class="attribute-name">
@@ -52,6 +53,9 @@ export default {
     methods: {
         goToAttributePage(name) {
             this.$emit('attribute-page', name);
+        },
+        getItemCode(name) {
+            return name.split(' ')[0];
         },
     },
 };

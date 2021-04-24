@@ -5,7 +5,7 @@ view courses for this subject.
 <template>
   <div>
     <b-overlay :show="loading" no-center class="overlay">
-        <h1>{{subjectName}}</h1>
+        <h1 id='page-name'>{{subjectName}}</h1>
         <div class="reactions" v-if="loggedIn">
             <b-button
                 class="reaction"

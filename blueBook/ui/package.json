@@ -5,10 +5,12 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@babel/polyfill": "^7.11.5",
+    "@wdio/cli": "^7.5.1",
     "autoresponsive-core": "^1.0.1",
     "autoresponsive-vue": "^1.0.22",
     "bootstrap": "^4.5.2",
@@ -24,23 +26,31 @@
     "vue-js-grid": "^1.0.1",
     "vue-navigation-bar": "^4.1.0",
     "vue-waterfall": "^1.0.6",
-    "vue2-waterfall": "^3.0.1"
+    "vue2-waterfall": "^3.0.1",
+    "wdio-chromedriver-service": "^7.0.0"
   },
   "devDependencies": {
+    "@babel/polyfill": "^7.11.5",
     "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-e2e-webdriverio": "~5.0.0-alpha",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
+    "bootstrap": "^4.5.2",
+    "chromedriver": "89",
     "eslint": "^6.7.2",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-vue": "^6.2.2",
+    "geckodriver": "^1.20.0",
+    "mutationobserver-shim": "^0.3.7",
     "popper.js": "^1.16.1",
     "portal-vue": "^2.1.7",
     "sass": "^1.26.11",
     "sass-loader": "^10.0.2",
     "vue-cli-plugin-bootstrap-vue": "~0.7.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webdriverio": "^7.4.6"
   },
   "eslintConfig": {
     "root": true,

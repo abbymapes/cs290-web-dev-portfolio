@@ -308,9 +308,19 @@ img {
     padding-top: 10px;
 }
 
+.reaction-feed{
+  width: 95%;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 @media screen and (min-width: 600px) {
     .waterfall-item {
         width: 50%;
+    }
+    .reaction-feed{
+        width: 80%;
     }
 }
 
@@ -321,6 +331,15 @@ img {
     .search {
         width: 80%;
     }
+    .reaction-feed{
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .reaction-feed{
+        width: 60%;
+    }
 }
 
 @media screen and (min-width: 1500px) {
@@ -329,6 +348,9 @@ img {
     }
     .search {
         width: 80%;
+    }
+    .reaction-feed{
+        width: 50%;
     }
 }
 </style>

@@ -5,7 +5,7 @@ page, users can view courses for this course attribute.
 <template>
   <div>
     <b-overlay :show="loading" no-center class="overlay">
-        <h1>{{attributeName}}</h1>
+        <h1 id='page-name'>{{attributeName}}</h1>
         <div class="search">
             <b-input-group
                 size="sm"
