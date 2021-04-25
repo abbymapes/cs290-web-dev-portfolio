@@ -853,8 +853,8 @@ async function getFriendsReactions(userId) {
     const friendUserIds = Object.getOwnPropertyNames(friends);
     let allReactions = [];
     if (friendUserIds.length > 0) {
-        for await (const friendId of friendUserIds) {
-            const reactions = await db.collection('reactions').where('userId', '==', friendId).get()
+        for (const friendId of friendUserIds) { // eslint-disable-line
+            const reactions = await db.collection('reactions').where('userId', '==', friendId).get() // eslint-disable-line
                 .then(async (querySnapshot) => {
                     const promises = [];
                     querySnapshot.forEach((doc) => {
