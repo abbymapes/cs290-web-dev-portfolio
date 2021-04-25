@@ -1,0 +1,299 @@
+[
+    {
+        "commentText": "I hated that too!",
+        "userId": "testId",
+        "date": {
+            "_seconds": 1618460055,
+            "_nanoseconds": 161000000
+        },
+        "reactionId": "exFollowingID6017124"
+    },
+    {
+        "courseId": "018276",
+        "commentText": "Hardest class ever!",
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "date": {
+            "_seconds": 1619112685,
+            "_nanoseconds": 840000000
+        }
+    },
+    {
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "commentText": "I love this class\n",
+        "date": {
+            "_seconds": 1618971105,
+            "_nanoseconds": 796000000
+        },
+        "reactionId": "testId001367"
+    },
+    {
+        "userId": "09kRYVmVW1gOi7sNYdX94xNTctY2",
+        "courseId": "000028",
+        "commentText": "I thought this class was so hard...",
+        "date": {
+            "_seconds": 1619145307,
+            "_nanoseconds": 968000000
+        }
+    },
+    {
+        "reactionId": "exFollowingID1018580",
+        "commentText": "I've always wanted to take this",
+        "date": {
+            "_seconds": 1619057865,
+            "_nanoseconds": 525000000
+        },
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1"
+    },
+    {
+        "courseId": "000028",
+        "userId": "7kltwm3VQrd4E7cDtHtvbpfUsw72",
+        "commentText": "Really great research class. I thought I wouldn't like it but I LOVED it",
+        "date": {
+            "_seconds": 1619145580,
+            "_nanoseconds": 87000000
+        }
+    },
+    {
+        "commentText": "Difficult but interesting class",
+        "date": {
+            "_seconds": 1619145808,
+            "_nanoseconds": 198000000
+        },
+        "userId": "DZUpHwsSF5hasIV3dHhM4z7dIG62",
+        "courseId": "001465"
+    },
+    {
+        "userId": "testId",
+        "courseId": "000028",
+        "commentText": "Wow! Love this class!",
+        "date": {
+            "_seconds": 1618318800,
+            "_nanoseconds": 0
+        }
+    },
+    {
+        "courseId": "019420",
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "date": {
+            "_seconds": 1619057902,
+            "_nanoseconds": 963000000
+        },
+        "commentText": "I heard this is super hard"
+    },
+    {
+        "commentText": "I loved it too!",
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "reactionId": "DZUpHwsSF5hasIV3dHhM4z7dIG62001465",
+        "date": {
+            "_seconds": 1619313163,
+            "_nanoseconds": 32000000
+        }
+    },
+    {
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "date": {
+            "_seconds": 1619288092,
+            "_nanoseconds": 343000000
+        },
+        "commentText": "Love this class",
+        "reactionId": "09kRYVmVW1gOi7sNYdX94xNTctY2000028"
+    },
+    {
+        "date": {
+            "_seconds": 1619296181,
+            "_nanoseconds": 3000000
+        },
+        "commentText": "great course...pretty tough",
+        "userId": "rhaHbLaPWian3TN37FPagPecg4I2",
+        "courseId": "000028"
+    },
+    {
+        "date": {
+            "_seconds": 1619311237,
+            "_nanoseconds": 459000000
+        },
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "reactionId": "mwLFSnegNKP55ICHlGHwol1uRns2002961",
+        "commentText": "Loved it too"
+    },
+    {
+        "date": {
+            "_seconds": 1619112953,
+            "_nanoseconds": 317000000
+        },
+        "reactionId": "exFollowingID5003296",
+        "commentText": "Who was your teacher?",
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1"
+    },
+    {
+        "date": {
+            "_seconds": 1619145673,
+            "_nanoseconds": 600000000
+        },
+        "userId": "BQd2CAW2E6WzV0eqOZVwUcVlzC02",
+        "courseId": "000028",
+        "commentText": "Honestly, not my favorite."
+    },
+    {
+        "date": {
+            "_seconds": 1619145787,
+            "_nanoseconds": 511000000
+        },
+        "reactionId": "exFollowingID1001465",
+        "userId": "DZUpHwsSF5hasIV3dHhM4z7dIG62",
+        "commentText": "I took it. Highly recommend. I wouldn't overload when taking it tho..."
+    },
+    {
+        "courseId": "001465",
+        "commentText": "Be sure to take it with Professor Wang",
+        "userId": "f7lSdznzscRdVCdwRENg6ob4QHP2",
+        "date": {
+            "_seconds": 1619145912,
+            "_nanoseconds": 166000000
+        }
+    },
+    {
+        "courseId": "000028",
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "commentText": "The best!",
+        "date": {
+            "_seconds": 1619313228,
+            "_nanoseconds": 869000000
+        }
+    },
+    {
+        "courseId": "000028",
+        "userId": "exFollowingID6",
+        "date": {
+            "_seconds": 1617948000,
+            "_nanoseconds": 0
+        },
+        "commentText": "I thought this class was the most interesting one at Duke"
+    },
+    {
+        "userId": "testId",
+        "reactionId": "exFollowingID1004536",
+        "commentText": "wow!",
+        "date": {
+            "_seconds": 1618447285,
+            "_nanoseconds": 259000000
+        }
+    },
+    {
+        "date": {
+            "_seconds": 1619058145,
+            "_nanoseconds": 857000000
+        },
+        "commentText": "I want to take this",
+        "userId": "jyJ6MWp02OZMdRf3VNzWzm2r2q22",
+        "courseId": "022549"
+    },
+    {
+        "date": {
+            "_seconds": 1619295841,
+            "_nanoseconds": 960000000
+        },
+        "userId": "rhaHbLaPWian3TN37FPagPecg4I2",
+        "commentText": "so hard!",
+        "courseId": "004748"
+    },
+    {
+        "reactionId": "testId000028",
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "commentText": "What! I loved this class!",
+        "date": {
+            "_seconds": 1619057920,
+            "_nanoseconds": 856000000
+        }
+    },
+    {
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "commentText": "Great class\n",
+        "date": {
+            "_seconds": 1619128492,
+            "_nanoseconds": 30000000
+        },
+        "reactionId": "exFollowingID3026893"
+    },
+    {
+        "userId": "mwLFSnegNKP55ICHlGHwol1uRns2",
+        "commentText": "WORST CLASS EVER! I had a horrible experience",
+        "courseId": "001465",
+        "date": {
+            "_seconds": 1619146020,
+            "_nanoseconds": 676000000
+        }
+    },
+    {
+        "reactionId": "mwLFSnegNKP55ICHlGHwol1uRns2002961",
+        "date": {
+            "_seconds": 1619290597,
+            "_nanoseconds": 244000000
+        },
+        "commentText": "I loved this class too",
+        "userId": "DZUpHwsSF5hasIV3dHhM4z7dIG62"
+    },
+    {
+        "commentText": "wow!",
+        "date": {
+            "_seconds": 1619033244,
+            "_nanoseconds": 623000000
+        },
+        "reactionId": "exFollowingID5003296",
+        "userId": "testId"
+    },
+    {
+        "commentText": "No way!",
+        "reactionId": "exFollowingID5003296",
+        "userId": "testId",
+        "date": {
+            "_seconds": 1618459615,
+            "_nanoseconds": 560000000
+        }
+    },
+    {
+        "commentText": "Very interesting class, especially during COVID because we learned a lot about it ",
+        "date": {
+            "_seconds": 1619147139,
+            "_nanoseconds": 526000000
+        },
+        "userId": "SRJH5vXslxRlTqQGLJF5h3tD9jZ2",
+        "courseId": "012940"
+    },
+    {
+        "courseId": "000028",
+        "userId": "3niFR2DiQMdLsDWwG1MMUmOrvkk2",
+        "commentText": "Highly recommend. I would have never learned any of this if I didn't take this at Duke. If you need a CCI it's been the best class I've taken.",
+        "date": {
+            "_seconds": 1619145461,
+            "_nanoseconds": 74000000
+        }
+    },
+    {
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "courseId": "022238",
+        "date": {
+            "_seconds": 1619144859,
+            "_nanoseconds": 947000000
+        },
+        "commentText": "Note my favorite course."
+    },
+    {
+        "commentText": "I hate this class too",
+        "date": {
+            "_seconds": 1619308850,
+            "_nanoseconds": 287000000
+        },
+        "reactionId": "rhaHbLaPWian3TN37FPagPecg4I2025510",
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1"
+    },
+    {
+        "commentText": "I liked but it doesn't count towards the major",
+        "date": {
+            "_seconds": 1619145888,
+            "_nanoseconds": 576000000
+        },
+        "reactionId": "exFollowingID1001465",
+        "userId": "f7lSdznzscRdVCdwRENg6ob4QHP2"
+    }
+]

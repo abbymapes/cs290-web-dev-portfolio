@@ -1,0 +1,158 @@
+[
+    {
+        "courseId": "000028",
+        "userId": "09kRYVmVW1gOi7sNYdX94xNTctY2",
+        "interesting": 2,
+        "difficulty": 5
+    },
+    {
+        "courseId": "000028",
+        "difficulty": 1,
+        "interesting": 5,
+        "userId": "3niFR2DiQMdLsDWwG1MMUmOrvkk2"
+    },
+    {
+        "userId": "7kltwm3VQrd4E7cDtHtvbpfUsw72",
+        "interesting": 5,
+        "difficulty": 2,
+        "courseId": "000028"
+    },
+    {
+        "userId": "BQd2CAW2E6WzV0eqOZVwUcVlzC02",
+        "courseId": "000028",
+        "interesting": 1,
+        "difficulty": 2
+    },
+    {
+        "interesting": 3,
+        "difficulty": 5,
+        "courseId": "001465",
+        "userId": "DZUpHwsSF5hasIV3dHhM4z7dIG62"
+    },
+    {
+        "difficulty": 3,
+        "interesting": 5,
+        "courseId": "000028",
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1"
+    },
+    {
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "difficulty": 3,
+        "interesting": 5,
+        "courseId": "002598"
+    },
+    {
+        "interesting": 3,
+        "difficulty": 1,
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "courseId": "005725"
+    },
+    {
+        "difficulty": 5,
+        "courseId": "017430",
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "interesting": 4
+    },
+    {
+        "interesting": 2,
+        "courseId": "018276",
+        "difficulty": 5,
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1"
+    },
+    {
+        "courseId": "019420",
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "difficulty": 5,
+        "interesting": 1
+    },
+    {
+        "difficulty": 2,
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "interesting": 3,
+        "courseId": "020830"
+    },
+    {
+        "courseId": "022238",
+        "difficulty": 2,
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "interesting": 1
+    },
+    {
+        "courseId": "023638",
+        "difficulty": 3,
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "interesting": 5
+    },
+    {
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "difficulty": 2,
+        "courseId": "025691",
+        "interesting": 5
+    },
+    {
+        "courseId": "012940",
+        "difficulty": 2,
+        "userId": "SRJH5vXslxRlTqQGLJF5h3tD9jZ2",
+        "interesting": 5
+    },
+    {
+        "courseId": "001448",
+        "userId": "c652BdFAwzT7e8evIb3zTkkKA802",
+        "interesting": 5,
+        "difficulty": 4
+    },
+    {
+        "difficulty": 1,
+        "userId": "f7lSdznzscRdVCdwRENg6ob4QHP2",
+        "interesting": 5,
+        "courseId": "001465"
+    },
+    {
+        "userId": "mwLFSnegNKP55ICHlGHwol1uRns2",
+        "interesting": 1,
+        "courseId": "001465",
+        "difficulty": 5
+    },
+    {
+        "courseId": "004748",
+        "difficulty": 5,
+        "userId": "rhaHbLaPWian3TN37FPagPecg4I2",
+        "interesting": 4
+    },
+    {
+        "difficulty": 1,
+        "courseId": "000028",
+        "userId": "testId",
+        "interesting": 5
+    },
+    {
+        "difficulty": 0,
+        "courseId": "001612",
+        "userId": "testId",
+        "interesting": 3
+    },
+    {
+        "interesting": 5,
+        "courseId": "002597",
+        "difficulty": 0,
+        "userId": "testId"
+    },
+    {
+        "userId": "testId",
+        "interesting": 0,
+        "difficulty": null,
+        "courseId": "002786"
+    },
+    {
+        "difficulty": 1,
+        "courseId": "003637",
+        "interesting": 3,
+        "userId": "testId"
+    },
+    {
+        "userId": "testId",
+        "interesting": 3,
+        "courseId": "018580",
+        "difficulty": 0
+    }
+]

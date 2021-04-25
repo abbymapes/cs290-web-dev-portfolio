@@ -266,32 +266,50 @@ describe('Vue.js app', () => {
     });
 
     /*
+     * 1 Back-End Computed Values Test: Tests that retrieving course information provided at
+     * endpoint '/bluebook/courseInfo.json' for the known courseID: 000028 returns the JSON
+     * data with the appropriate fields for course 000028.
+     */
+    it('Should return correct JSON for course with known courseId.', async () => {
+        // use fetch to call the backend API directly
+        const result = await fetch(`${browser.options.baseUrl}/bluebook/courseInfo.json`);
+        const json = await result.json();
+        expect(result.status === 200);
+        expect(json.catalogNumber === '151');
+        expect(json.courseCodes.length === 4);
+        expect(json.courseCodes[0] === '(CCI) Cross Cultural Inquiry');
+        expect(json.courseCodes[1] === '(R) Research');
+        expect(json.courseCodes[2] === '(ALP) Arts, Literature & Performance');
+        expect(json.courseCodes[3] === '(CZ) Civilizations');
+        expect(json.courseId === '000028');
+        expect(json.description === 'Sources of vitality in twentieth-century Indian cinema. The resilience of popular cinema in the face of Hollywood. Narrative and non-narrative expressive forms in folk and high culture in India. The work of Guru Dutt, Satyajit Ray, G. Aravindan, and Mani Kaul. Instructor: Khanna');
+        expect(json.subjectCode === 'AMES');
+        expect(json.subjectName === 'Asian & Middle Eastern Studies');
+        expect(json.title === 'Indian Cinema');
+    });
+
+    /*
      * 4 back-end tests to verify the JSON data returned the expected values
      * (including two that produce expected error results)
      */
 
     /*
-     * Back-End Verify Test 1: Tests that retrieving course information for the known
-     * courseID: 000028 returns the JSON object with the appropriate fields for course
-     * 000028.
+     * Back-End Verify Test 1: Tests that filtering the database collection
+     * subjects to retrieve subjects that match a search term: 'computer' will return
+     * the known computed list of subjects that contain the search term.
      */
-    it('Should return correct JSON for course with known courseId.', async () => {
+    it('Back-end should return correct computed list of subjects based on the search term and collection.', async () => {
         // use fetch to call the backend API directly
-        const knownCourseId = '000028';
-        const result = await fetch(`${browser.options.baseUrl}/bluebook/getCourseInformation?courseId=${knownCourseId}`);
+        const searchTerm = 'computer';
+        const collection = 'subjects';
+        const result = await fetch(`${browser.options.baseUrl}/bluebook/getFilteredDocuments?collection=${collection}&searchTerm=${searchTerm}`);
         const json = await result.json();
         expect(result.status === 200);
-        expect(json.course.catalogNumber === '151');
-        expect(json.course.courseCodes.length === 4);
-        expect(json.course.courseCodes[0] === '(CCI) Cross Cultural Inquiry');
-        expect(json.course.courseCodes[1] === '(R) Research');
-        expect(json.course.courseCodes[2] === '(ALP) Arts, Literature & Performance');
-        expect(json.course.courseCodes[3] === '(CZ) Civilizations');
-        expect(json.course.courseId === '000028');
-        expect(json.course.description === 'Sources of vitality in twentieth-century Indian cinema. The resilience of popular cinema in the face of Hollywood. Narrative and non-narrative expressive forms in folk and high culture in India. The work of Guru Dutt, Satyajit Ray, G. Aravindan, and Mani Kaul. Instructor: Khanna');
-        expect(json.course.subjectCode === 'AMES');
-        expect(json.course.subjectName === 'Asian & Middle Eastern Studies');
-        expect(json.course.title === 'Indian Cinema');
+        expect(json.totalResults === 2);
+        expect(json.results[0].code === 'COMPSCI');
+        expect(json.results[0].name === 'Computer Science');
+        expect(json.results[1].code === 'ECE');
+        expect(json.results[1].name === 'Electrical & Computer Egr');
     });
 
     /*
@@ -349,24 +367,5 @@ describe('Vue.js app', () => {
         const json = await result.json();
         expect(result.status !== 200);
         expect(json.message).toHaveTextContaining(`Cannot find requested user ${invalidUserId}.`);
-    });
-
-    /*
-     * 1 Back-End Computed Values Test: Tests that filtering the database collection
-     * subjects to retrieve subjects that match a search term: 'computer' will return
-     * the known computed list of subjects that contain the search term.
-     */
-    it('Back-end should return correct computed list of subjects based on the search term and collection.', async () => {
-        // use fetch to call the backend API directly
-        const searchTerm = 'computer';
-        const collection = 'subjects';
-        const result = await fetch(`${browser.options.baseUrl}/bluebook/getFilteredDocuments?collection=${collection}&searchTerm=${searchTerm}`);
-        const json = await result.json();
-        expect(result.status === 200);
-        expect(json.totalResults === 2);
-        expect(json.results[0].code === 'COMPSCI');
-        expect(json.results[0].name === 'Computer Science');
-        expect(json.results[1].code === 'ECE');
-        expect(json.results[1].name === 'Electrical & Computer Egr');
     });
 });

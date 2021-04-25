@@ -66,10 +66,10 @@ exports.config = {
     // =====
     // Hooks
     // =====
-    // WebdriverIO provides several hooks you can use to interfere with the test process in order to enhance
-    // it and to build services around it. You can either apply a single function or an array of
-    // methods to it. If one of them returns with a promise, WebdriverIO will wait until that promise got
-    // resolved to continue.
+    // WebdriverIO provides several hooks you can use to interfere with the test process
+    // in order to enhance it and to build services around it. You can either apply a single
+    // function or an array of methods to it. If one of them returns with a promise,
+    // WebdriverIO will wait until that promise got resolved to continue.
     //
     /**
    * Gets executed once before all workers get launched.
@@ -82,9 +82,11 @@ exports.config = {
    * Gets executed before a worker process is spawned and can be used to initialise specific service
    * for that worker as well as modify runtime environments in an async fashion.
    * @param  {String} cid      capability id (e.g 0-0)
-   * @param  {[type]} caps     object containing capabilities for session that will be spawn in the worker
+   * @param  {[type]} caps     object containing capabilities for session
+   *                           that will be spawn in the worker
    * @param  {[type]} specs    specs to be run in the worker process
-   * @param  {[type]} args     object that will be merged with the main configuration once worker is initialised
+   * @param  {[type]} args     object that will be merged with the main
+   *                           configuration once worker is initialised
    * @param  {[type]} execArgv list of string arguments passed to the worker process
    */
     onWorkerStart(cid, caps, specs, args, execArgv) {

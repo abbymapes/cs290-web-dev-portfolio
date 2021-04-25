@@ -1,0 +1,170 @@
+[
+    {
+        "followerId": "testId",
+        "followingId": "exFollowingID2"
+    },
+    {
+        "followingId": "exFollowingID5",
+        "followerId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1"
+    },
+    {
+        "followerId": "f7lSdznzscRdVCdwRENg6ob4QHP2",
+        "followingId": "exFollowingID1"
+    },
+    {
+        "followerId": "exFollowingID6",
+        "followingId": "exFollowingID5"
+    },
+    {
+        "followingId": "jyJ6MWp02OZMdRf3VNzWzm2r2q22",
+        "followerId": "mwLFSnegNKP55ICHlGHwol1uRns2"
+    },
+    {
+        "followingId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "followerId": "3niFR2DiQMdLsDWwG1MMUmOrvkk2"
+    },
+    {
+        "followerId": "exFollowingID1",
+        "followingId": "testId"
+    },
+    {
+        "followerId": "exFollowingID5",
+        "followingId": "exFollowingID4"
+    },
+    {
+        "followerId": "rhaHbLaPWian3TN37FPagPecg4I2",
+        "followingId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1"
+    },
+    {
+        "followingId": "Xtx6EZbytcZpMuVXcYDWljoMWWK2",
+        "followerId": "mwLFSnegNKP55ICHlGHwol1uRns2"
+    },
+    {
+        "followerId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "followingId": "09kRYVmVW1gOi7sNYdX94xNTctY2"
+    },
+    {
+        "followerId": "c652BdFAwzT7e8evIb3zTkkKA802",
+        "followingId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1"
+    },
+    {
+        "followingId": "exFollowingID3",
+        "followerId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1"
+    },
+    {
+        "followingId": "testId",
+        "followerId": "exFollowingID6"
+    },
+    {
+        "followerId": "mwLFSnegNKP55ICHlGHwol1uRns2",
+        "followingId": "3niFR2DiQMdLsDWwG1MMUmOrvkk2"
+    },
+    {
+        "followingId": "testId",
+        "followerId": "exFollowingID4"
+    },
+    {
+        "followerId": "exFollowingID2",
+        "followingId": "testId"
+    },
+    {
+        "followingId": "7kltwm3VQrd4E7cDtHtvbpfUsw72",
+        "followerId": "mwLFSnegNKP55ICHlGHwol1uRns2"
+    },
+    {
+        "followingId": "exFollowingID1",
+        "followerId": "testId"
+    },
+    {
+        "followerId": "exFollowingID1",
+        "followingId": "exFollowingID6"
+    },
+    {
+        "followingId": "exFollowingID3",
+        "followerId": "exFollowingID4"
+    },
+    {
+        "followerId": "exFollowingID3",
+        "followingId": "testId"
+    },
+    {
+        "followingId": "Xtx6EZbytcZpMuVXcYDWljoMWWK2",
+        "followerId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1"
+    },
+    {
+        "followingId": "3niFR2DiQMdLsDWwG1MMUmOrvkk2",
+        "followerId": "rhaHbLaPWian3TN37FPagPecg4I2"
+    },
+    {
+        "followingId": "f7lSdznzscRdVCdwRENg6ob4QHP2",
+        "followerId": "mwLFSnegNKP55ICHlGHwol1uRns2"
+    },
+    {
+        "followingId": "jyJ6MWp02OZMdRf3VNzWzm2r2q22",
+        "followerId": "09kRYVmVW1gOi7sNYdX94xNTctY2"
+    },
+    {
+        "followerId": "jyJ6MWp02OZMdRf3VNzWzm2r2q22",
+        "followingId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1"
+    },
+    {
+        "followerId": "exFollowingID2",
+        "followingId": "exFollowingID1"
+    },
+    {
+        "followingId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "followerId": "Xtx6EZbytcZpMuVXcYDWljoMWWK2"
+    },
+    {
+        "followingId": "testId",
+        "followerId": "exFollowingID5"
+    },
+    {
+        "followerId": "mwLFSnegNKP55ICHlGHwol1uRns2",
+        "followingId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1"
+    },
+    {
+        "followingId": "exFollowingID4",
+        "followerId": "testId"
+    },
+    {
+        "followerId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "followingId": "DZUpHwsSF5hasIV3dHhM4z7dIG62"
+    },
+    {
+        "followerId": "SRJH5vXslxRlTqQGLJF5h3tD9jZ2",
+        "followingId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1"
+    },
+    {
+        "followingId": "exFollowingID1",
+        "followerId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1"
+    },
+    {
+        "followerId": "mwLFSnegNKP55ICHlGHwol1uRns2",
+        "followingId": "DZUpHwsSF5hasIV3dHhM4z7dIG62"
+    },
+    {
+        "followingId": "exFollowingID5",
+        "followerId": "testId"
+    },
+    {
+        "followingId": "Xtx6EZbytcZpMuVXcYDWljoMWWK2",
+        "followerId": "09kRYVmVW1gOi7sNYdX94xNTctY2"
+    },
+    {
+        "followerId": "DZUpHwsSF5hasIV3dHhM4z7dIG62",
+        "followingId": "mwLFSnegNKP55ICHlGHwol1uRns2"
+    },
+    {
+        "followingId": "7kltwm3VQrd4E7cDtHtvbpfUsw72",
+        "followerId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1"
+    },
+    {
+        "followerId": "exFollowingID3",
+        "followingId": "exFollowingID2"
+    },
+    {
+        "followingId": "exFollowingID3",
+        "followerId": "testId"
+    }
+]

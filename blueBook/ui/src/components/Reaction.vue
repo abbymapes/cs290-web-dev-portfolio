@@ -44,6 +44,7 @@ for a user, including the reaction type, the class, and the user's name.
                         max-rows="8"
                         v-model="newComment"
                         @keyup.enter="postComment"
+                        aria-label='Comment input for reaction'
                     ></b-form-textarea>
                     <b-input-group-append>
                         <b-button

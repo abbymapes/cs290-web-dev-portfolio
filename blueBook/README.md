@@ -41,7 +41,7 @@ Asset attributions:
 
 ### Assignment Notes
 
-Known Bugs: N/A
+Known Bugs: No known bugs, however there is 1 known eslint error in [./server/datastore.js](./server/datastore.js) where I use a for loop instead of a forEach() loop. As I asked and discussed with the professors on Piazza, since I am doing asynchronous calls within this loop, they permitted me to have this error for the purpose of this class. Other than this, there are no other errors or bugs.
 
 Extra credit: I believe that my web application goes above and beyond the requirements for this project and this course. I spent a lot of time handling errors and ensuring that the website runs smoothly and potential bugs are taken care of. 
 
@@ -49,15 +49,58 @@ Extra credit: I believe that my web application goes above and beyond the requir
 Ultimately, I'm very proud of what I've accomplished in this project and this course. I feel like I have a solid understanding of the foundations of web development and have been able to create a web app that is responsive, interactive, and useful for Duke students. It was overwhelming having to do this project by myself; however, designing an application from scratch and implementing it very rewarding.
 
 ## Set Up Instructions:
-Log In Information to Demo Bluebook:
+
+### ui setup instructions
+
+#### Project setup
+```
+cd ui
+npm install
+```
+
+#### Compiles and hot-reloads for development
+```
+cd ui
+npm run serve
+```
+
+#### Compiles and minifies for production
+```
+cd ui
+npm run build
+```
+
+#### Lints and fixes files
+```
+cd ui
+npm run lint
+```
+
+### server setup instructions
+
+#### Project setup
+```
+cd server
+npm install
+```
+
+#### Runs local server
+```
+cd server
+npm run start
+```
+
+#### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
-User Account:
+### Log In Information to Demo Bluebook:
+#### User Account:
 - Email: acm103@duke.edu
 - Password: password
 
 
-Admin Account:
+#### Admin Account:
 - Email: admin@duke.edu
 - Password: password
 
@@ -65,7 +108,7 @@ Admin Account:
 In order to retrieve information about Duke’s course offerings, subjects, and course attributes, I pulled data from the Duke Curriculum API (https://api-catalog.oit.duke.edu/apis/1),  which provides JSON streams of data that contain various course details, including a list of all classes, class synopsis, curriculum details and class sections, and loaded this data into Firebase. The Duke Curriculum API gives members of the Duke community access to the courses offered at Duke. So, all data used for Bluebook is authentic, as it is pulled directly from Duke’s Curriculum API. Note: all other data used for Bluebook is inputted directly by its users. 
 
 ## Database Structure:
-Below is a description of each of the collections in my database, along with a description of the documents for each collection.
+Below is a description of each of the collections in my database, along with a description of the documents for each collection. Note: [Here](./data/) is a "local" version of my database, in which each JSON file contains the documents in the corresponding Firestore collection (which was pulled when I turned project in).
 
 - Courses Collection: The courses collection contains a document for each course returned from Duke’s Curriculum API. A course document contains the following fields: catalogNumber (String), courseCodes (Array), courseId (String), description (String), offerNumber (String), subjectCode (String), subjectName (String), title (String), type (String). Each courseId was the courseId given to courses in Duke’s Catalog API, which the documentation specified were all unique. So, I used the unique courseId as the ID for each course document in Firebase. [Here](./reports/exampleClassData.json) is the JSON data structure that represents each course document. Note, each property represents a field for a course document. If any of these fields are missing (i.e. a course didn’t have a course code), then they are intialized to an empty version of the data type (i.e. an empty string or array).
 

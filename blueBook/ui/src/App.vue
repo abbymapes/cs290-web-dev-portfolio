@@ -315,6 +315,25 @@ img {
   margin-bottom: 20px;
 }
 
+.btn {
+    font-weight: 500;
+}
+
+.btn-outline-primary {
+    color: hsl(215, 100%, 60%);
+    border-color: hsl(215, 100%, 60%);
+}
+
+.btn-outline-success {
+    color: hsl(113, 100%, 30%);
+    border-color: hsl(113, 100%, 30%);
+}
+
+.btn-outline-danger {
+    color: hsl(0, 100%, 42%);
+    border-color: hsl(0, 100%, 42%);
+}
+
 @media screen and (min-width: 600px) {
     .waterfall-item {
         width: 50%;

@@ -76,6 +76,7 @@ their profile on their user page.
                   v-model="form.majors"
                   id="major-input"
                   stacked
+                  aria-label='Select Majors'
                 >
                   <b-form-checkbox
                     v-for="(subject, i) in subjects"
@@ -104,6 +105,7 @@ their profile on their user page.
                   v-model="form.minors"
                   id="minor-input"
                   stacked
+                  aria-label='Select Minors'
                 >
                   <b-form-checkbox
                     v-for="(subject, i) in subjects"
@@ -132,6 +134,7 @@ their profile on their user page.
                   v-model="form.certificates"
                   id="certificate-input"
                   stacked
+                  aria-label='Select Certificates'
                 >
                   <b-form-checkbox
                     v-for="(subject, i) in subjects"

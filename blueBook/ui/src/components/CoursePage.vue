@@ -123,7 +123,7 @@ component displays information for the course provided as a prop.
             variant="primary"
           ></b-form-rating>
           <br />
-          <label for="rating-lg" class="mt-3">Difficulty</label>
+          <label for="rating-difficulty" class="mt-3">Difficulty</label>
           <b-form-rating
             id="rating-difficulty"
             v-model="difficultyRating"
@@ -148,6 +148,7 @@ component displays information for the course provided as a prop.
                         max-rows="8"
                         v-model="newComment"
                         @keyup.enter="postComment"
+                        aria-label='Comment input for course'
                     ></b-form-textarea>
                     <b-input-group-append>
                         <b-button

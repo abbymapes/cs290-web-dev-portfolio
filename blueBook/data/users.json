@@ -1,0 +1,448 @@
+[
+    {
+        "isAdmin": false,
+        "majors": [
+            "MUSIC",
+            "MILITSCI"
+        ],
+        "userId": "09kRYVmVW1gOi7sNYdX94xNTctY2",
+        "picture": "https://firebasestorage.googleapis.com/v0/b/bluebook-153fe.appspot.com/o/profile%2F09kRYVmVW1gOi7sNYdX94xNTctY2.jpg?alt=media&token=b594bb63-ba0e-4b65-b88b-be6df59c4571",
+        "subjects": [
+            "DANCE"
+        ],
+        "displayName": "Lily Allen",
+        "visits": 4,
+        "certificates": [],
+        "minors": [
+            "AMES"
+        ]
+    },
+    {
+        "majors": [
+            "FRENCH"
+        ],
+        "userId": "3niFR2DiQMdLsDWwG1MMUmOrvkk2",
+        "visits": 2,
+        "displayName": "Josh Smith",
+        "picture": "https://firebasestorage.googleapis.com/v0/b/bluebook-153fe.appspot.com/o/profile%2F3niFR2DiQMdLsDWwG1MMUmOrvkk2.jpg?alt=media&token=c754eb42-5600-4f3f-8975-4592f1a4273c",
+        "certificates": [
+            "HINDI"
+        ],
+        "subjects": [
+            "DECSCI"
+        ],
+        "minors": [],
+        "isAdmin": false
+    },
+    {
+        "majors": [
+            "CHINESE",
+            "CHILDPOL"
+        ],
+        "picture": "https://firebasestorage.googleapis.com/v0/b/bluebook-153fe.appspot.com/o/profile%2F7kltwm3VQrd4E7cDtHtvbpfUsw72.jpg?alt=media&token=cdd3832d-4b56-44b2-a190-f9fe12cd4778",
+        "certificates": [],
+        "minors": [],
+        "isAdmin": false,
+        "userId": "7kltwm3VQrd4E7cDtHtvbpfUsw72",
+        "visits": 4,
+        "displayName": "Leila Lemus",
+        "subjects": []
+    },
+    {
+        "userId": "BQd2CAW2E6WzV0eqOZVwUcVlzC02",
+        "displayName": "Carly L.",
+        "picture": "https://firebasestorage.googleapis.com/v0/b/bluebook-153fe.appspot.com/o/profile%2FBQd2CAW2E6WzV0eqOZVwUcVlzC02.jpg?alt=media&token=79a0a99d-a01f-4817-a5a0-d2421e0a98c2",
+        "majors": [
+            "CHEM",
+            "CELLBIO"
+        ],
+        "minors": [
+            "HISTORY"
+        ],
+        "isAdmin": false,
+        "subjects": [],
+        "certificates": [],
+        "visits": 2
+    },
+    {
+        "subjects": [],
+        "minors": [
+            "LINGUIST"
+        ],
+        "picture": "https://firebasestorage.googleapis.com/v0/b/bluebook-153fe.appspot.com/o/profile%2FDZUpHwsSF5hasIV3dHhM4z7dIG62.jpg?alt=media&token=9041f6f8-457b-475b-bb6a-ebfb0136fa32",
+        "isAdmin": false,
+        "visits": 3,
+        "displayName": "Luke M.",
+        "userId": "DZUpHwsSF5hasIV3dHhM4z7dIG62",
+        "certificates": [
+            "IMMUNOL"
+        ],
+        "majors": [
+            "GSF",
+            "GLHLTH"
+        ]
+    },
+    {
+        "subjects": [],
+        "displayName": "Jack Dark",
+        "email": "jack@duke.edu",
+        "majors": [
+            "BME"
+        ],
+        "certificates": [
+            "UKRAIN"
+        ],
+        "userId": "HMZnGV2qZOcqMwrV4ENcwvsNW6z1",
+        "picture": "",
+        "minors": [
+            "IDS"
+        ],
+        "isAdmin": false,
+        "visits": 2
+    },
+    {
+        "visits": 218,
+        "subjects": [
+            "DOCST",
+            "DANCE",
+            "BIOLOGY",
+            "AAAS",
+            "ARABIC",
+            "ARTHIST",
+            "BME"
+        ],
+        "minors": [
+            "BIOLOGY",
+            "CELLBIO"
+        ],
+        "userId": "MM1mepZMrlfdJKF5MoBK3x7KSjz1",
+        "isAdmin": false,
+        "certificates": [
+            "ISS"
+        ],
+        "picture": "https://firebasestorage.googleapis.com/v0/b/bluebook-153fe.appspot.com/o/profile%2FMM1mepZMrlfdJKF5MoBK3x7KSjz1.jpg?alt=media&token=80b35f0a-f6cd-43d7-a0d3-b19ecde8d74e",
+        "displayName": "Abby Mapes",
+        "majors": [
+            "COMPSCI"
+        ]
+    },
+    {
+        "visits": 1,
+        "certificates": [
+            "MMS"
+        ],
+        "userId": "SRJH5vXslxRlTqQGLJF5h3tD9jZ2",
+        "isAdmin": false,
+        "majors": [
+            "SOCIOL",
+            "VMS"
+        ],
+        "email": "brooke.ward@duke.edu",
+        "subjects": [
+            "COMPSCI"
+        ],
+        "displayName": "Chloe Ward ",
+        "picture": "",
+        "minors": []
+    },
+    {
+        "isAdmin": false,
+        "picture": "https://firebasestorage.googleapis.com/v0/b/bluebook-153fe.appspot.com/o/profile%2FXtx6EZbytcZpMuVXcYDWljoMWWK2.jpg?alt=media&token=c58cdbf6-805f-4b91-a077-1f7868684e18",
+        "majors": [
+            "VMS",
+            "SOCIOL"
+        ],
+        "displayName": "Chloe Jones",
+        "subjects": [],
+        "visits": 13,
+        "certificates": [
+            "MMS"
+        ],
+        "userId": "Xtx6EZbytcZpMuVXcYDWljoMWWK2",
+        "minors": []
+    },
+    {
+        "userId": "c652BdFAwzT7e8evIb3zTkkKA802",
+        "subjects": [
+            "CHILDPOL"
+        ],
+        "picture": "",
+        "majors": [
+            "PSY"
+        ],
+        "email": "marley.storch@duke.edu",
+        "isAdmin": false,
+        "displayName": "Marley Storch",
+        "visits": 2,
+        "minors": [
+            "NEUROSCI",
+            "BIOLOGY"
+        ],
+        "certificates": []
+    },
+    {
+        "email": "csw@duke.edu",
+        "subjects": [
+            "SOCIOL",
+            "STA",
+            "LIT",
+            "AAAS"
+        ],
+        "certificates": [
+            "MMS"
+        ],
+        "displayName": "Claire Rainey",
+        "majors": [
+            "PSY",
+            "ITALIAN"
+        ],
+        "isAdmin": false,
+        "minors": [
+            "FRENCH"
+        ],
+        "visits": 1,
+        "userId": "exFollowingID1",
+        "picture": "https://st.depositphotos.com/2208320/1827/v/950/depositphotos_18271601-stock-illustration-vector-portrait-girl.jpg"
+    },
+    {
+        "certificates": [],
+        "displayName": "John Smith",
+        "majors": [
+            "PUBPOL"
+        ],
+        "userId": "exFollowingID2",
+        "email": "johnsmith@duke.edu",
+        "minors": [
+            "GSF",
+            "MATH"
+        ],
+        "picture": "https://st.depositphotos.com/1898481/5087/i/950/depositphotos_50878063-stock-photo-people.jpg",
+        "visits": 9,
+        "isAdmin": false,
+        "subjects": [
+            "COMPSCI"
+        ]
+    },
+    {
+        "visits": 2,
+        "picture": "https://st3.depositphotos.com/3591429/19002/i/1600/depositphotos_190024836-stock-photo-illustrated-mature-man-casual-wear.jpg",
+        "minors": [
+            "ARTSVIS"
+        ],
+        "displayName": "Mack Riley",
+        "isAdmin": false,
+        "email": "mack@duke.edu",
+        "subjects": [
+            "CEE",
+            "BME",
+            "BIOCHEM",
+            "VMS"
+        ],
+        "majors": [
+            "AEROSCI"
+        ],
+        "userId": "exFollowingID3",
+        "certificates": [
+            "BRAINSOC"
+        ]
+    },
+    {
+        "userId": "exFollowingID4",
+        "picture": "",
+        "email": "billy@duke.edu",
+        "majors": [
+            "ARTS&SCI"
+        ],
+        "isAdmin": false,
+        "certificates": [
+            "DECSCI"
+        ],
+        "displayName": "Patrick Joe",
+        "visits": 6,
+        "subjects": [
+            "RELIGION",
+            "SUSTAIN",
+            "ROMST",
+            "SANSKRIT"
+        ],
+        "minors": [
+            "MUSIC"
+        ]
+    },
+    {
+        "majors": [
+            "GLHLTH"
+        ],
+        "userId": "exFollowingID5",
+        "certificates": [
+            "I&E"
+        ],
+        "minors": [
+            "IMMUNOL"
+        ],
+        "displayName": "Lily S.",
+        "visits": 9,
+        "picture": "https://st.depositphotos.com/2208320/1871/v/950/depositphotos_18717899-stock-illustration-cute-green-face-vector-illustration.jpg",
+        "email": "lily@duke.edu",
+        "isAdmin": false,
+        "subjects": [
+            "EVANTH",
+            "ENGLISH",
+            "ETHICS"
+        ]
+    },
+    {
+        "majors": [
+            "CHEM"
+        ],
+        "certificates": [],
+        "picture": "",
+        "visits": 12,
+        "subjects": [
+            "DANCE",
+            "ECE",
+            "DECSCI"
+        ],
+        "email": "jj@duke.edu",
+        "minors": [
+            "CREOLE"
+        ],
+        "displayName": "J.J Rowlings",
+        "isAdmin": false,
+        "userId": "exFollowingID6"
+    },
+    {
+        "displayName": "Julia Jenkins",
+        "userId": "f7lSdznzscRdVCdwRENg6ob4QHP2",
+        "subjects": [],
+        "certificates": [
+            "ARTS&SCI"
+        ],
+        "picture": "https://firebasestorage.googleapis.com/v0/b/bluebook-153fe.appspot.com/o/profile%2Ff7lSdznzscRdVCdwRENg6ob4QHP2.jpg?alt=media&token=16d950c2-50b8-4485-9793-bf1882a45d2a",
+        "isAdmin": false,
+        "visits": 3,
+        "majors": [
+            "BALTFIN",
+            "BIOETHIC"
+        ],
+        "minors": []
+    },
+    {
+        "minors": [],
+        "userId": "iXVniKGmpXeNngwjrmjPNqaE3ag1",
+        "subjects": [],
+        "visits": 2,
+        "certificates": [],
+        "email": "josh@duke.edu",
+        "isAdmin": false,
+        "picture": "",
+        "displayName": "Wendall F.",
+        "majors": [
+            "BIOCHEM",
+            "BALTFIN"
+        ]
+    },
+    {
+        "picture": "https://firebasestorage.googleapis.com/v0/b/bluebook-153fe.appspot.com/o/profile%2FjyJ6MWp02OZMdRf3VNzWzm2r2q22.jpg?alt=media&token=806a125b-8e55-44d5-a71c-0acdab8b6873",
+        "subjects": [],
+        "certificates": [
+            "BRAINSOC"
+        ],
+        "isAdmin": false,
+        "visits": 1,
+        "minors": [],
+        "majors": [
+            "ECON",
+            "GLHLTH"
+        ],
+        "userId": "jyJ6MWp02OZMdRf3VNzWzm2r2q22",
+        "displayName": "Mike M."
+    },
+    {
+        "userId": "mwLFSnegNKP55ICHlGHwol1uRns2",
+        "subjects": [
+            "CEE",
+            "COMPSCI",
+            "DECSCI",
+            "RIGHTS",
+            "CREOLE",
+            "CULANTH",
+            "DANCE"
+        ],
+        "visits": 6,
+        "certificates": [
+            "BRAINSOC"
+        ],
+        "majors": [
+            "EDUC",
+            "EOS"
+        ],
+        "minors": [],
+        "isAdmin": false,
+        "displayName": "Mary Mack",
+        "picture": "https://firebasestorage.googleapis.com/v0/b/bluebook-153fe.appspot.com/o/profile%2FmwLFSnegNKP55ICHlGHwol1uRns2.jpg?alt=media&token=9e9d69df-388d-4f2a-9cfd-ea580eced992"
+    },
+    {
+        "subjects": [],
+        "email": "a@duke.edu",
+        "displayName": "Vivian Vert",
+        "majors": [
+            "MATH"
+        ],
+        "visits": 1,
+        "isAdmin": false,
+        "picture": "",
+        "minors": [
+            "COMPSCI"
+        ],
+        "userId": "pPfUV0mPENcuePJInah0qnv2vnJ3",
+        "certificates": []
+    },
+    {
+        "majors": [
+            "MMS"
+        ],
+        "isAdmin": false,
+        "minors": [
+            "VMS"
+        ],
+        "displayName": "Kyle Adomian",
+        "certificates": [],
+        "visits": 2,
+        "userId": "rhaHbLaPWian3TN37FPagPecg4I2",
+        "picture": "https://firebasestorage.googleapis.com/v0/b/bluebook-153fe.appspot.com/o/profile%2FrhaHbLaPWian3TN37FPagPecg4I2.jpg?alt=media&token=f92d49d0-de4f-459d-8d6b-33c432b4f7d3",
+        "subjects": [
+            "MATH"
+        ],
+        "email": "kyleadomian@duke.edu"
+    },
+    {
+        "userId": "rtby4MQq91Pl3UVMiMfCBUqCRj23",
+        "isAdmin": true,
+        "displayName": "Joe Smith",
+        "picture": "",
+        "visits": 94
+    },
+    {
+        "picture": "",
+        "displayName": "Carrie Lane",
+        "majors": [
+            "COMPSCI"
+        ],
+        "visits": 2,
+        "certificates": [
+            "ISS"
+        ],
+        "isAdmin": false,
+        "email": "carrie@duke.edu",
+        "minors": [],
+        "userId": "testId",
+        "subjects": [
+            "GSF",
+            "PHYSEDU",
+            "MATH",
+            "PSY",
+            "AAAS"
+        ]
+    }
+]

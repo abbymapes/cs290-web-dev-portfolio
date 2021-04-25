@@ -12,25 +12,25 @@ page, users can view courses for this course attribute.
                 class="mb-3"
                 prepend="Course Titles"
             >
-            <b-form-input
-                v-model='searchText'
-                :aria-label="'Search courses for ' + attributeName"
-                @keyup.enter="searchResults"
-            ></b-form-input>
-            <b-input-group-append>
-                <b-button
-                v-if="!isFiltered"
-                    size="sm"
-                    variant="outline-primary"
-                    @click="searchResults"
-                >Search</b-button>
-                <b-button
-                    v-if="isFiltered"
-                    size="sm"
-                    variant="outline-danger"
-                    @click="clearSearch"
-                >Clear Search</b-button>
-            </b-input-group-append>
+                <b-form-input
+                    v-model='searchText'
+                    :aria-label="'Search courses for ' + attributeName"
+                    @keyup.enter="searchResults"
+                ></b-form-input>
+                <b-input-group-append>
+                    <b-button
+                    v-if="!isFiltered"
+                        size="sm"
+                        variant="outline-primary"
+                        @click="searchResults"
+                    >Search</b-button>
+                    <b-button
+                        v-if="isFiltered"
+                        size="sm"
+                        variant="outline-danger"
+                        @click="clearSearch"
+                    >Clear Search</b-button>
+                </b-input-group-append>
             </b-input-group>
         </div>
         <classes-section
