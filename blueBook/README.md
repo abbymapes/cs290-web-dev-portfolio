@@ -15,7 +15,7 @@ Finish Date:
 - Project Plan: March 22, 2021
 - Progress Report 1: April 7, 2021
 - Progress Report 2: April 14, 2021
-- Final Report: 
+- Final Report: April 25, 2021
 
 Hours Spent: 
 - Project Plan: ~8 hours

@@ -21,7 +21,7 @@
 }
   
 .nav-bar a:hover {
-  color: hsl(215, 100%, 50%);
+  color: #012169;
   font-weight: normal;
 }
   
@@ -32,7 +32,7 @@
 }
   
 .nav-bar a.home:hover {
-  color:hsl(215, 100%, 50%);
+  color:#012169;
   font-weight: bold;
 }
 
@@ -62,7 +62,7 @@
 /* Coursework */
 .coursework-item {
   font-size: 20pt;
-  color: hsl(215, 100%, 70%);
+  color: #00539B;
   padding: 10pt;
 }
 
@@ -102,17 +102,17 @@ a {
 a:hover {
   text-decoration: none;
   font-weight: bold;
-  color: hsl(215, 100%, 50%);
+  color: #00539B
 }
 
 .projects {
   font-weight: normal;
-  color: hsl(215, 100%, 60%);
+  color: #00539B
 }
 
 .projects:hover {
   font-weight: bold;
-  color: hsl(215, 100%, 65%);
+  color: #00539B
 }
 
 .panorama {
@@ -122,12 +122,12 @@ a:hover {
 
 h1 {
   font-size: 30pt;
-  color: hsl(215, 100%, 60%);
+  color: #00539B
 }
 
 h2 {
   font-size: 20pt;
-  color: hsl(215, 100%, 60%);
+  color: #00539B
 }
 
 p {
