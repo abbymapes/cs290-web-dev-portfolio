@@ -149,6 +149,26 @@ app.get('/',
         feed page of the user with userId = 'testId'.
         <br>
         <a href="/bluebook/getFriendsReactions?userId=testId">Get Friends' Reaction Data</a>
+        <br><br>
+        <h1>Collections</h1>
+        Below are links to the current JSON data for all documents in each collection of Bluebook's Firestore database.
+        <br><br>
+        <a href="/bluebook/attributesCollection.json">Attributes Collection</a>
+        <br><br>
+        <a href="/bluebook/commentsCollection.json">Comments Collection</a>
+        <br><br>
+        <a href="/bluebook/coursesCollection.json">Courses Collection</a>
+        <br><br>
+        <a href="/bluebook/followsCollection.json">Follows Collection</a>
+        <br><br>
+        <a href="/bluebook/ratingsCollection.json">Ratings Collection</a>
+        <br><br>
+        <a href="/bluebook/reactionsCollection.json">Reactions Collection</a>
+        <br><br>
+        <a href="/bluebook/subjectsCollection.json">Subjects Collection</a>
+        <br><br>
+        <a href="/bluebook/usersCollection.json">Users Collection</a>
+        <br><br>
         `);
     });
 
@@ -656,7 +676,7 @@ app.get('/bluebook/updateUserVisits', async (req, res, next) => {
         const { userId } = req.query;
         await datastore.increaseVisit(userId);
         res.status(200);
-        res.send('Updated user successfully.')
+        res.send('Updated user successfully.');
     } catch (error) {
         console.log(error);
         // create error object with useful message
@@ -691,6 +711,63 @@ app.post('/bluebook/loadCourses', (req, res) => {
     res.status(200);
     res.send('Complete');
 });
+
+// Retrieves all data in Firestore collections
+app.get('/bluebook/attributesCollection.json',
+    async (req, res) => {
+        res.status(200);
+        const collections = await datastore.getCollection('attributes');
+        res.json(collections);
+    });
+
+app.get('/bluebook/commentsCollection.json',
+    async (req, res) => {
+        res.status(200);
+        const collections = await datastore.getCollection('comments');
+        res.json(collections);
+    });
+
+app.get('/bluebook/coursesCollection.json',
+    async (req, res) => {
+        res.status(200);
+        const collections = await datastore.getCollection('courses');
+        res.json(collections);
+    });
+
+app.get('/bluebook/followsCollection.json',
+    async (req, res) => {
+        res.status(200);
+        const collections = await datastore.getCollection('follows');
+        res.json(collections);
+    });
+
+app.get('/bluebook/ratingsCollection.json',
+    async (req, res) => {
+        res.status(200);
+        const collections = await datastore.getCollection('ratings');
+        res.json(collections);
+    });
+
+app.get('/bluebook/reactionsCollection.json',
+    async (req, res) => {
+        res.status(200);
+        const collections = await datastore.getCollection('reactions');
+        res.json(collections);
+    });
+
+app.get('/bluebook/subjectsCollection.json',
+    async (req, res) => {
+        res.status(200);
+        const collections = await datastore.getCollection('subjects');
+        res.json(collections);
+    });
+
+app.get('/bluebook/usersCollection.json',
+    async (req, res) => {
+        res.status(200);
+        const collections = await datastore.getCollection('users');
+        res.json(collections);
+    });
 
 // Retrieves json data for project demos
 app.get('/bluebook/user.json',

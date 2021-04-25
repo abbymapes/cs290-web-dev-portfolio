@@ -26,9 +26,9 @@ function isValidCourseDocument(data) {
         && data.courseCodes !== null
         && data.description !== null
         && data.subjectName !== null) {
-            return true;
-    };
-    console.log(`BAD JSON DATA: Unable to load course document due to invalid JSON data loaded from Firestore.`);
+        return true;
+    }
+    console.log('BAD JSON DATA: Unable to load course document due to invalid JSON data loaded from Firestore.');
     return false;
 }
 
@@ -46,9 +46,9 @@ function isValidUserDocument(data) {
         && data.subjects !== null
         && data.visits !== null
         && data.picture !== null) {
-            return true;
+        return true;
     }
-    console.log(`BAD JSON DATA: Unable to load user document due to invalid JSON data loaded from Firestore.`);
+    console.log('BAD JSON DATA: Unable to load user document due to invalid JSON data loaded from Firestore.');
     return false;
 }
 
@@ -56,7 +56,7 @@ function isValidSubjectDocument(data) {
     if (data.name !== null && data.code !== null) {
         return true;
     }
-    console.log(`BAD JSON DATA: Unable to load subject document due to invalid JSON data loaded from Firestore.`);
+    console.log('BAD JSON DATA: Unable to load subject document due to invalid JSON data loaded from Firestore.');
     return false;
 }
 
@@ -64,35 +64,34 @@ function isValidAttributeDocument(data) {
     if (data.name !== null) {
         return true;
     }
-    console.log(`BAD JSON DATA: Unable to load attribute document due to invalid JSON data loaded from Firestore.`);
+    console.log('BAD JSON DATA: Unable to load attribute document due to invalid JSON data loaded from Firestore.');
     return false;
 }
 
 function isValidCommentDocument(data) {
-    if (data.commentText !== null 
-        && data.date !== null 
-        && (data.reactionId !== null || data.courseId !== null) 
+    if (data.commentText !== null
+        && data.date !== null
+        && (data.reactionId !== null || data.courseId !== null)
         && data.userId !== null) {
-            return true;
+        return true;
     }
-    console.log(`BAD JSON DATA: Unable to load comment document due to invalid JSON data loaded from Firestore.`);
+    console.log('BAD JSON DATA: Unable to load comment document due to invalid JSON data loaded from Firestore.');
     return false;
 }
 
 function isValidRatingDocument(data) {
-    if (data.courseId !== null 
+    if (data.courseId !== null
         && data.difficulty !== null
         && data.interesting !== null
         && data.userId !== null) {
-            return true;
+        return true;
     }
-    console.log(`BAD JSON DATA: Unable to load rating document due to invalid JSON data loaded from Firestore.`);
+    console.log('BAD JSON DATA: Unable to load rating document due to invalid JSON data loaded from Firestore.');
     return false;
 }
 
-
 function isValidReactionDocument(data) {
-    if (data.courseId !== null 
+    if (data.courseId !== null
         && data.date !== null
         && data.dislike !== null
         && data.like !== null
@@ -102,9 +101,9 @@ function isValidReactionDocument(data) {
         && !(data.like && data.dislike)
         && !(data.like && data.wishlist)
         && !(data.dislike && data.wishlist)) {
-            return true;
+        return true;
     }
-    console.log(`BAD JSON DATA: Unable to load reaction document due to invalid JSON data loaded from Firestore.`);
+    console.log('BAD JSON DATA: Unable to load reaction document due to invalid JSON data loaded from Firestore.');
     return false;
 }
 
@@ -600,6 +599,28 @@ async function getCourseForReaction(reaction, courseId) {
 }
 
 /*
+ * Comparator for reaction documents to sort by descending date
+ */
+function compareReactions(reaction1, reaction2) {
+    if (reaction1.date > reaction2.date) {
+        return -1;
+    } if (reaction1.date < reaction2.date) {
+        return 1;
+    }
+    return 0;
+}
+
+/*
+ * Replaces reaction date property with String of its date
+ */
+function getReactionWithDateString(reaction) {
+    const newReaction = reaction;
+    const dateString = `${reaction.date.toDateString()} at ${reaction.date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    newReaction.date = dateString;
+    return newReaction;
+}
+
+/*
  * Retrieves course reactions for specified userId
  */
 async function getReactions(userId) {
@@ -615,12 +636,12 @@ async function getReactions(userId) {
                 querySnapshot.forEach(async (doc) => {
                     if (isValidReactionDocument(doc.data())) {
                         if (doc.data().like || doc.data().dislike || doc.data().wishlist) {
-                            const dateInMillis  = doc.data().date._seconds * 1000;
-                            let date = new Date(dateInMillis);
+                            const dateInMillis = doc.data().date.seconds * 1000;
+                            const date = new Date(dateInMillis);
                             const reaction = {
                                 reactionId: doc.id,
                                 courseId: doc.data().courseId,
-                                date
+                                date,
                             };
                             if (doc.data().like) {
                                 reaction.type = 'like';
@@ -639,7 +660,7 @@ async function getReactions(userId) {
                                 );
                             }
                         }
-                    } 
+                    }
                 });
                 liked = await Promise.all(likedPromises);
                 disliked = await Promise.all(dislikedPromises);
@@ -648,9 +669,9 @@ async function getReactions(userId) {
                 disliked.sort(compareReactions);
                 wishlist.sort(compareReactions);
                 return {
-                    liked: liked.map(reaction => getReactionWithDateString(reaction)),
-                    disliked: disliked.map(reaction => getReactionWithDateString(reaction)),
-                    wishlist: wishlist.map(reaction => getReactionWithDateString(reaction)),
+                    liked: liked.map((reaction) => getReactionWithDateString(reaction)),
+                    disliked: disliked.map((reaction) => getReactionWithDateString(reaction)),
+                    wishlist: wishlist.map((reaction) => getReactionWithDateString(reaction)),
                 };
             });
         return reactions;
@@ -832,60 +853,44 @@ async function getFriendsReactions(userId) {
     const friendUserIds = Object.getOwnPropertyNames(friends);
     let allReactions = [];
     if (friendUserIds.length > 0) {
-        for (const friendId of friendUserIds) {
+        for await (const friendId of friendUserIds) {
             const reactions = await db.collection('reactions').where('userId', '==', friendId).get()
-            .then(async (querySnapshot) => {
-                const promises = [];
-                querySnapshot.forEach((doc) => {
-                    if (isValidReactionDocument(doc.data())) {
-                        if (doc.data().like || doc.data().dislike || doc.data().wishlist) {
-                            const user = friends[doc.data().userId];
-                            const dateInMillis  = doc.data().date._seconds * 1000;
-                            let date = new Date(dateInMillis);
-                            const reaction = {
-                                reactionId: doc.id,
-                                date,
-                                user,
-                            };
-                            if (doc.data().like) {
-                                reaction.type = 'like';
-                            } else if (doc.data().dislike) {
-                                reaction.type = 'dislike';
-                            } else {
-                                reaction.type = 'wishlist';
+                .then(async (querySnapshot) => {
+                    const promises = [];
+                    querySnapshot.forEach((doc) => {
+                        if (isValidReactionDocument(doc.data())) {
+                            if (doc.data().like || doc.data().dislike || doc.data().wishlist) {
+                                const user = friends[doc.data().userId];
+                                const dateInMillis = doc.data().date.seconds * 1000;
+                                const date = new Date(dateInMillis);
+                                const reaction = {
+                                    reactionId: doc.id,
+                                    date,
+                                    user,
+                                };
+                                if (doc.data().like) {
+                                    reaction.type = 'like';
+                                } else if (doc.data().dislike) {
+                                    reaction.type = 'dislike';
+                                } else {
+                                    reaction.type = 'wishlist';
+                                }
+                                promises.push(addCourseToReaction(reaction, doc.data().courseId));
                             }
-                            promises.push(addCourseToReaction(reaction, doc.data().courseId));
                         }
-                    }
+                    });
+                    const ret = await Promise.all(promises);
+                    return ret;
+                })
+                .catch((error) => {
+                    throw new Error(`Error retrieving reaction friends of ${userId}: ${error}`);
                 });
-                const ret = await Promise.all(promises);
-                return ret;
-            })
-            .catch((error) => {
-                throw new Error(`Error retrieving reaction friends of ${userId}: ${error}`);
-            });
             allReactions = allReactions.concat(reactions);
         }
     }
     allReactions.sort(compareReactions);
-    const formattedReactions = allReactions.map(reaction => getReactionWithDateString(reaction));
+    const formattedReactions = allReactions.map((reaction) => getReactionWithDateString(reaction));
     return formattedReactions;
-}
-
-function compareReactions(reaction1, reaction2) {
-    if (reaction1.date > reaction2.date) {
-        return -1;
-    } else if (reaction1.date < reaction2.date) {
-        return 1;
-    }
-    return 0;
-}
-
-function getReactionWithDateString(reaction) {
-    let newReaction = reaction;
-    let dateString = reaction.date.toDateString() + ' at ' + reaction.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-    newReaction.date = dateString;
-    return newReaction;
 }
 
 /*
@@ -1197,8 +1202,8 @@ async function getFilteredAttributes(search) {
     await db.collection('attributes').orderBy('name').get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                let attrName = doc.data().name;
-                if (isValidAttributeDocument(doc.data()) 
+                const attrName = doc.data().name;
+                if (isValidAttributeDocument(doc.data())
                 && (attrName.toLowerCase()).includes(search.toLowerCase())) {
                     const attribute = {
                         name: attrName,
@@ -1238,6 +1243,23 @@ async function getAllSubjects() {
             throw new Error(`Error retrieving all subjects from Firebase: ${error}`);
         });
     return subjects;
+}
+
+/*
+ * Retrieves all documents in collection specified
+ */
+async function getCollection(name) {
+    const documents = [];
+    await db.collection(name).get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                documents.push(doc.data());
+            });
+        })
+        .catch((error) => {
+            throw new Error(`Error retrieving all documents from collection ${name}: ${error}`);
+        });
+    return documents;
 }
 
 // Functions to preload the database with synthetic data
@@ -1414,3 +1436,4 @@ exports.getAllSubjects = getAllSubjects;
 exports.createUserDocument = createUserDocument;
 exports.increaseVisit = increaseVisit;
 exports.getUsersForAdmin = getUsersForAdmin;
+exports.getCollection = getCollection;
