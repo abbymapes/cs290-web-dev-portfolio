@@ -319,19 +319,59 @@ img {
     font-weight: 500;
 }
 
+h1 {
+    color: #00539B;
+}
+
+h2 {
+    color: #00539B;
+}
+
+#page-name {
+    color: #012169;
+}
+
+.btn-primary {
+    background-color: #00539B;
+}
+
 .btn-outline-primary {
-    color: hsl(215, 100%, 60%);
-    border-color: hsl(215, 100%, 60%);
+    color: #00539B;
+    border-color: #00539B;
+}
+
+.btn-outline-primary:hover {
+    background-color: #00539B;
+}
+
+.attribute-card {
+    border-color: #00539B;
+}
+
+.btn-success {
+    background-color: hsl(113, 100%, 26%);
 }
 
 .btn-outline-success {
-    color: hsl(113, 100%, 30%);
-    border-color: hsl(113, 100%, 30%);
+    color: hsl(113, 100%, 26%);
+    border-color: hsl(113, 100%, 26%);
+}
+
+.btn-outline-success:hover {
+    background-color: hsl(113, 100%, 26%);
+}
+
+.btn-danger {
+    background-color: hsl(0, 100%, 42%);
 }
 
 .btn-outline-danger {
     color: hsl(0, 100%, 42%);
     border-color: hsl(0, 100%, 42%);
+}
+
+.btn-outline-danger:hover {
+    background-color: hsl(0, 100%, 42%);
 }
 
 @media screen and (min-width: 600px) {

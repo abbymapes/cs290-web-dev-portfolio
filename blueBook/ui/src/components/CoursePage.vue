@@ -97,7 +97,7 @@ component displays information for the course provided as a prop.
         >
           <template v-slot:default="{ item }">
             <div class="item attributes">
-              <b-card border-variant="primary" @click="goToAttributePage(item)">
+              <b-card class="attribute-card" @click="goToAttributePage(item)">
                 <b-card-body>
                   {{ item }}
                 </b-card-body>
