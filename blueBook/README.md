@@ -1,7 +1,16 @@
-# Final Project
+# BlueBook - Final Project
+
+## Demo:
+https://drive.google.com/file/d/1gEvtATEtdOYraGdRDqUSSfdqPd1FLGaM/view
+
+## Website Link:
+https://compsci290_2021spring.dukecs.io/portfolio_acm103/blueBook/ui/dist/index.html
+
+Note: See the log in information below for test accounts.
 
 ## Name: 
 Abby Mapes - acm103
+
 
 ### Timeline
 
